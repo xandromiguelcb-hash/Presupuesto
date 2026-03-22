@@ -92,11 +92,11 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
   <div class="section">
     <div class="sec-title">📈 Progreso mensual</div>
     <div class="prog-row">
-      <div class="prog-info"><span>Gastos vs Presupuesto</span><span class="prog-num" id="pLabel">$0 / $3.825.000</span></div>
+      <div class="prog-info"><span>Gastos vs Presupuesto</span><span class="prog-num" id="pLabel">$0 / $3.400.000</span></div>
       <div class="prog-track"><div class="prog-fill" id="pBar" style="width:0%;background:linear-gradient(90deg,#00e5a0,#00c87a)"></div></div>
     </div>
     <div class="prog-row">
-      <div class="prog-info"><span>Ahorro vs Meta (15%)</span><span class="prog-num" id="pALabel">$0 / $675.000</span></div>
+      <div class="prog-info"><span>Ahorro vs Meta (20%)</span><span class="prog-num" id="pALabel">$0 / $850.000</span></div>
       <div class="prog-track"><div class="prog-fill" id="pABar" style="width:0%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
     </div>
   </div>
@@ -151,8 +151,8 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
 <div class="toast" id="toast"></div>
 
 <script>
-const INGRESO = 4500000;
-const META_PCT = 0.15;
+const INGRESO = 4250000;
+const META_PCT = 0.20;
 const PRESUP = INGRESO * (1 - META_PCT);
 const META_AHO = INGRESO * META_PCT;
 
