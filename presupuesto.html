@@ -231,7 +231,7 @@ const CATS={
 };
 
 function save(){localStorage.setItem('pb_recs',JSON.stringify(recs));}
-function cop(n){return '$'+Math.round(n).toLocaleString('es-CO');}
+function cop(n){return '$COP '+Math.round(n).toLocaleString('es-CO');}
 function fdate(d){if(!d)return 'hoy';return new Date(d+'T12:00:00').toLocaleDateString('es-CO',{day:'numeric',month:'short'});}
 
 function openSettings(){
