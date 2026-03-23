@@ -419,6 +419,9 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
     <div class="field"><label>Tipo</label>
       <select id="eTipo"><option>Gasto</option><option>Ingreso</option><option>Ahorro</option><option>Inversión</option></select>
     </div>
+    <div class="field" id="eMetaField"><label>Asignar a meta (opcional)</label>
+      <select id="eMeta"><option value="">Sin meta</option></select>
+    </div>
     <div class="modal-actions">
       <button class="mbtn del" onclick="deleteRec()">🗑️</button>
       <button class="mbtn cancel" onclick="closeModal('overlayEdit')">Cancelar</button>
@@ -712,10 +715,12 @@ function render(){
     const cat=CATS[r.categoria]||CATS['Otros'];
     const tc=r.tipo==='Ingreso'?'ingreso':(r.tipo==='Ahorro'||r.tipo==='Inversión')?'ahorro':'gasto';
     const sg=r.tipo==='Ingreso'?'+':r.tipo==='Ahorro'||r.tipo==='Inversión'?'↗':'-';
+    const meta=r.metaId?goals.find(g=>g.id===r.metaId):null;
+    const metaBadge=meta?`<span style="font-size:.6rem;background:rgba(0,229,160,.12);color:#00e5a0;border-radius:100px;padding:.1rem .45rem;border:1px solid rgba(0,229,160,.25)">${meta.emoji} ${meta.nombre}</span>`:'';
     return `<div class="rec" onclick="openEdit(${r.id})">
       <div class="rec-icon" style="background:${cat.bg};color:${cat.c}">${cat.i}</div>
       <div><div class="rec-name">${r.desc}</div>
-      <div class="rec-meta"><span>${fdate(r.fecha)}</span><span class="badge">${r.categoria}</span><span class="edit-hint">✏️ editar</span></div></div>
+      <div class="rec-meta"><span>${fdate(r.fecha)}</span><span class="badge">${r.categoria}</span>${metaBadge}<span class="edit-hint">✏️ editar</span></div></div>
       <div class="rec-amt amt-${tc}">${sg}${cop(r.monto)}</div>
     </div>`;
   }).join('');
@@ -732,6 +737,11 @@ function openEdit(id){
   document.getElementById('eFecha').value=r.fecha||'';
   document.getElementById('eCat').value=r.categoria;
   document.getElementById('eTipo').value=r.tipo;
+  // Populate meta dropdown
+  const sel=document.getElementById('eMeta');
+  sel.innerHTML='<option value="">Sin meta</option>'+goals.map(g=>`<option value="${g.id}">${g.emoji} ${g.nombre}</option>`).join('');
+  sel.value=r.metaId||'';
+  document.getElementById('eMetaField').style.display=(r.tipo==='Ahorro'||r.tipo==='Inversión')?'block':'none';
   document.getElementById('overlayEdit').classList.add('on');
 }
 function saveEdit(){
@@ -740,7 +750,16 @@ function saveEdit(){
   const desc=document.getElementById('eDesc').value.trim();
   const monto=Number(document.getElementById('eMonto').value);
   if(!desc||!monto){toast('Completa los campos',true);return;}
-  recs[idx]={...recs[idx],desc,monto,fecha:document.getElementById('eFecha').value,categoria:document.getElementById('eCat').value,tipo:document.getElementById('eTipo').value};
+  const tipo=document.getElementById('eTipo').value;
+  const newMetaId=document.getElementById('eMeta').value?Number(document.getElementById('eMeta').value):null;
+  const oldMetaId=recs[idx].metaId||null;
+  const oldMonto=recs[idx].monto;
+  // Ajustar metas afectadas
+  if(oldMetaId&&oldMetaId!==newMetaId){const og=goals.find(g=>g.id===oldMetaId);if(og)og.actual=Math.max((og.actual||0)-oldMonto,0);}
+  if(newMetaId&&newMetaId!==oldMetaId){const ng=goals.find(g=>g.id===newMetaId);if(ng)ng.actual=(ng.actual||0)+monto;}
+  else if(newMetaId&&newMetaId===oldMetaId&&monto!==oldMonto){const ng=goals.find(g=>g.id===newMetaId);if(ng)ng.actual=(ng.actual||0)-oldMonto+monto;}
+  save('pb_goals',goals);
+  recs[idx]={...recs[idx],desc,monto,fecha:document.getElementById('eFecha').value,categoria:document.getElementById('eCat').value,tipo,metaId:newMetaId};
   save('pb_recs',recs);render();updateAll();closeModal('overlayEdit');toast('✅ Actualizado');
 }
 function deleteRec(){
@@ -790,14 +809,17 @@ function renderGoals(){
   const el=document.getElementById('goalList');
   if(!goals.length){el.innerHTML='<div class="empty">Sin metas todavía.<br>Toca "+ Agregar" para crear una.</div>';return;}
   el.innerHTML=goals.map(g=>{
-    const falta=Math.max(g.total-g.actual,0);
+    // Sumar tanto lo manual como registros asignados a esta meta
+    const fromRecs=recs.filter(r=>r.metaId===g.id).reduce((s,r)=>s+r.monto,0);
+    const totalActual=(g.actual||0)+fromRecs;
+    const falta=Math.max(g.total-totalActual,0);
     const meses=g.mensual>0?Math.ceil(falta/g.mensual):0;
-    const pct=Math.min(Math.round((g.actual/g.total)*100),100);
+    const pct=Math.min(Math.round((totalActual/g.total)*100),100);
     const eta=meses>0?`~${meses} meses`:'✅ Completada';
     const etaDate=meses>0?new Date(Date.now()+meses*30*24*3600*1000).toLocaleDateString('es-CO',{month:'short',year:'numeric'}):'';
     return `<div class="goal-card" onclick="openGoalModal(${g.id})">
       <div class="goal-top"><span class="goal-name">${g.emoji} ${g.nombre}</span><span class="goal-eta">${eta}${etaDate?' · '+etaDate:''}</span></div>
-      <div class="goal-sub">${cop(g.actual)} ahorrado de ${cop(g.total)} · ${cop(g.mensual)}/mes</div>
+      <div class="goal-sub">${cop(totalActual)} ahorrado de ${cop(g.total)} · ${cop(g.mensual)}/mes</div>
       <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,#00e5a0,#00c87a)"></div></div>
       <div style="font-size:.68rem;color:#64748b;margin-top:.35rem;text-align:right">${pct}% completado</div>
     </div>`;
@@ -1015,10 +1037,32 @@ REGLAS CRÍTICAS DE CLASIFICACIÓN:
     document.getElementById('typing').classList.remove('on');
     if(p.err){bbl('⚠️ '+p.err);toast(p.err,true);}
     else{
-      recs.push({id:Date.now(),desc:p.desc,monto:Number(p.monto),categoria:p.categoria,tipo:p.tipo,fecha:p.fecha,renta:p.renta||''});
-      save('pb_recs',recs);render();updateAll();
-      bbl(p.ok||'✅ Registrado');toast(p.ok||'✅ Guardado');
-      if(navigator.vibrate)navigator.vibrate(55);
+      const rec={id:Date.now(),desc:p.desc,monto:Number(p.monto),categoria:p.categoria,tipo:p.tipo,fecha:p.fecha,renta:p.renta||'',metaId:null};
+
+      // Si es Ahorro o Inversión, intentar asignar a meta
+      if((p.tipo==='Ahorro'||p.tipo==='Inversión') && goals.length>0){
+        const msgLower=msg.toLowerCase();
+        // 1. Intentar detectar automáticamente por nombre de la meta
+        const detected=goals.find(g=>msgLower.includes(g.nombre.toLowerCase())||
+          g.nombre.toLowerCase().split(' ').some(w=>w.length>3&&msgLower.includes(w)));
+        if(detected){
+          rec.metaId=detected.id;
+          detected.actual=(detected.actual||0)+rec.monto;
+          save('pb_goals',goals);
+          saveRec(rec);
+          bbl(`✅ ${p.ok||'Registrado'} → Meta: ${detected.emoji} ${detected.nombre}`);
+          toast(`🎯 Asignado a "${detected.nombre}"`);
+          if(navigator.vibrate)navigator.vibrate(55);
+        } else {
+          // 2. No detectó → preguntar al usuario
+          saveRec(rec); // guardar sin meta primero
+          showGoalPicker(rec.id, p.ok||'✅ Registrado');
+        }
+      } else {
+        saveRec(rec);
+        bbl(p.ok||'✅ Registrado');toast(p.ok||'✅ Guardado');
+        if(navigator.vibrate)navigator.vibrate(55);
+      }
     }
   }catch(e){document.getElementById('typing').classList.remove('on');bbl('❌ '+e.message);toast('❌ '+e.message,true);}
   btn.disabled=false;
@@ -1026,6 +1070,55 @@ REGLAS CRÍTICAS DE CLASIFICACIÓN:
 
 function bbl(msg){document.getElementById('bubbleTxt').textContent=msg;const b=document.getElementById('bubble');b.classList.add('on');setTimeout(()=>b.classList.remove('on'),5000);}
 function toast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast on'+(err?' err':'');setTimeout(()=>t.className='toast',3500);}
+
+function saveRec(rec){
+  recs.push(rec);save('pb_recs',recs);render();updateAll();
+}
+
+function showGoalPicker(recId, okMsg){
+  // Build goal picker modal dynamically
+  const existing=document.getElementById('overlayGoalPicker');
+  if(existing)existing.remove();
+
+  const opts=goals.map(g=>`
+    <button onclick="assignGoal(${recId},${g.id})" style="width:100%;background:#1a2235;border:1.5px solid #1f2d45;border-radius:12px;padding:.85rem 1rem;color:#e2e8f0;font-size:.9rem;text-align:left;cursor:pointer;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center">
+      <span>${g.emoji} ${g.nombre}</span>
+      <span style="font-size:.72rem;color:#64748b">${cop(g.actual||0)} / ${cop(g.total)}</span>
+    </button>`).join('');
+
+  const div=document.createElement('div');
+  div.id='overlayGoalPicker';
+  div.className='overlay on';
+  div.innerHTML=`<div class="modal">
+    <div class="modal-title">🎯 ¿A cuál meta lo asigno?</div>
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:1rem;text-align:center">Toca la meta para asignarle este ahorro</div>
+    ${opts}
+    <button onclick="assignGoal(${recId},null)" style="width:100%;background:transparent;border:1px solid #1f2d45;border-radius:12px;padding:.75rem;color:#64748b;font-size:.85rem;cursor:pointer;margin-top:.25rem">Sin meta específica</button>
+  </div>`;
+  div.onclick=e=>{if(e.target===div)div.remove();};
+  document.body.appendChild(div);
+  bbl(okMsg+' — ¿A qué meta asigno este ahorro?');
+}
+
+function assignGoal(recId, goalId){
+  const picker=document.getElementById('overlayGoalPicker');
+  if(picker)picker.remove();
+  const rec=recs.find(r=>r.id===recId);
+  if(!rec)return;
+  if(goalId){
+    rec.metaId=goalId;
+    save('pb_recs',recs);
+    const g=goals.find(x=>x.id===goalId);
+    if(g){g.actual=(g.actual||0)+rec.monto;save('pb_goals',goals);}
+    render();updateAll();
+    toast(`🎯 Asignado a "${g?g.nombre:'meta'}"`);
+    bbl(`✅ Guardado en meta: ${g?g.emoji+' '+g.nombre:'—'}`);
+  } else {
+    toast('✅ Registrado sin meta');
+    bbl('✅ Guardado sin meta asignada');
+  }
+  if(navigator.vibrate)navigator.vibrate(55);
+}
 
 function toggleMic(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
