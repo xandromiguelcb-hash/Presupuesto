@@ -996,7 +996,13 @@ async function send(){
   const today=new Date().toISOString().split('T')[0];
   const sys=`Eres asistente financiero Colombia. SOLO JSON sin markdown:
 {"desc":"max 35 chars","monto":entero COP,"categoria":"Alimentación|Transporte|Entretenimiento|Salud/Medicamentos|Ropa|Servicios|Educación|Deudas/Créditos|Ahorro|Inversión|Ingreso|Otros","tipo":"Gasto|Ingreso|Ahorro|Inversión","fecha":"YYYY-MM-DD hoy=${today}","ok":"confirmación max 60 chars emoji","renta":"Deducible|No deducible|Ingreso gravado|Ingreso no gravado"}
-k=x1000. Si no entiendes: {"err":"mensaje"}`;
+
+REGLAS CRÍTICAS DE CLASIFICACIÓN:
+- tipo="Inversión" y categoria="Inversión" cuando: compra de acciones, ETFs, fondos, CDTs, criptomonedas, bonos, finca raíz, cualquier activo financiero que genere rentabilidad futura. Palabras clave: invertí, compré acciones, ETF, fondo, CDT, cripto, bitcoin, depósito a término.
+- tipo="Ahorro" y categoria="Ahorro" cuando: separar dinero para una meta, fondo de emergencia, ahorros sin rentabilidad específica. Palabras clave: ahorré, separé, guardé.
+- tipo="Ingreso" y categoria="Ingreso" SOLO cuando: salario, sueldo, pago por trabajo, freelance, venta de algo, dividendos recibidos, intereses recibidos en cuenta.
+- tipo="Gasto" para todo lo que se gasta y no genera activo.
+- k=x1000. Si no entiendes: {"err":"mensaje"}`;
   try{
     const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
