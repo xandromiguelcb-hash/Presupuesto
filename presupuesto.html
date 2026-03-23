@@ -145,6 +145,22 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
 .tax-val{font-weight:600;font-family:monospace}
 .tax-green{color:#00e5a0}.tax-red{color:#f43f5e}.tax-blue{color:#3b82f6}.tax-yellow{color:#f59e0b}
 
+/* Ratio cards */
+.ratio-card{background:#1a2235;border-radius:14px;padding:1rem;margin-bottom:.75rem;border-left:4px solid var(--rc,#00e5a0)}
+.ratio-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem}
+.ratio-name{font-size:.85rem;font-weight:600;line-height:1.3}
+.ratio-value{font-family:monospace;font-size:1.15rem;font-weight:700;color:var(--rc,#00e5a0);white-space:nowrap;margin-left:.75rem}
+.ratio-desc{font-size:.72rem;color:#64748b;line-height:1.45;margin-bottom:.55rem}
+.ratio-gauge{height:6px;background:#1f2d45;border-radius:10px;overflow:hidden}
+.ratio-fill{height:100%;border-radius:10px;transition:width .7s}
+.ratio-status{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:600;border-radius:100px;padding:.18rem .6rem;margin-top:.45rem}
+.status-green{background:rgba(0,229,160,.12);color:#00e5a0}
+.status-yellow{background:rgba(245,158,11,.12);color:#f59e0b}
+.status-red{background:rgba(244,63,94,.12);color:#f43f5e}
+.tip-item{display:flex;gap:.6rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px solid #1f2d45;font-size:.8rem;line-height:1.45}
+.tip-item:last-child{border-bottom:none}
+.tip-icon{flex-shrink:0;font-size:1rem}
+
 /* Modals */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;display:none;align-items:flex-end;justify-content:center}
 .overlay.on{display:flex}
@@ -212,6 +228,7 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
     <button class="tab"     onclick="showTab('fijos',this)">🔁 Fijos</button>
     <button class="tab"     onclick="showTab('calendario',this)">🗓️ Calendario</button>
     <button class="tab"     onclick="showTab('renta',this)">📑 Renta</button>
+    <button class="tab"     onclick="showTab('ratios',this)">📊 Ratios</button>
   </div>
 </div>
 
@@ -355,6 +372,22 @@ body{font-family:system-ui,sans-serif;background:#0a0e1a;color:#e2e8f0;min-heigh
     <div class="sec-hdr"><span class="sec-title">📥 Exportar para contador</span></div>
     <button onclick="exportTax()" style="width:100%;background:linear-gradient(135deg,#00e5a0,#00c87a);border:none;border-radius:12px;padding:.85rem;color:#0a0e1a;font-weight:700;font-size:.9rem;cursor:pointer">📁 Descargar resumen CSV</button>
   </div>
+</div>
+
+<!-- ══ PAGE: RATIOS ══ -->
+<div class="page" id="page-ratios">
+
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📊 Ratios financieros personales</span></div>
+    <div style="font-size:.73rem;color:#64748b;line-height:1.5;margin-bottom:.85rem">Indicadores calculados en tiempo real con tus datos registrados.</div>
+    <div id="ratiosList"></div>
+  </div>
+
+  <div class="section" id="ratiosTips">
+    <div class="sec-hdr"><span class="sec-title">💡 Interpretación</span></div>
+    <div id="ratiosTipsContent"></div>
+  </div>
+
 </div>
 
 <!-- ══ MODALS ══ -->
@@ -514,6 +547,7 @@ function showTab(id,btn){
   if(id==='metas')renderGoals();
   if(id==='deudas')renderDebts();
   if(id==='fijos')renderFixed();
+  if(id==='ratios')renderRatios();
 }
 
 // ─── Modals ───────────────────────────────────────────────────────────────────
@@ -1008,6 +1042,111 @@ function exportCSV(){
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
   a.download='presupuesto_'+new Date().toISOString().split('T')[0]+'.csv';
   a.click();toast('📁 CSV descargado');
+}
+
+// ─── Ratios financieros ───────────────────────────────────────────────────────
+function renderRatios(){
+  const cfg=getCfg();
+  const ing   = recs.filter(r=>r.tipo==='Ingreso').reduce((s,r)=>s+r.monto,0);
+  const gst   = recs.filter(r=>r.tipo==='Gasto').reduce((s,r)=>s+r.monto,0);
+  const aho   = recs.filter(r=>r.tipo==='Ahorro'||r.tipo==='Inversión').reduce((s,r)=>s+r.monto,0);
+  const inv   = recs.filter(r=>r.tipo==='Inversión').reduce((s,r)=>s+r.monto,0);
+  const totalFijos = fixeds.reduce((s,f)=>s+f.monto,0);
+  const totalDeuda = debts.reduce((s,d)=>s+d.cuota,0);
+  const saldoDeuda = debts.reduce((s,d)=>s+d.saldo,0);
+  const ingresoMes = cfg.ingreso;
+
+  // ── 1. Tasa de ahorro real ────────────────────────────────────────────────
+  const tasaAhorro = ing>0 ? (aho/ing)*100 : 0;
+  const tasaColor  = tasaAhorro>=20?'#00e5a0':tasaAhorro>=10?'#f59e0b':'#f43f5e';
+  const tasaStatus = tasaAhorro>=20?['✅ Excelente','green']:tasaAhorro>=10?['⚠️ Mejorable','yellow']:['🔴 Bajo','red'];
+
+  // ── 2. Ratio de liquidez ─────────────────────────────────────────────────
+  // Cuántos meses de gastos fijos cubre el saldo disponible
+  const saldoDisp = ing - gst - aho;
+  const liquidez  = totalFijos>0 ? saldoDisp/totalFijos : null;
+  const liqColor  = liquidez===null?'#64748b':liquidez>=2?'#00e5a0':liquidez>=1?'#f59e0b':'#f43f5e';
+  const liqStatus = liquidez===null?['—','yellow']:liquidez>=2?['✅ Solvente','green']:liquidez>=1?['⚠️ Ajustado','yellow']:['🔴 Crítico','red'];
+  const liqVal    = liquidez===null?'N/A':(liquidez>=0?'+':'')+liquidez.toFixed(1)+'x';
+
+  // ── 3. Ratio de endeudamiento ─────────────────────────────────────────────
+  const endPct    = ingresoMes>0 ? (totalDeuda/ingresoMes)*100 : 0;
+  const endColor  = endPct<=30?'#00e5a0':endPct<=40?'#f59e0b':'#f43f5e';
+  const endStatus = endPct<=30?['✅ Saludable','green']:endPct<=40?['⚠️ Moderado','yellow']:['🔴 Alto','red'];
+
+  // ── 4. Independencia financiera ───────────────────────────────────────────
+  // Meses que puedes vivir sin ingreso con el ahorro acumulado
+  const gastoMensual = totalFijos>0?totalFijos:(gst||ingresoMes*0.7);
+  const indMeses     = gastoMensual>0 ? aho/gastoMensual : 0;
+  const indColor     = indMeses>=6?'#00e5a0':indMeses>=3?'#f59e0b':'#f43f5e';
+  const indStatus    = indMeses>=6?['✅ Fondo sólido','green']:indMeses>=3?['⚠️ En construcción','yellow']:['🔴 Insuficiente','red'];
+
+  // ── 5. Rentabilidad de inversiones ───────────────────────────────────────
+  // ROI simple: inversiones como % del ingreso total
+  const roiPct    = ing>0?(inv/ing)*100:0;
+  const roiColor  = roiPct>=10?'#00e5a0':roiPct>=5?'#f59e0b':'#64748b';
+  const roiStatus = roiPct>=10?['✅ Activo','green']:roiPct>=5?['⚠️ Creciendo','yellow']:['💤 Bajo','yellow'];
+
+  // ── 6. Gastos fijos vs variables ─────────────────────────────────────────
+  const gstVar    = Math.max(gst - totalFijos, 0);
+  const fijoPct   = gst>0?(totalFijos/gst)*100:0;
+  const varPct    = 100-fijoPct;
+  const fvColor   = fijoPct<=60?'#00e5a0':fijoPct<=75?'#f59e0b':'#f43f5e';
+  const fvStatus  = fijoPct<=60?['✅ Flexible','green']:fijoPct<=75?['⚠️ Comprometido','yellow']:['🔴 Rígido','red'];
+
+  function card(icon,name,val,desc,pct,color,status,extra=''){
+    const [stTxt,stCls]=status;
+    return `<div class="ratio-card" style="--rc:${color}">
+      <div class="ratio-top">
+        <div class="ratio-name">${icon} ${name}</div>
+        <div class="ratio-value">${val}</div>
+      </div>
+      <div class="ratio-desc">${desc}</div>
+      <div class="ratio-gauge"><div class="ratio-fill" style="width:${Math.min(pct,100)}%;background:linear-gradient(90deg,${color},${color}aa)"></div></div>
+      <div class="ratio-status status-${stCls}">${stTxt}</div>
+      ${extra}
+    </div>`;
+  }
+
+  document.getElementById('ratiosList').innerHTML=
+    card('💰','Tasa de ahorro real',tasaAhorro.toFixed(1)+'%',
+      `De cada $COP 100 que recibes, ahorras $COP ${tasaAhorro.toFixed(0)}. Meta recomendada: mínimo 20%.`,
+      tasaAhorro*5,tasaColor,tasaStatus)+
+
+    card('🧪','Ratio de liquidez',liqVal,
+      `Tu saldo disponible (${cop(saldoDisp)}) cubre ${liquidez!==null?liquidez.toFixed(1)+'x':'N/A'} tus gastos fijos mensuales (${cop(totalFijos)}). Meta: al menos 1x.`,
+      liquidez!==null?Math.min(liquidez*33,100):0,liqColor,liqStatus)+
+
+    card('💳','Ratio de endeudamiento',endPct.toFixed(1)+'%',
+      `Tus cuotas mensuales de deuda (${cop(totalDeuda)}) representan el ${endPct.toFixed(1)}% de tu ingreso (${cop(ingresoMes)}). Límite saludable: máx 30%.`,
+      endPct/0.5,endColor,endStatus,
+      saldoDeuda>0?`<div style="font-size:.68rem;color:#64748b;margin-top:.4rem">Deuda total pendiente: ${cop(saldoDeuda)}</div>`:'')+
+
+    card('🏝️','Independencia financiera',indMeses.toFixed(1)+' meses',
+      `Tu ahorro acumulado (${cop(aho)}) cubre ${indMeses.toFixed(1)} meses de gastos fijos. Meta mínima: 3 meses. Ideal: 6 meses.`,
+      (indMeses/6)*100,indColor,indStatus)+
+
+    card('📈','Rentabilidad de inversiones',roiPct.toFixed(1)+'% del ing.',
+      `Estás invirtiendo ${cop(inv)}, que representa el ${roiPct.toFixed(1)}% de tus ingresos totales. Meta: al menos 10% del ingreso en activos.`,
+      roiPct*10,roiColor,roiStatus)+
+
+    card('⚖️','Gastos fijos vs variables',Math.round(fijoPct)+'% / '+Math.round(varPct)+'%',
+      `Gastos fijos: ${cop(totalFijos)} (${Math.round(fijoPct)}%) · Variables: ${cop(gstVar)} (${Math.round(varPct)}%). Meta: máx 60% fijos para tener flexibilidad.`,
+      fijoPct/0.8,fvColor,fvStatus);
+
+  // Tips personalizados según estado
+  const tips=[];
+  if(tasaAhorro<20)tips.push({i:'💰',t:`Tu tasa de ahorro es ${tasaAhorro.toFixed(1)}%. Para llegar al 20%, necesitas ahorrar ${cop(ingresoMes*0.2-aho)} adicionales.`});
+  if(indMeses<3)tips.push({i:'🏦',t:`Prioridad: construir tu fondo de emergencia. Meta inmediata: ${cop(gastoMensual*3)} (3 meses de gastos).`});
+  if(endPct>30)tips.push({i:'💳',t:`Tus deudas superan el 30% de tu ingreso. Considera la estrategia "bola de nieve": paga primero la deuda con mayor interés.`});
+  if(roiPct<5)tips.push({i:'📈',t:`Estás invirtiendo menos del 5% de tu ingreso. Considera CDTs o ETFs desde ${cop(100000)}/mes para empezar.`});
+  if(fijoPct>75)tips.push({i:'⚖️',t:`Más del 75% de tus gastos son fijos. Busca reducir al menos un gasto recurrente para ganar flexibilidad.`});
+  if(liquidez!==null&&liquidez<1)tips.push({i:'🧪',t:`Tu liquidez es crítica. Evita comprometer más ingresos hasta tener al menos 1 mes de gastos fijos disponible.`});
+  if(!tips.length)tips.push({i:'🎉',t:'¡Tus ratios están en buen estado! Sigue con disciplina y enfócate en crecer tus inversiones.'});
+
+  document.getElementById('ratiosTipsContent').innerHTML=tips.map(t=>
+    `<div class="tip-item"><div class="tip-icon">${t.i}</div><div>${t.t}</div></div>`
+  ).join('');
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
