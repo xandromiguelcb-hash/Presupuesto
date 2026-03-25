@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#060d1f">
+<title>📈 Mis Inversiones</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,sans-serif;background:#060d1f;color:#e2e8f0;min-height:100vh;padding-bottom:30px}
+
+/* ── Top ── */
+.top{background:#0d1526;border-bottom:1px solid #1a2740;padding:.75rem 1rem;position:sticky;top:0;z-index:30}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.55rem}
+.app-title{font-size:1.05rem;font-weight:700;color:#fff}
+.app-sub{font-size:.62rem;color:#4a6080;margin-top:2px}
+.top-btns{display:flex;gap:.4rem}
+.tbtn{background:#1a2740;border:1px solid #243450;color:#4a6080;border-radius:9px;padding:.38rem .75rem;font-size:.72rem;cursor:pointer;transition:all .15s}
+.tbtn.accent{color:#7dd3fc;border-color:#7dd3fc}
+.tbtn:active{transform:scale(.93)}
+.tabs{display:flex;gap:.3rem;overflow-x:auto;padding-bottom:.1rem}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:1px solid #1a2740;background:transparent;color:#4a6080;border-radius:100px;padding:.28rem .78rem;font-size:.71rem;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.tab.on{background:#7dd3fc;border-color:#7dd3fc;color:#060d1f;font-weight:700}
+
+/* ── Pages ── */
+.page{display:none;padding:1rem}
+.page.on{display:block}
+
+/* ── Cards ── */
+.section{background:#0d1526;border:1px solid #1a2740;border-radius:16px;padding:1rem;margin-bottom:1rem}
+.sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.85rem}
+.sec-title{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#4a6080}
+.add-btn{background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.3);color:#7dd3fc;border-radius:8px;padding:.26rem .68rem;font-size:.71rem;cursor:pointer}
+.add-btn:active{transform:scale(.94)}
+
+/* ── KPI grid ── */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.kpi{background:#0d1526;border:1px solid #1a2740;border-radius:14px;padding:1rem;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--kc,#7dd3fc)}
+.kpi-lbl{font-size:.61rem;text-transform:uppercase;letter-spacing:.08em;color:#4a6080;margin-bottom:.28rem}
+.kpi-val{font-size:1.1rem;font-weight:700}
+.kpi-sub{font-size:.61rem;color:#4a6080;margin-top:.15rem}
+
+/* ── Investment cards ── */
+.inv-card{background:#131e35;border:1px solid #1a2740;border-radius:14px;padding:.95rem;margin-bottom:.65rem;cursor:pointer;transition:border-color .15s}
+.inv-card:active,.inv-card:hover{border-color:#7dd3fc}
+.inv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.55rem}
+.inv-left{flex:1;min-width:0}
+.inv-name{font-weight:700;font-size:.92rem;margin-bottom:.18rem}
+.inv-type{font-size:.65rem;background:#1a2740;border-radius:100px;padding:.12rem .5rem;color:#4a6080;display:inline-block}
+.inv-right{text-align:right;flex-shrink:0;margin-left:.75rem}
+.inv-val{font-size:1rem;font-weight:700}
+.inv-roi{font-size:.75rem;font-weight:700;border-radius:100px;padding:.15rem .55rem;margin-top:.2rem;display:inline-block}
+.roi-pos{background:rgba(74,222,128,.12);color:#4ade80}
+.roi-neg{background:rgba(248,113,113,.12);color:#f87171}
+.roi-neu{background:rgba(100,116,139,.12);color:#94a3b8}
+.inv-detail{display:flex;gap:.6rem;font-size:.7rem;color:#4a6080;flex-wrap:wrap}
+.inv-val-detail{color:#94a3b8;font-weight:500}
+.inv-progress{margin-top:.6rem}
+.prog-track{height:5px;background:#1a2740;border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;transition:width .6s}
+.alert-badge{font-size:.6rem;background:rgba(251,191,36,.12);color:#fbbf24;border-radius:100px;padding:.12rem .45rem;border:1px solid rgba(251,191,36,.25);display:inline-flex;align-items:center;gap:.25rem;margin-top:.35rem}
+
+/* ── Gráfico de línea SVG ── */
+.chart-svg-wrap{overflow-x:auto;margin-bottom:.5rem}
+.chart-svg-wrap::-webkit-scrollbar{display:none}
+
+/* ── Pie diversificación ── */
+.pie-row{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.pie-svg{flex-shrink:0}
+.pie-legend{display:flex;flex-direction:column;gap:.4rem;flex:1}
+.pie-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem}
+.pie-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* ── Tabla comparativa ── */
+.bench-row{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid #1a2740;font-size:.82rem}
+.bench-row:last-child{border-bottom:none}
+.bench-lbl{color:#94a3b8;display:flex;align-items:center;gap:.4rem}
+.bench-val{font-weight:700;font-family:monospace}
+
+/* ── CDT countdown ── */
+.cdt-row{background:#131e35;border-radius:11px;padding:.8rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.cdt-left .cdt-name{font-weight:600;font-size:.87rem}
+.cdt-left .cdt-days{font-size:.68rem;color:#4a6080;margin-top:.15rem}
+.cdt-right{text-align:right}
+.cdt-rate{font-size:.82rem;font-weight:700;color:#4ade80}
+.cdt-maturity{font-size:.68rem;color:#4a6080}
+.days-badge{font-size:.65rem;border-radius:100px;padding:.15rem .5rem;font-weight:600}
+.days-soon{background:rgba(251,191,36,.12);color:#fbbf24;border:1px solid rgba(251,191,36,.25)}
+.days-ok{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2)}
+.days-past{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)}
+
+/* ── Modals ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+.modal{background:#0d1526;border:1px solid #1a2740;border-radius:22px 22px 0 0;padding:1.4rem 1rem 2rem;width:100%;max-width:600px;max-height:92vh;overflow-y:auto}
+.modal-title{font-size:1rem;font-weight:700;margin-bottom:1.1rem;text-align:center}
+.field{margin-bottom:.85rem}
+.field label{display:block;font-size:.72rem;color:#4a6080;margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.07em}
+.field input,.field select,.field textarea{width:100%;background:#131e35;border:1.5px solid #1a2740;border-radius:10px;padding:.7rem 1rem;color:#e2e8f0;font-size:.95rem;outline:none;-webkit-appearance:none;appearance:none;font-family:system-ui,sans-serif}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#7dd3fc}
+.field select option{background:#131e35}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.modal-actions{display:flex;gap:.65rem;margin-top:1.1rem;flex-wrap:wrap}
+.mbtn{flex:1;min-width:80px;padding:.72rem;border-radius:12px;border:none;font-size:.88rem;font-weight:600;cursor:pointer}
+.mbtn.cancel{background:#131e35;color:#4a6080;border:1px solid #1a2740}
+.mbtn.save{background:linear-gradient(135deg,#7dd3fc,#38bdf8);color:#060d1f}
+.mbtn.del{background:rgba(248,113,113,.1);color:#f87171;border:1px solid #f87171}
+.mbtn:active{transform:scale(.95)}
+
+/* ── Actualizaciones ── */
+.upd-item{background:#131e35;border-radius:11px;padding:.75rem;margin-bottom:.5rem;cursor:pointer;border:1px solid transparent;transition:border .15s}
+.upd-item:active{border-color:#7dd3fc}
+
+/* ── Misc ── */
+.empty{text-align:center;padding:2.5rem 1rem;color:#4a6080;font-size:.85rem;line-height:1.7}
+.tag{font-size:.62rem;border-radius:100px;padding:.12rem .48rem;font-family:monospace;margin-right:.3rem}
+.tag-cop{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2)}
+.tag-usd{background:rgba(125,211,252,.1);color:#7dd3fc;border:1px solid rgba(125,211,252,.2)}
+.row-stat{display:flex;justify-content:space-between;align-items:center;padding:.52rem 0;border-bottom:1px solid #1a2740;font-size:.82rem}
+.row-stat:last-child{border-bottom:none}
+.stat-lbl{color:#94a3b8}
+.stat-val{font-weight:600;font-family:monospace}
+.g{color:#4ade80}.r{color:#f87171}.b{color:#7dd3fc}.y{color:#fbbf24}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(8px);background:#131e35;border:1px solid #7dd3fc;border-radius:10px;padding:.62rem 1.1rem;font-size:.79rem;opacity:0;transition:all .3s;z-index:99;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{border-color:#f87171}
+.divider{height:1px;background:#1a2740;margin:.75rem 0}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-row">
+    <div>
+      <div class="app-title">📈 Mis Inversiones</div>
+      <div class="app-sub" id="appSub">Portafolio personal</div>
+    </div>
+    <div class="top-btns">
+      <button class="tbtn" onclick="openTRM()">💱 TRM</button>
+      <button class="tbtn accent" onclick="openInvModal()">+ Activo</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab on" onclick="showTab('dashboard',this)">🏠 Dashboard</button>
+    <button class="tab" onclick="showTab('portafolios',this)">📂 Portafolios</button>
+    <button class="tab" onclick="showTab('activos',this)">💼 Activos</button>
+    <button class="tab" onclick="showTab('cdts',this)">🏦 CDTs</button>
+    <button class="tab" onclick="showTab('rendimiento',this)">📊 Rendimiento</button>
+    <button class="tab" onclick="showTab('alertas',this)">🔔 Alertas</button>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div class="page on" id="page-dashboard">
+  <div class="kpis" id="dashKpis"></div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📈 Crecimiento del portafolio</span></div>
+    <div class="chart-svg-wrap" id="lineChartWrap"></div>
+    <div id="lineChartLegend" style="display:flex;gap:1rem;justify-content:center;margin-top:.5rem;font-size:.7rem;color:#4a6080"></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">🥧 Diversificación</span></div>
+    <div class="pie-row">
+      <svg class="pie-svg" id="pieSvg" width="120" height="120" viewBox="0 0 120 120"></svg>
+      <div class="pie-legend" id="pieLegend"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">⚡ Resumen rápido</span></div>
+    <div id="dashSummary"></div>
+  </div>
+</div>
+
+<!-- ══ PORTAFOLIOS ══ -->
+<div class="page" id="page-portafolios">
+  <div class="section">
+    <div class="sec-hdr">
+      <span class="sec-title">📂 Mis portafolios</span>
+      <button class="add-btn" onclick="openPortfolioModal()">+ Portafolio</button>
+    </div>
+    <div id="portfolioList"><div class="empty">Sin portafolios.<br>Agrupa tus activos por estrategia.</div></div>
+  </div>
+</div>
+
+<!-- ══ ACTIVOS ══ -->
+<div class="page" id="page-activos">
+  <div class="section">
+    <div class="sec-hdr">
+      <span class="sec-title">💼 Todos los activos</span>
+      <div style="display:flex;gap:.4rem">
+        <select id="filterTipo" onchange="renderActivos()" style="background:#131e35;border:1px solid #1a2740;color:#94a3b8;border-radius:8px;padding:.25rem .55rem;font-size:.7rem;outline:none">
+          <option value="">Todos</option>
+          <option>ETF/Acción</option><option>CDT</option><option>Fondo</option>
+          <option>Finca Raíz</option><option>Bono</option><option>Cripto</option><option>Otro</option>
+        </select>
+      </div>
+    </div>
+    <div id="activosList"><div class="empty">Sin activos registrados.</div></div>
+  </div>
+</div>
+
+<!-- ══ CDTs ══ -->
+<div class="page" id="page-cdts">
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">🏦 CDTs y renta fija</span><button class="add-btn" onclick="openInvModal('CDT')">+ CDT</button></div>
+    <div id="cdtSummaryBox" style="margin-bottom:.75rem"></div>
+    <div id="cdtList"><div class="empty">Sin CDTs registrados.</div></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📋 Calendario de vencimientos</span></div>
+    <div id="cdtCalendar"></div>
+  </div>
+</div>
+
+<!-- ══ RENDIMIENTO ══ -->
+<div class="page" id="page-rendimiento">
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📊 Rendimiento vs benchmarks</span></div>
+    <div id="benchmarks"></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">💰 Por activo</span></div>
+    <div id="rendByAsset"></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📉 Real vs inflación Colombia</span></div>
+    <div id="inflacionComp"></div>
+  </div>
+</div>
+
+<!-- ══ ALERTAS ══ -->
+<div class="page" id="page-alertas">
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">🔔 Alertas activas</span><button class="add-btn" onclick="openAlertModal()">+ Alerta</button></div>
+    <div id="alertasList"><div class="empty">Sin alertas configuradas.</div></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><span class="sec-title">📣 Notificaciones recientes</span></div>
+    <div id="notifList"><div class="empty" style="padding:1rem">Todo en orden. 🟢</div></div>
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+
+<!-- TRM -->
+<div class="overlay" id="overlayTRM" onclick="if(event.target===this)closeModal('overlayTRM')">
+  <div class="modal">
+    <div class="modal-title">💱 Tasa de Cambio (TRM)</div>
+    <div class="field"><label>TRM actual (COP por 1 USD)</label><input type="number" id="trmVal" placeholder="Ej: 4150" inputmode="numeric"></div>
+    <div style="font-size:.75rem;color:#4a6080;margin-bottom:.85rem;line-height:1.5">Actualiza la TRM para calcular correctamente los activos en USD. Consulta en Banco de la República o Google.</div>
+    <div class="modal-actions">
+      <button class="mbtn cancel" onclick="closeModal('overlayTRM')">Cancelar</button>
+      <button class="mbtn save" onclick="saveTRM()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Inversión / activo -->
+<div class="overlay" id="overlayInv" onclick="if(event.target===this)closeModal('overlayInv')">
+  <div class="modal">
+    <div class="modal-title" id="invModalTitle">📈 Nuevo Activo</div>
+    <input type="hidden" id="invId">
+    <div class="field"><label>Nombre del activo</label><input type="text" id="iNombre" placeholder="Ej: ETF VOO, CDT Bancolombia, Apto 101"></div>
+    <div class="field-row">
+      <div class="field"><label>Tipo</label>
+        <select id="iTipo">
+          <option>ETF/Acción</option><option>CDT</option><option>Fondo</option>
+          <option>Finca Raíz</option><option>Bono</option><option>Otro</option>
+        </select>
+      </div>
+      <div class="field"><label>Moneda</label>
+        <select id="iMoneda"><option>COP</option><option>USD</option></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Valor invertido</label><input type="number" id="iInvertido" inputmode="numeric" placeholder="0"></div>
+      <div class="field"><label>Valor actual</label><input type="number" id="iActual" inputmode="numeric" placeholder="0"></div>
+    </div>
+    <div class="field"><label>Portafolio</label>
+      <select id="iPortafolio"><option value="">Sin portafolio</option></select>
+    </div>
+    <div class="field"><label>Fecha de compra</label><input type="date" id="iFecha"></div>
+    <!-- CDT fields -->
+    <div id="cdtFields" style="display:none">
+      <div class="divider"></div>
+      <div style="font-size:.72rem;color:#7dd3fc;margin-bottom:.65rem;font-weight:600">📋 Datos CDT / Renta Fija</div>
+      <div class="field-row">
+        <div class="field"><label>Tasa EA (%)</label><input type="number" id="iTasa" placeholder="Ej: 13.5" step="0.1"></div>
+        <div class="field"><label>Fecha vencimiento</label><input type="date" id="iVencimiento"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Entidad</label><input type="text" id="iEntidad" placeholder="Ej: Bancolombia"></div>
+        <div class="field"><label>Reinvertir al vencer</label>
+          <select id="iReinvertir"><option value="1">Sí</option><option value="0">No</option></select>
+        </div>
+      </div>
+    </div>
+    <!-- Alerta umbral -->
+    <div class="divider"></div>
+    <div class="field-row">
+      <div class="field"><label>Alerta si baja de (%)</label><input type="number" id="iAlertaMin" placeholder="Ej: -10" step="0.5"></div>
+      <div class="field"><label>Rentabilidad esperada (%)</label><input type="number" id="iRentEsperada" placeholder="Ej: 12" step="0.5"></div>
+    </div>
+    <div class="field"><label>Notas</label><textarea id="iNotas" rows="2" placeholder="Observaciones..."></textarea></div>
+    <div class="modal-actions">
+      <button class="mbtn del" id="invDelBtn" style="display:none" onclick="deleteInv()">🗑️</button>
+      <button class="mbtn cancel" onclick="closeModal('overlayInv')">Cancelar</button>
+      <button class="mbtn save" onclick="saveInv()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Actualizar valor -->
+<div class="overlay" id="overlayUpdate" onclick="if(event.target===this)closeModal('overlayUpdate')">
+  <div class="modal">
+    <div class="modal-title">🔄 Actualizar Valor</div>
+    <input type="hidden" id="updId">
+    <div id="updInfo" style="background:#131e35;border-radius:10px;padding:.75rem;margin-bottom:.85rem;font-size:.82rem;line-height:1.6"></div>
+    <div class="field"><label>Nuevo valor actual</label><input type="number" id="updValor" inputmode="numeric"></div>
+    <div class="field"><label>Fecha de actualización</label><input type="date" id="updFecha"></div>
+    <div class="modal-actions">
+      <button class="mbtn cancel" onclick="closeModal('overlayUpdate')">Cancelar</button>
+      <button class="mbtn save" onclick="saveUpdate()">✅ Actualizar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Portafolio -->
+<div class="overlay" id="overlayPortfolio" onclick="if(event.target===this)closeModal('overlayPortfolio')">
+  <div class="modal">
+    <div class="modal-title" id="pfModalTitle">📂 Nuevo Portafolio</div>
+    <input type="hidden" id="pfId">
+    <div class="field"><label>Nombre</label><input type="text" id="pfNombre" placeholder="Ej: Jubilación, Viaje, Largo plazo"></div>
+    <div class="field"><label>Emoji / Ícono</label><input type="text" id="pfEmoji" placeholder="📂" maxlength="2"></div>
+    <div class="field"><label>Objetivo / Descripción</label><textarea id="pfDesc" rows="2" placeholder="Estrategia de este portafolio..."></textarea></div>
+    <div class="field"><label>Meta de rentabilidad anual (%)</label><input type="number" id="pfMeta" placeholder="Ej: 15" step="0.5"></div>
+    <div class="modal-actions">
+      <button class="mbtn del" id="pfDelBtn" style="display:none" onclick="deletePortfolio()">🗑️</button>
+      <button class="mbtn cancel" onclick="closeModal('overlayPortfolio')">Cancelar</button>
+      <button class="mbtn save" onclick="savePortfolio()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Alerta -->
+<div class="overlay" id="overlayAlert" onclick="if(event.target===this)closeModal('overlayAlert')">
+  <div class="modal">
+    <div class="modal-title">🔔 Nueva Alerta</div>
+    <input type="hidden" id="alertId">
+    <div class="field"><label>Activo</label>
+      <select id="alertActivo"><option value="">Todos los activos</option></select>
+    </div>
+    <div class="field"><label>Tipo de alerta</label>
+      <select id="alertTipo">
+        <option value="roi_min">ROI cae por debajo de (%)</option>
+        <option value="roi_max">ROI supera (%)</option>
+        <option value="venc_days">CDT vence en X días</option>
+        <option value="val_min">Valor cae por debajo de</option>
+      </select>
+    </div>
+    <div class="field"><label>Valor umbral</label><input type="number" id="alertUmbral" placeholder="Ej: -10"></div>
+    <div class="modal-actions">
+      <button class="mbtn del" id="alertDelBtn" style="display:none" onclick="deleteAlerta()">🗑️</button>
+      <button class="mbtn cancel" onclick="closeModal('overlayAlert')">Cancelar</button>
+      <button class="mbtn save" onclick="saveAlerta()">💾 Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+function load(k,d){try{return JSON.parse(localStorage.getItem(k)||d);}catch(e){return JSON.parse(d);}}
+let invs       = load('inv_assets','[]');
+let portfolios = load('inv_portfolios','[]');
+let alertas    = load('inv_alertas','[]');
+let history    = load('inv_history','{}'); // {id:[{fecha,valor},...]}
+let trm        = Number(localStorage.getItem('inv_trm')||4150);
+
+const INFLACION = 0.072;
+const TIPO_COLORS = {'ETF/Acción':'#7dd3fc','CDT':'#4ade80','Fondo':'#a78bfa','Finca Raíz':'#fb923c','Bono':'#fbbf24','Cripto':'#f472b6','Otro':'#94a3b8'};
+const TIPO_ICONS  = {'ETF/Acción':'📊','CDT':'🏦','Fondo':'💼','Finca Raíz':'🏠','Bono':'📋','Cripto':'🪙','Otro':'💰'};
+
+function saveAll(){
+  localStorage.setItem('inv_assets',JSON.stringify(invs));
+  localStorage.setItem('inv_portfolios',JSON.stringify(portfolios));
+  localStorage.setItem('inv_alertas',JSON.stringify(alertas));
+  localStorage.setItem('inv_history',JSON.stringify(history));
+}
+function cop(n,mon='COP'){
+  if(mon==='USD') return 'USD '+Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2});
+  return '$COP '+Math.round(n).toLocaleString('es-CO');
+}
+function toCOP(val,mon){return mon==='USD'?val*trm:val;}
+function toast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast on'+(err?' err':'');setTimeout(()=>t.className='toast',3500);}
+function closeModal(id){document.getElementById(id).classList.remove('on');}
+function roi(inv,act){return inv>0?((act-inv)/inv)*100:0;}
+function roiClass(r){return r>0?'roi-pos':r<0?'roi-neg':'roi-neu';}
+function roiColor(r){return r>0?'#4ade80':r<0?'#f87171':'#94a3b8';}
+
+// ─── Tabs ─────────────────────────────────────────────────────────────────────
+function showTab(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('page-'+id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='dashboard')renderDashboard();
+  if(id==='portafolios')renderPortfolios();
+  if(id==='activos')renderActivos();
+  if(id==='cdts')renderCDTs();
+  if(id==='rendimiento')renderRendimiento();
+  if(id==='alertas')renderAlertas();
+}
+
+// ─── TRM ──────────────────────────────────────────────────────────────────────
+function openTRM(){document.getElementById('trmVal').value=trm;document.getElementById('overlayTRM').classList.add('on');}
+function saveTRM(){const v=Number(document.getElementById('trmVal').value);if(!v||v<1000){toast('TRM inválida',true);return;}trm=v;localStorage.setItem('inv_trm',trm);closeModal('overlayTRM');renderDashboard();toast('✅ TRM actualizada: $'+trm.toLocaleString('es-CO'));}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard(){
+  checkAlertas();
+  if(!invs.length){
+    document.getElementById('dashKpis').innerHTML='<div class="empty" style="grid-column:1/-1;padding:1.5rem">Sin activos. Toca "+ Activo" para empezar.</div>';
+    document.getElementById('lineChartWrap').innerHTML='';document.getElementById('pieSvg').innerHTML='';document.getElementById('pieLegend').innerHTML='';document.getElementById('dashSummary').innerHTML='';return;
+  }
+  const totalInvCOP = invs.reduce((s,a)=>s+toCOP(a.invertido,a.moneda),0);
+  const totalActCOP = invs.reduce((s,a)=>s+toCOP(a.actual,a.moneda),0);
+  const totalROI    = roi(totalInvCOP,totalActCOP);
+  const ganancia    = totalActCOP - totalInvCOP;
+  const totalUSD    = invs.filter(a=>a.moneda==='USD').reduce((s,a)=>s+a.actual,0);
+  const totalCOPdir = invs.filter(a=>a.moneda==='COP').reduce((s,a)=>s+a.actual,0);
+
+  document.getElementById('dashKpis').innerHTML=[
+    {lbl:'💵 Total invertido',val:cop(totalInvCOP),sub:'en COP equivalente',kc:'#7dd3fc'},
+    {lbl:'📊 Valor actual',val:cop(totalActCOP),sub:`TRM: $${trm.toLocaleString('es-CO')}`,kc:roiColor(totalROI)},
+    {lbl:'📈 ROI total',val:(totalROI>=0?'+':'')+totalROI.toFixed(2)+'%',sub:ganancia>=0?`+${cop(ganancia)}`:`-${cop(Math.abs(ganancia))}`,kc:roiColor(totalROI)},
+    {lbl:'🌍 En USD',val:'USD '+totalUSD.toLocaleString('en-US',{maximumFractionDigits:0}),sub:`≈ ${cop(totalUSD*trm)}`,kc:'#7dd3fc'},
+  ].map(k=>`<div class="kpi" style="--kc:${k.kc}"><div class="kpi-lbl">${k.lbl}</div><div class="kpi-val" style="color:${k.kc}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('');
+
+  renderLineChart();
+  renderPie();
+  renderDashSummary(totalInvCOP,totalActCOP,totalROI,ganancia);
+}
+
+function renderLineChart(){
+  // Build timeline from history
+  const allDates = new Set();
+  invs.forEach(a=>{if(history[a.id])history[a.id].forEach(h=>allDates.add(h.fecha));});
+  invs.forEach(a=>allDates.add(a.fechaCompra||new Date().toISOString().split('T')[0]));
+  const sorted = [...allDates].filter(Boolean).sort();
+  if(sorted.length<2){document.getElementById('lineChartWrap').innerHTML='<div style="text-align:center;padding:1.5rem;color:#4a6080;font-size:.8rem">Actualiza los valores periódicamente para ver el gráfico de crecimiento.</div>';return;}
+
+  const W=Math.max(sorted.length*44,300), H=110;
+  const vals = sorted.map(date=>{
+    let total=0;
+    invs.forEach(a=>{
+      const hist=history[a.id]||[];
+      const snap=hist.filter(h=>h.fecha<=date).pop();
+      const val=snap?snap.valor:(date===a.fechaCompra?a.invertido:null);
+      if(val!==null&&val!==undefined)total+=toCOP(val,a.moneda);
+    });
+    return total;
+  });
+  const maxV=Math.max(...vals,1),minV=Math.min(...vals,0);
+  const range=maxV-minV||1;
+  const pts=sorted.map((d,i)=>{
+    const x=30+(i/(sorted.length-1||1))*(W-60);
+    const y=H-15-((vals[i]-minV)/range)*(H-30);
+    return `${x},${y}`;
+  }).join(' ');
+  const firstPt=pts.split(' ')[0], lastPt=pts.split(' ').pop();
+  const [lx,ly]=lastPt.split(',');
+
+  document.getElementById('lineChartWrap').innerHTML=`
+  <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="min-width:${W}px">
+    <defs>
+      <linearGradient id="lgrd" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7dd3fc" stop-opacity=".3"/>
+        <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <polyline points="${pts}" fill="none" stroke="#7dd3fc" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="${firstPt} ${pts} ${lx},${H} 30,${H}" fill="url(#lgrd)"/>
+    ${sorted.map((d,i)=>{
+      const x=30+(i/(sorted.length-1||1))*(W-60);
+      const y=H-15-((vals[i]-minV)/range)*(H-30);
+      const lbl=new Date(d+'T12:00:00').toLocaleDateString('es-CO',{day:'numeric',month:'short'});
+      return `<circle cx="${x}" cy="${y}" r="3.5" fill="#7dd3fc"/>
+              <text x="${x}" y="${H-2}" text-anchor="middle" font-size="8" fill="#4a6080">${lbl}</text>`;
+    }).join('')}
+  </svg>`;
+  document.getElementById('lineChartLegend').innerHTML=`<span style="display:flex;align-items:center;gap:.3rem"><span style="width:12px;height:2.5px;background:#7dd3fc;display:inline-block;border-radius:2px"></span>Valor portafolio en COP</span>`;
+}
+
+function renderPie(){
+  const byType={};
+  invs.forEach(a=>{const v=toCOP(a.actual,a.moneda);byType[a.tipo]=(byType[a.tipo]||0)+v;});
+  const total=Object.values(byType).reduce((s,v)=>s+v,0)||1;
+  const types=Object.entries(byType).sort((a,b)=>b[1]-a[1]);
+  let ang=0;
+  const paths=types.map(([tipo,val])=>{
+    const slice=(val/total)*2*Math.PI;
+    const x1=60+54*Math.cos(ang),y1=60+54*Math.sin(ang);
+    const x2=60+54*Math.cos(ang+slice),y2=60+54*Math.sin(ang+slice);
+    const large=slice>Math.PI?1:0;
+    const d=`M60,60 L${x1},${y1} A54,54,0,${large},1,${x2},${y2} Z`;
+    ang+=slice;
+    return `<path d="${d}" fill="${TIPO_COLORS[tipo]||'#94a3b8'}" opacity=".85"/>`;
+  }).join('');
+  document.getElementById('pieSvg').innerHTML=paths;
+  document.getElementById('pieLegend').innerHTML=types.map(([tipo,val])=>
+    `<div class="pie-item"><div class="pie-dot" style="background:${TIPO_COLORS[tipo]||'#94a3b8'}"></div><span>${TIPO_ICONS[tipo]||'💰'} ${tipo}</span><span style="margin-left:auto;font-family:monospace;font-size:.7rem;color:#4a6080">${((val/total)*100).toFixed(1)}%</span></div>`
+  ).join('');
+}
+
+function renderDashSummary(totalInv,totalAct,totalROI,ganancia){
+  const cdts=invs.filter(a=>a.tipo==='CDT');
+  const cdtsVencen=cdts.filter(a=>a.vencimiento&&daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00'))<=30);
+  const rentEsp=invs.filter(a=>a.rentEsperada).reduce((s,a)=>s+Number(a.rentEsperada),0)/Math.max(invs.filter(a=>a.rentEsperada).length,1);
+  const roiReal=totalROI/Math.max(invs.filter(a=>a.fechaCompra).reduce((s,a)=>s+(daysBetween(new Date(a.fechaCompra+'T12:00:00'),new Date())/365),0)/Math.max(invs.length,1),1/12);
+  document.getElementById('dashSummary').innerHTML=`
+    <div class="row-stat"><span class="stat-lbl">Nº de activos</span><span class="stat-val">${invs.length}</span></div>
+    <div class="row-stat"><span class="stat-lbl">Ganancia/Pérdida total</span><span class="stat-val ${ganancia>=0?'g':'r'}">${ganancia>=0?'+':''}${cop(ganancia)}</span></div>
+    <div class="row-stat"><span class="stat-lbl">Rentabilidad esperada promedio</span><span class="stat-val y">${rentEsp.toFixed(1)}% EA</span></div>
+    <div class="row-stat"><span class="stat-lbl">Inflación Colombia 2025</span><span class="stat-val r">7.2% EA</span></div>
+    <div class="row-stat"><span class="stat-lbl">¿Superas la inflación?</span><span class="stat-val ${totalROI>7.2?'g':'r'}">${totalROI>7.2?'✅ Sí':'⚠️ No aún'}</span></div>
+    ${cdtsVencen.length?`<div class="row-stat"><span class="stat-lbl">⚠️ CDTs por vencer (30 días)</span><span class="stat-val y">${cdtsVencen.length} CDT(s)</span></div>`:''}
+    <div class="row-stat"><span class="stat-lbl">TRM usada</span><span class="stat-val b">$${trm.toLocaleString('es-CO')}</span></div>
+  `;
+}
+
+// ─── PORTAFOLIOS ──────────────────────────────────────────────────────────────
+function openPortfolioModal(id){
+  document.getElementById('pfModalTitle').textContent=id?'✏️ Editar Portafolio':'📂 Nuevo Portafolio';
+  document.getElementById('pfDelBtn').style.display=id?'flex':'none';
+  if(id){
+    const p=portfolios.find(x=>x.id===id);
+    document.getElementById('pfId').value=id;
+    document.getElementById('pfNombre').value=p.nombre;
+    document.getElementById('pfEmoji').value=p.emoji||'📂';
+    document.getElementById('pfDesc').value=p.desc||'';
+    document.getElementById('pfMeta').value=p.meta||'';
+  } else {
+    document.getElementById('pfId').value='';
+    ['pfNombre','pfDesc','pfMeta'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('pfEmoji').value='📂';
+  }
+  document.getElementById('overlayPortfolio').classList.add('on');
+}
+function savePortfolio(){
+  const nombre=document.getElementById('pfNombre').value.trim();
+  if(!nombre){toast('Ingresa un nombre',true);return;}
+  const id=document.getElementById('pfId').value;
+  const obj={id:id?Number(id):Date.now(),nombre,emoji:document.getElementById('pfEmoji').value||'📂',desc:document.getElementById('pfDesc').value,meta:Number(document.getElementById('pfMeta').value)||0};
+  if(id){const idx=portfolios.findIndex(x=>x.id===Number(id));if(idx!==-1)portfolios[idx]=obj;}
+  else portfolios.push(obj);
+  saveAll();renderPortfolios();closeModal('overlayPortfolio');toast('✅ Portafolio guardado');
+}
+function deletePortfolio(){
+  if(!confirm('¿Eliminar portafolio?'))return;
+  const id=Number(document.getElementById('pfId').value);
+  portfolios=portfolios.filter(x=>x.id!==id);
+  invs.forEach(a=>{if(a.portafolioId===id)a.portafolioId=null;});
+  saveAll();renderPortfolios();closeModal('overlayPortfolio');toast('🗑️ Eliminado');
+}
+function renderPortfolios(){
+  const el=document.getElementById('portfolioList');
+  if(!portfolios.length){el.innerHTML='<div class="empty">Sin portafolios.<br>Agrupa tus activos por estrategia u objetivo.</div>';return;}
+  el.innerHTML=portfolios.map(p=>{
+    const pInvs=invs.filter(a=>a.portafolioId===p.id);
+    const pInv=pInvs.reduce((s,a)=>s+toCOP(a.invertido,a.moneda),0);
+    const pAct=pInvs.reduce((s,a)=>s+toCOP(a.actual,a.moneda),0);
+    const pROI=roi(pInv,pAct);
+    const roiC=roiColor(pROI);
+    return `<div class="inv-card" onclick="openPortfolioModal(${p.id})">
+      <div class="inv-top">
+        <div class="inv-left"><div class="inv-name">${p.emoji} ${p.nombre}</div><div class="inv-type">${pInvs.length} activos</div></div>
+        <div class="inv-right"><div class="inv-val" style="color:${roiC}">${cop(pAct)}</div><div class="inv-roi ${roiClass(pROI)}">${pROI>=0?'+':''}${pROI.toFixed(1)}%</div></div>
+      </div>
+      ${p.desc?`<div style="font-size:.72rem;color:#4a6080;margin-bottom:.45rem">${p.desc}</div>`:''}
+      ${p.meta?`<div class="inv-progress"><div style="display:flex;justify-content:space-between;font-size:.68rem;color:#4a6080;margin-bottom:.3rem"><span>Rentabilidad meta: ${p.meta}%</span><span style="color:${pROI>=p.meta?'#4ade80':'#fbbf24'}">${pROI>=p.meta?'✅ Alcanzada':'⏳ En progreso'}</span></div><div class="prog-track"><div class="prog-fill" style="width:${Math.min((pROI/p.meta)*100,100)}%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div></div>`:''}
+      ${pInvs.map(a=>`<div style="display:flex;justify-content:space-between;font-size:.72rem;color:#94a3b8;padding:.25rem 0;border-top:1px solid #1a2740">${TIPO_ICONS[a.tipo]||'💰'} ${a.nombre}<span style="color:${roiColor(roi(a.invertido,a.actual))}">${roi(a.invertido,a.actual)>=0?'+':''}${roi(a.invertido,a.actual).toFixed(1)}%</span></div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ─── ACTIVOS ──────────────────────────────────────────────────────────────────
+function openInvModal(tipo,id){
+  document.getElementById('invModalTitle').textContent=id?'✏️ Editar Activo':'📈 Nuevo Activo';
+  document.getElementById('invDelBtn').style.display=id?'flex':'none';
+  // Populate portfolio select
+  const pSel=document.getElementById('iPortafolio');
+  pSel.innerHTML='<option value="">Sin portafolio</option>'+portfolios.map(p=>`<option value="${p.id}">${p.emoji} ${p.nombre}</option>`).join('');
+  if(id){
+    const a=invs.find(x=>x.id===id);
+    document.getElementById('invId').value=id;
+    document.getElementById('iNombre').value=a.nombre;
+    document.getElementById('iTipo').value=a.tipo;
+    document.getElementById('iMoneda').value=a.moneda;
+    document.getElementById('iInvertido').value=a.invertido;
+    document.getElementById('iActual').value=a.actual;
+    document.getElementById('iPortafolio').value=a.portafolioId||'';
+    document.getElementById('iFecha').value=a.fechaCompra||'';
+    document.getElementById('iTasa').value=a.tasa||'';
+    document.getElementById('iVencimiento').value=a.vencimiento||'';
+    document.getElementById('iEntidad').value=a.entidad||'';
+    document.getElementById('iReinvertir').value=a.reinvertir!==undefined?a.reinvertir:'1';
+    document.getElementById('iAlertaMin').value=a.alertaMin||'';
+    document.getElementById('iRentEsperada').value=a.rentEsperada||'';
+    document.getElementById('iNotas').value=a.notas||'';
+    toggleCDTFields(a.tipo);
+  } else {
+    document.getElementById('invId').value='';
+    ['iNombre','iInvertido','iActual','iFecha','iTasa','iVencimiento','iEntidad','iAlertaMin','iRentEsperada','iNotas'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('iMoneda').value='COP';
+    document.getElementById('iTipo').value=tipo||'ETF/Acción';
+    document.getElementById('iPortafolio').value='';
+    document.getElementById('iReinvertir').value='1';
+    toggleCDTFields(tipo||'ETF/Acción');
+  }
+  document.getElementById('overlayInv').classList.add('on');
+}
+function toggleCDTFields(tipo){
+  document.getElementById('cdtFields').style.display=(tipo==='CDT'||tipo==='Bono')?'block':'none';
+}
+document.getElementById('iTipo').addEventListener('change',e=>toggleCDTFields(e.target.value));
+
+function saveInv(){
+  const nombre=document.getElementById('iNombre').value.trim();
+  const invertido=Number(document.getElementById('iInvertido').value);
+  if(!nombre||!invertido){toast('Nombre y valor invertido son obligatorios',true);return;}
+  const id=document.getElementById('invId').value;
+  const actual=Number(document.getElementById('iActual').value)||invertido;
+  const tipo=document.getElementById('iTipo').value;
+  const obj={
+    id:id?Number(id):Date.now(),nombre,tipo,moneda:document.getElementById('iMoneda').value,
+    invertido,actual,portafolioId:document.getElementById('iPortafolio').value?Number(document.getElementById('iPortafolio').value):null,
+    fechaCompra:document.getElementById('iFecha').value,
+    tasa:document.getElementById('iTasa').value?Number(document.getElementById('iTasa').value):null,
+    vencimiento:document.getElementById('iVencimiento').value||null,
+    entidad:document.getElementById('iEntidad').value||null,
+    reinvertir:document.getElementById('iReinvertir').value,
+    alertaMin:document.getElementById('iAlertaMin').value?Number(document.getElementById('iAlertaMin').value):null,
+    rentEsperada:document.getElementById('iRentEsperada').value?Number(document.getElementById('iRentEsperada').value):null,
+    notas:document.getElementById('iNotas').value||null,
+  };
+  if(id){const idx=invs.findIndex(x=>x.id===Number(id));if(idx!==-1)invs[idx]=obj;}
+  else{
+    invs.push(obj);
+    // Add initial history point
+    if(!history[obj.id])history[obj.id]=[];
+    history[obj.id].push({fecha:obj.fechaCompra||new Date().toISOString().split('T')[0],valor:invertido});
+  }
+  saveAll();renderActivos();renderDashboard();closeModal('overlayInv');toast('✅ Activo guardado');
+}
+function deleteInv(){
+  if(!confirm('¿Eliminar este activo?'))return;
+  const id=Number(document.getElementById('invId').value);
+  invs=invs.filter(x=>x.id!==id);delete history[id];
+  saveAll();renderActivos();renderDashboard();closeModal('overlayInv');toast('🗑️ Eliminado');
+}
+function renderActivos(){
+  const el=document.getElementById('activosList');
+  const filtro=document.getElementById('filterTipo').value;
+  let list=filtro?invs.filter(a=>a.tipo===filtro):invs;
+  if(!list.length){el.innerHTML='<div class="empty">Sin activos'+( filtro?' de tipo '+filtro:'')+`.</div>`;return;}
+  list=[...list].sort((a,b)=>toCOP(b.actual,b.moneda)-toCOP(a.actual,a.moneda));
+  el.innerHTML=list.map(a=>assetCard(a,true)).join('');
+}
+function assetCard(a,showUpdate=false){
+  const r=roi(a.invertido,a.actual);
+  const ganCOP=toCOP(a.actual-a.invertido,a.moneda);
+  const pf=a.portafolioId?portfolios.find(p=>p.id===a.portafolioId):null;
+  const daysToVenc=a.vencimiento?daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00')):null;
+  const alerta=a.alertaMin!==null&&a.alertaMin!==undefined&&r<a.alertaMin;
+  return `<div class="inv-card">
+    <div class="inv-top">
+      <div class="inv-left">
+        <div class="inv-name">${TIPO_ICONS[a.tipo]||'💰'} ${a.nombre}</div>
+        <div style="display:flex;gap:.3rem;margin-top:.22rem;flex-wrap:wrap">
+          <span class="inv-type">${a.tipo}</span>
+          <span class="tag tag-${a.moneda.toLowerCase()}">${a.moneda}</span>
+          ${pf?`<span style="font-size:.62rem;color:#a78bfa">${pf.emoji} ${pf.nombre}</span>`:''}
+        </div>
+      </div>
+      <div class="inv-right">
+        <div class="inv-val" style="color:${roiColor(r)}">${cop(a.actual,a.moneda)}</div>
+        <div class="inv-roi ${roiClass(r)}">${r>=0?'+':''}${r.toFixed(2)}% ROI</div>
+      </div>
+    </div>
+    <div class="inv-detail">
+      <span>Invertido: <span class="inv-val-detail">${cop(a.invertido,a.moneda)}</span></span>
+      <span>G/P: <span style="color:${roiColor(r)}">${ganCOP>=0?'+':''}${cop(ganCOP)}</span></span>
+      ${a.rentEsperada?`<span>Meta: <span class="inv-val-detail">${a.rentEsperada}%</span></span>`:''}
+      ${a.tasa?`<span>Tasa: <span style="color:#4ade80">${a.tasa}% EA</span></span>`:''}
+    </div>
+    ${a.vencimiento?`<div style="margin-top:.45rem;font-size:.7rem">
+      <span class="days-badge ${daysToVenc<=30?'days-soon':daysToVenc<0?'days-past':'days-ok'}">
+        ${daysToVenc<0?'Venció hace '+Math.abs(daysToVenc)+' días':daysToVenc===0?'Vence hoy':'Vence en '+daysToVenc+' días'}
+      </span>
+      <span style="color:#4a6080;margin-left:.4rem">${a.vencimiento}</span>
+    </div>`:''}
+    ${alerta?`<div class="alert-badge">⚠️ ROI por debajo del umbral (${a.alertaMin}%)</div>`:''}
+    ${a.notas?`<div style="font-size:.68rem;color:#4a6080;margin-top:.35rem">📝 ${a.notas}</div>`:''}
+    ${showUpdate?`<div style="display:flex;gap:.5rem;margin-top:.65rem">
+      <button onclick="event.stopPropagation();openUpdate(${a.id})" style="flex:1;background:rgba(125,211,252,.08);border:1px solid rgba(125,211,252,.25);color:#7dd3fc;border-radius:8px;padding:.4rem;font-size:.73rem;cursor:pointer">🔄 Actualizar valor</button>
+      <button onclick="event.stopPropagation();openInvModal(null,${a.id})" style="flex:1;background:#131e35;border:1px solid #1a2740;color:#4a6080;border-radius:8px;padding:.4rem;font-size:.73rem;cursor:pointer">✏️ Editar</button>
+    </div>`:''}
+  </div>`;
+}
+
+// ─── ACTUALIZAR VALOR ─────────────────────────────────────────────────────────
+function openUpdate(id){
+  const a=invs.find(x=>x.id===id);if(!a)return;
+  document.getElementById('updId').value=id;
+  document.getElementById('updValor').value=a.actual;
+  document.getElementById('updFecha').value=new Date().toISOString().split('T')[0];
+  const r=roi(a.invertido,a.actual);
+  document.getElementById('updInfo').innerHTML=`<strong>${a.nombre}</strong><br>Valor actual: ${cop(a.actual,a.moneda)} · ROI: <span style="color:${roiColor(r)}">${r>=0?'+':''}${r.toFixed(2)}%</span>`;
+  document.getElementById('overlayUpdate').classList.add('on');
+}
+function saveUpdate(){
+  const id=Number(document.getElementById('updId').value);
+  const val=Number(document.getElementById('updValor').value);
+  const fecha=document.getElementById('updFecha').value;
+  const idx=invs.findIndex(x=>x.id===id);if(idx===-1)return;
+  invs[idx].actual=val;
+  if(!history[id])history[id]=[];
+  // Avoid duplicate date
+  const existing=history[id].findIndex(h=>h.fecha===fecha);
+  if(existing>=0)history[id][existing].valor=val;
+  else history[id].push({fecha,valor:val});
+  history[id].sort((a,b)=>a.fecha<b.fecha?-1:1);
+  saveAll();
+  checkAlertas();
+  renderActivos();renderDashboard();
+  closeModal('overlayUpdate');
+  toast('✅ Valor actualizado');
+}
+
+// ─── CDTs ─────────────────────────────────────────────────────────────────────
+function renderCDTs(){
+  const cdts=invs.filter(a=>a.tipo==='CDT'||a.tipo==='Bono');
+  const el=document.getElementById('cdtList');
+  if(!cdts.length){el.innerHTML='<div class="empty">Sin CDTs ni bonos registrados.</div>';document.getElementById('cdtSummaryBox').innerHTML='';document.getElementById('cdtCalendar').innerHTML='';return;}
+  const totalInv=cdts.reduce((s,a)=>s+toCOP(a.invertido,a.moneda),0);
+  const totalAct=cdts.reduce((s,a)=>s+toCOP(a.actual,a.moneda),0);
+  const tasaProm=cdts.filter(a=>a.tasa).reduce((s,a,_,arr)=>s+a.tasa/arr.length,0);
+  document.getElementById('cdtSummaryBox').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;text-align:center;margin-bottom:.5rem">
+    <div style="background:#131e35;border-radius:10px;padding:.7rem"><div style="font-size:.6rem;color:#4a6080;text-transform:uppercase;margin-bottom:.2rem">Total CDTs</div><div style="font-weight:700;font-size:.85rem">${cop(totalInv)}</div></div>
+    <div style="background:#131e35;border-radius:10px;padding:.7rem"><div style="font-size:.6rem;color:#4a6080;text-transform:uppercase;margin-bottom:.2rem">Valor actual</div><div style="font-weight:700;font-size:.85rem;color:#4ade80">${cop(totalAct)}</div></div>
+    <div style="background:#131e35;border-radius:10px;padding:.7rem"><div style="font-size:.6rem;color:#4a6080;text-transform:uppercase;margin-bottom:.2rem">Tasa prom EA</div><div style="font-weight:700;font-size:.85rem;color:#fbbf24">${tasaProm.toFixed(1)}%</div></div>
+  </div>`;
+  const sorted=[...cdts].sort((a,b)=>{if(!a.vencimiento)return 1;if(!b.vencimiento)return -1;return a.vencimiento<b.vencimiento?-1:1;});
+  el.innerHTML=sorted.map(a=>{
+    const days=a.vencimiento?daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00')):null;
+    const bc=days===null?'days-ok':days<0?'days-past':days<=30?'days-soon':'days-ok';
+    const interesProyectado=a.tasa&&a.vencimiento?a.invertido*(a.tasa/100)*(Math.max(daysBetween(new Date(a.fechaCompra+'T12:00:00')||new Date(),new Date(a.vencimiento+'T12:00:00')),0)/365):null;
+    return `<div class="cdt-row" onclick="openInvModal(null,${a.id})">
+      <div class="cdt-left">
+        <div class="cdt-name">${a.entidad?a.entidad+' · ':''}${a.nombre}</div>
+        <div class="cdt-days">${a.moneda==='USD'?'🌍 USD':''} ${cop(a.invertido,a.moneda)} invertido${interesProyectado?` · Interés esperado: ${cop(interesProyectado)}`:''}
+          ${a.reinvertir==='1'?'<span style="color:#7dd3fc;margin-left:.3rem">🔄 Reinvertir</span>':''}
+        </div>
+      </div>
+      <div class="cdt-right">
+        ${a.tasa?`<div class="cdt-rate">${a.tasa}% EA</div>`:''}
+        ${days!==null?`<div style="margin-top:.2rem"><span class="days-badge ${bc}">${days<0?'Venció':days===0?'Hoy':days+' días'}</span></div>`:''}
+        ${a.vencimiento?`<div class="cdt-maturity">${a.vencimiento}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  // Calendar timeline
+  const upcoming=sorted.filter(a=>a.vencimiento&&daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00'))>=0).slice(0,6);
+  document.getElementById('cdtCalendar').innerHTML=upcoming.length?upcoming.map(a=>{
+    const days=daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00'));
+    const w=Math.min(Math.max((1-days/365)*100,5),100);
+    return `<div style="margin-bottom:.6rem"><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:.25rem"><span>${a.nombre}</span><span class="days-badge ${days<=30?'days-soon':'days-ok'}">${days} días</span></div><div class="prog-track"><div class="prog-fill" style="width:${w}%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div></div>`;
+  }).join(''):'<div style="font-size:.8rem;color:#4a6080;padding:.5rem 0">Sin CDTs próximos a vencer.</div>';
+}
+
+// ─── RENDIMIENTO ──────────────────────────────────────────────────────────────
+function renderRendimiento(){
+  const totalInv=invs.reduce((s,a)=>s+toCOP(a.invertido,a.moneda),0);
+  const totalAct=invs.reduce((s,a)=>s+toCOP(a.actual,a.moneda),0);
+  const roiTotal=roi(totalInv,totalAct);
+  const roiAnual=calcROIAnual();
+
+  // Benchmarks
+  const benches=[
+    {n:'🏦 Mi portafolio',v:roiTotal,sub:'ROI acumulado total'},
+    {n:'📈 Mi portafolio (anualizado)',v:roiAnual,sub:'Rentabilidad anualizada estimada'},
+    {n:'📉 Inflación Colombia 2025',v:7.2,sub:'Meta mínima a superar'},
+    {n:'🏦 CDT promedio mercado',v:13.5,sub:'Referencia renta fija Colombia'},
+    {n:'📊 S&P 500 (10 años prom.)',v:10.7,sub:'Referencia renta variable USD'},
+    {n:'🏠 Valorización finca raíz Col.',v:8.5,sub:'Promedio histórico Colombia'},
+  ];
+  document.getElementById('benchmarks').innerHTML=benches.map(b=>{
+    const c=b.v>INFLACION*100?'#4ade80':b.n.includes('Mi ')?'#fbbf24':'#94a3b8';
+    const isMine=b.n.includes('Mi ');
+    return `<div class="bench-row" style="${isMine?'background:rgba(125,211,252,.04);border-radius:8px;padding:.55rem .4rem':''}">
+      <span class="bench-lbl">${b.n}${b.sub?`<span style="font-size:.62rem;color:#4a6080;display:block">${b.sub}</span>`:''}</span>
+      <span class="bench-val" style="color:${c}">${b.v>=0?'+':''}${b.v.toFixed(1)}%</span>
+    </div>`;
+  }).join('');
+
+  // Por activo
+  const sorted=[...invs].sort((a,b)=>roi(b.invertido,b.actual)-roi(a.invertido,a.actual));
+  document.getElementById('rendByAsset').innerHTML=sorted.map(a=>{
+    const r=roi(a.invertido,a.actual);
+    const ganCOP=toCOP(a.actual-a.invertido,a.moneda);
+    const barra=Math.min(Math.abs(r)*3,100);
+    return `<div style="margin-bottom:.75rem">
+      <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.3rem">
+        <span>${TIPO_ICONS[a.tipo]||'💰'} ${a.nombre}</span>
+        <span style="font-weight:700;color:${roiColor(r)}">${r>=0?'+':''}${r.toFixed(2)}%</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:.68rem;color:#4a6080;margin-bottom:.3rem">
+        <span>${cop(a.invertido,a.moneda)} → ${cop(a.actual,a.moneda)}</span>
+        <span style="color:${roiColor(r)}">${ganCOP>=0?'+':''}${cop(ganCOP)}</span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" style="width:${barra}%;background:${r>=0?'linear-gradient(90deg,#4ade80,#22c55e)':'linear-gradient(90deg,#f87171,#ef4444)'}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Inflación real
+  const perdidaAnual=totalAct*INFLACION;
+  const valReal=totalAct/(1+INFLACION);
+  document.getElementById('inflacionComp').innerHTML=`
+    <div class="row-stat"><span class="stat-lbl">Valor nominal portafolio</span><span class="stat-val">${cop(totalAct)}</span></div>
+    <div class="row-stat"><span class="stat-lbl">Valor real (descontando 7.2% inflación)</span><span class="stat-val r">${cop(valReal)}</span></div>
+    <div class="row-stat"><span class="stat-lbl">Pérdida poder adquisitivo/año</span><span class="stat-val r">-${cop(perdidaAnual)}</span></div>
+    <div class="row-stat"><span class="stat-lbl">¿Tu ROI supera la inflación?</span><span class="stat-val ${roiAnual>7.2?'g':'y'}">${roiAnual>7.2?'✅ Sí, +'+( roiAnual-7.2).toFixed(1)+'% real':'⚠️ No, necesitas +'+(7.2-roiAnual).toFixed(1)+'% más'}</span></div>
+    <div class="row-stat"><span class="stat-lbl">Para ganarle a inflación necesitas</span><span class="stat-val y">> 7.2% EA</span></div>
+  `;
+}
+function calcROIAnual(){
+  if(!invs.length)return 0;
+  let totalW=0,totalROI=0;
+  invs.forEach(a=>{
+    if(!a.fechaCompra)return;
+    const years=Math.max(daysBetween(new Date(a.fechaCompra+'T12:00:00'),new Date())/365,1/12);
+    const r=roi(a.invertido,a.actual);
+    const annualized=((1+r/100)**(1/years)-1)*100;
+    const w=toCOP(a.invertido,a.moneda);
+    totalROI+=annualized*w;totalW+=w;
+  });
+  return totalW>0?totalROI/totalW:0;
+}
+
+// ─── ALERTAS ──────────────────────────────────────────────────────────────────
+function openAlertModal(id){
+  document.getElementById('alertDelBtn').style.display=id?'flex':'none';
+  const sel=document.getElementById('alertActivo');
+  sel.innerHTML='<option value="">Todos los activos</option>'+invs.map(a=>`<option value="${a.id}">${a.nombre}</option>`).join('');
+  if(id){
+    const al=alertas.find(x=>x.id===id);
+    document.getElementById('alertId').value=id;
+    document.getElementById('alertActivo').value=al.activoId||'';
+    document.getElementById('alertTipo').value=al.tipo;
+    document.getElementById('alertUmbral').value=al.umbral;
+  } else {
+    document.getElementById('alertId').value='';
+    document.getElementById('alertActivo').value='';
+    document.getElementById('alertTipo').value='roi_min';
+    document.getElementById('alertUmbral').value='';
+  }
+  document.getElementById('overlayAlert').classList.add('on');
+}
+function saveAlerta(){
+  const umbral=Number(document.getElementById('alertUmbral').value);
+  if(isNaN(umbral)){toast('Ingresa un valor umbral',true);return;}
+  const id=document.getElementById('alertId').value;
+  const obj={id:id?Number(id):Date.now(),activoId:document.getElementById('alertActivo').value?Number(document.getElementById('alertActivo').value):null,tipo:document.getElementById('alertTipo').value,umbral};
+  if(id){const idx=alertas.findIndex(x=>x.id===Number(id));if(idx!==-1)alertas[idx]=obj;}
+  else alertas.push(obj);
+  saveAll();renderAlertas();closeModal('overlayAlert');toast('✅ Alerta guardada');
+}
+function deleteAlerta(){
+  if(!confirm('¿Eliminar alerta?'))return;
+  alertas=alertas.filter(x=>x.id!==Number(document.getElementById('alertId').value));
+  saveAll();renderAlertas();closeModal('overlayAlert');toast('🗑️ Alerta eliminada');
+}
+function checkAlertas(){
+  const notifs=[];
+  alertas.forEach(al=>{
+    const targets=al.activoId?invs.filter(a=>a.id===al.activoId):invs;
+    targets.forEach(a=>{
+      const r=roi(a.invertido,a.actual);
+      const days=a.vencimiento?daysBetween(new Date(),new Date(a.vencimiento+'T12:00:00')):null;
+      let triggered=false,msg='';
+      if(al.tipo==='roi_min'&&r<al.umbral){triggered=true;msg=`⚠️ ${a.nombre}: ROI ${r.toFixed(1)}% cayó bajo ${al.umbral}%`;}
+      if(al.tipo==='roi_max'&&r>al.umbral){triggered=true;msg=`🎉 ${a.nombre}: ROI ${r.toFixed(1)}% superó ${al.umbral}%`;}
+      if(al.tipo==='venc_days'&&days!==null&&days<=al.umbral){triggered=true;msg=`📅 ${a.nombre}: vence en ${days} días (umbral: ${al.umbral})`;}
+      if(al.tipo==='val_min'&&toCOP(a.actual,a.moneda)<al.umbral){triggered=true;msg=`📉 ${a.nombre}: valor ${cop(toCOP(a.actual,a.moneda))} bajo umbral ${cop(al.umbral)}`;}
+      if(triggered)notifs.push({msg,fecha:new Date().toLocaleDateString('es-CO')});
+    });
+  });
+  // Also check alertaMin on assets
+  invs.forEach(a=>{
+    if(a.alertaMin!==null&&a.alertaMin!==undefined){
+      const r=roi(a.invertido,a.actual);
+      if(r<a.alertaMin)notifs.push({msg:`⚠️ ${a.nombre}: ROI ${r.toFixed(1)}% bajó del umbral configurado (${a.alertaMin}%)`,fecha:new Date().toLocaleDateString('es-CO')});
+    }
+  });
+  const nl=document.getElementById('notifList');
+  if(nl)nl.innerHTML=notifs.length?notifs.map(n=>`<div style="background:#131e35;border-radius:10px;padding:.7rem;margin-bottom:.45rem;font-size:.82rem;border-left:3px solid #fbbf24"><div>${n.msg}</div><div style="font-size:.65rem;color:#4a6080;margin-top:.2rem">${n.fecha}</div></div>`).join(''):'<div class="empty" style="padding:1rem">Todo en orden. 🟢</div>';
+  return notifs;
+}
+function renderAlertas(){
+  checkAlertas();
+  const el=document.getElementById('alertasList');
+  if(!alertas.length){el.innerHTML='<div class="empty">Sin alertas configuradas.<br>Agrega alertas para que te avise cuando un activo baje del umbral.</div>';return;}
+  const tipoLabels={roi_min:'ROI cae bajo','roi_max':'ROI supera','venc_days':'Vence en X días','val_min':'Valor cae bajo'};
+  el.innerHTML=alertas.map(al=>{
+    const activo=al.activoId?invs.find(a=>a.id===al.activoId):null;
+    return `<div class="upd-item" onclick="openAlertModal(${al.id})">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.85rem;font-weight:600">🔔 ${tipoLabels[al.tipo]||al.tipo} ${al.umbral}${al.tipo.includes('val')?'':al.tipo==='venc_days'?' días':'%'}</span>
+        <span style="font-size:.7rem;color:#4a6080">${activo?activo.nombre:'Todos los activos'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function daysBetween(d1,d2){return Math.round((d2-d1)/(1000*60*60*24));}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+renderDashboard();
+document.getElementById('appSub').textContent=`${invs.length} activos · TRM $${trm.toLocaleString('es-CO')}`;
+</script>
+</body>
+</html>
