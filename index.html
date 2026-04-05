@@ -18,7 +18,7 @@ html{height:100%;-webkit-text-size-adjust:100%}
 body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column;height:100%;max-height:100dvh;overflow:hidden}
 
-/* TOP BAR */
+/* ── TOP BAR ── */
 .topbar{flex-shrink:0;height:60px;display:flex;align-items:center;justify-content:space-between;
   padding:0 18px;background:rgba(248,250,247,.96);border-bottom:1px solid var(--outv);z-index:50}
 .logo{display:flex;align-items:center;gap:8px;font-family:'DM Serif Display',serif;font-size:19px;color:var(--green)}
@@ -27,15 +27,14 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   display:flex;align-items:center;justify-content:center;color:var(--ink2);transition:background .15s}
 .ibtn:hover{background:var(--s2)}
 
-/* SCREENS */
+/* ── SCREENS ── */
 .wrap{flex:1;overflow:hidden;position:relative;min-height:0}
-.scr{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;
-  padding-bottom:80px;opacity:0;pointer-events:none;
-  transform:translateY(8px);transition:opacity .2s ease,transform .2s ease;
-  -webkit-overflow-scrolling:touch}
+.scr{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:80px;
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity .2s ease,transform .2s ease;-webkit-overflow-scrolling:touch}
 .scr.on{opacity:1;pointer-events:all;transform:none}
 
-/* BOTTOM NAV */
+/* ── BOTTOM NAV ── */
 .bnav{flex-shrink:0;display:flex;justify-content:space-around;align-items:center;
   padding:8px 4px 16px;background:rgba(248,250,247,.96);border-top:1px solid var(--outv);z-index:50}
 .nb{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;
@@ -44,7 +43,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .nb.on{color:var(--green);background:var(--s1)}
 .nb .nl{font-size:10px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
 
-/* SHARED */
+/* ── SHARED ── */
 .shdr{display:flex;justify-content:space-between;align-items:center;padding:20px 18px 12px}
 .shdr h2{font-size:17px;font-weight:700;letter-spacing:-.2px}
 .lbtn{font-size:13px;font-weight:700;color:var(--green);border:none;background:none;cursor:pointer;font-family:inherit;padding:4px}
@@ -75,7 +74,6 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   border:none;background:rgba(255,255,255,.16);color:#fff;font-family:inherit;
   font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
 .hpill:hover{background:rgba(255,255,255,.26)}
-
 .wstrip{margin:14px 18px;padding:15px 18px;background:var(--s1);border-radius:18px;
   display:flex;align-items:center;justify-content:space-between}
 .wl{display:flex;align-items:center;gap:12px}
@@ -84,7 +82,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .wlbl{font-size:10px;color:var(--out);font-weight:600}
 .wval{font-size:13px;font-weight:800;color:var(--green);margin-top:2px}
 
-/* crop cards grid (shared: inicio + mis cultivos) */
+/* crop cards */
 .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px}
 .cc{background:var(--s0);border-radius:18px;padding:14px;cursor:pointer;
   border:none;font-family:inherit;text-align:left;width:100%;transition:transform .15s,box-shadow .15s}
@@ -95,18 +93,15 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .ccp{font-size:11px;color:var(--ink2);margin-bottom:7px}
 .ccbadge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
   background:var(--tertfix);color:var(--tert);padding:2px 8px;border-radius:100px;margin-bottom:7px}
-.ccbadge.plan{background:var(--seccon);color:var(--seconc)}
 .prow{display:flex;justify-content:space-between;font-size:10px;font-weight:700;margin-bottom:4px}
 .pbar{height:3px;background:var(--s3);border-radius:100px;overflow:hidden}
 .pfil{height:100%;background:var(--green);border-radius:100px;transition:width .6s ease}
 .eta{font-size:10px;color:var(--sec);font-weight:600;margin-top:5px}
-
 .addcard{background:var(--s1);border:1.5px dashed var(--outv);border-radius:18px;
   display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;
   font-family:inherit;text-align:left;grid-column:1/-1;
   transition:border-color .15s,background .15s;border-style:dashed}
 .addcard:hover{border-color:var(--green);background:var(--s2)}
-
 .tcard{background:var(--s0);border-radius:14px;padding:14px 16px;
   display:flex;align-items:center;gap:14px;margin:0 18px 10px;cursor:pointer;
   border:none;font-family:inherit;text-align:left;width:calc(100% - 36px);transition:background .15s}
@@ -119,13 +114,11 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;transition:all .15s;font-family:inherit;font-size:16px}
 .chkbtn.done{background:var(--green);border-color:var(--green);color:#fff}
-
-/* ════ MIS CULTIVOS ════ */
 .empty-state{text-align:center;padding:40px 30px;color:var(--ink2)}
 .empty-state .big{font-size:48px;margin-bottom:12px}
 .empty-state p{font-size:14px;line-height:1.6;margin-bottom:20px}
 
-/* ════ GUÍAS / EXPLORADOR ════ */
+/* ════ EXPLORADOR ════ */
 .ghdr{padding:18px 18px 14px}
 .gtl{font-family:'DM Serif Display',serif;font-size:27px;color:var(--green);margin-bottom:5px}
 .gsb{font-size:13px;color:var(--ink2);line-height:1.55}
@@ -133,8 +126,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .exlbl{font-size:11px;font-weight:700;color:var(--ink2);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
 .exrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .expill{padding:8px 14px;border-radius:100px;font-size:12px;font-weight:600;
-  border:1.5px solid var(--outv);background:var(--s0);color:var(--ink2);
-  cursor:pointer;transition:all .15s;font-family:inherit}
+  border:1.5px solid var(--outv);background:var(--s0);color:var(--ink2);cursor:pointer;transition:all .15s;font-family:inherit}
 .expill:active{border-color:var(--green);color:var(--green)}
 .msgs{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
 .msg{animation:fadeup .25s ease both}
@@ -143,9 +135,8 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .msg.user .bbl{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;
   border-radius:18px 18px 4px 18px;padding:12px 16px;font-size:13px;font-weight:600;line-height:1.55}
 .msg.bot{align-self:flex-start;max-width:100%;width:100%}
-.msg.bot .bbl{background:var(--s0);border-radius:18px 18px 18px 4px;
-  padding:14px 16px;font-size:13px;color:var(--ink);line-height:1.65;
-  box-shadow:0 2px 8px rgba(25,28,27,.06)}
+.msg.bot .bbl{background:var(--s0);border-radius:18px 18px 18px 4px;padding:14px 16px;
+  font-size:13px;color:var(--ink);line-height:1.65;box-shadow:0 2px 8px rgba(25,28,27,.06)}
 .typi{display:inline-flex;gap:5px;align-items:center;padding:4px 0}
 .typi span{width:6px;height:6px;border-radius:50%;background:var(--green);animation:ty 1.2s infinite}
 .typi span:nth-child(2){animation-delay:.2s}.typi span:nth-child(3){animation-delay:.4s}
@@ -159,23 +150,19 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .rcn{font-size:14px;font-weight:800;margin-bottom:4px}
 .rctgs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
 .tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;text-transform:uppercase;letter-spacing:.4px}
-.tg{background:var(--greenfix);color:var(--green)}
-.ts2{background:var(--seccon);color:var(--seconc)}
-.tt{background:var(--s4);color:var(--ink2)}
+.tg{background:var(--greenfix);color:var(--green)}.ts2{background:var(--seccon);color:var(--seconc)}.tt{background:var(--s4);color:var(--ink2)}
 .rcdesc{font-size:12px;color:var(--ink2);line-height:1.55;margin-bottom:8px}
 .rcft{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
 .rst{font-size:11px;color:var(--ink2);font-weight:600}
 .addbtn{width:100%;padding:9px;border-radius:100px;border:none;cursor:pointer;
   background:var(--greenfix);color:var(--green);font-family:'Manrope',sans-serif;
-  font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;
-  gap:6px;transition:background .15s}
+  font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
 .addbtn:active{background:var(--greendim)}
 .addbtn.added{background:var(--green);color:#fff;pointer-events:none}
 .ibar{display:flex;gap:10px;align-items:flex-end;margin-top:4px;margin-bottom:4px}
 .itxt{flex:1;background:var(--s0);border:1.5px solid var(--outv);border-radius:18px;
-  padding:12px 16px;font-size:14px;font-weight:500;color:var(--ink);
-  font-family:'Manrope',sans-serif;outline:none;resize:none;line-height:1.5;
-  transition:border-color .15s;max-height:120px;overflow-y:auto}
+  padding:12px 16px;font-size:14px;font-weight:500;color:var(--ink);font-family:'Manrope',sans-serif;
+  outline:none;resize:none;line-height:1.5;transition:border-color .15s;max-height:120px;overflow-y:auto}
 .itxt:focus{border-color:var(--green)}
 .itxt::placeholder{color:var(--out)}
 .isend{width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
@@ -185,76 +172,13 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .isend:active{transform:scale(.93)}
 .isend:disabled{opacity:.35;pointer-events:none}
 
-/* ════ MODAL: SETUP DE CULTIVO ════ */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;
-  display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
-.modal-bg.on{opacity:1;pointer-events:all}
-.modal{background:var(--s0);border-radius:28px 28px 0 0;padding:24px 20px 36px;
-  width:100%;max-height:92dvh;overflow-y:auto;
-  transform:translateY(100%);transition:transform .3s ease}
-.modal-bg.on .modal{transform:translateY(0)}
-.modal-handle{width:40px;height:4px;background:var(--outv);border-radius:100px;margin:0 auto 20px}
-.modal-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--green);margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--ink2);margin-bottom:24px;line-height:1.5}
-
-/* wizard steps indicator */
-.wizard-steps{display:flex;gap:6px;margin-bottom:24px}
-.ws{flex:1;height:3px;border-radius:100px;background:var(--s3);transition:background .3s}
-.ws.done{background:var(--green)}
-.ws.active{background:var(--green)}
-
-.wstep{display:none}
-.wstep.on{display:block}
-
-.field-lbl{font-size:12px;font-weight:700;color:var(--ink2);text-transform:uppercase;
-  letter-spacing:.5px;margin-bottom:8px;display:block}
-.field-input{width:100%;background:var(--s1);border:1.5px solid var(--outv);border-radius:14px;
-  padding:13px 16px;font-size:15px;font-family:'Manrope',sans-serif;color:var(--ink);
-  outline:none;transition:border-color .15s;margin-bottom:18px}
-.field-input:focus{border-color:var(--green)}
-.field-input::placeholder{color:var(--out)}
-
-.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.qty-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--outv);
-  background:var(--s0);font-size:22px;font-weight:300;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
-.qty-btn:hover{border-color:var(--green);color:var(--green)}
-.qty-val{flex:1;text-align:center;font-size:28px;font-weight:800;color:var(--green)}
-.qty-unit{font-size:13px;color:var(--ink2);text-align:center;margin-top:2px;font-weight:600}
-
-.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.date-card{background:var(--s1);border:1.5px solid var(--outv);border-radius:14px;
-  padding:14px;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit}
-.date-card.sel{border-color:var(--green);background:var(--greenfix)}
-.date-card .dc-icon{font-size:24px;margin-bottom:4px}
-.date-card .dc-lbl{font-size:12px;font-weight:700;color:var(--ink)}
-.date-card .dc-sub{font-size:11px;color:var(--ink2);margin-top:2px}
-
-.area-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
-.area-opt{background:var(--s1);border:1.5px solid var(--outv);border-radius:12px;
-  padding:12px 8px;cursor:pointer;text-align:center;font-family:inherit;transition:all .15s}
-.area-opt.sel{border-color:var(--green);background:var(--greenfix)}
-.area-opt .ao-ico{font-size:22px;margin-bottom:4px}
-.area-opt .ao-lbl{font-size:11px;font-weight:700;color:var(--ink)}
-.area-opt .ao-sub{font-size:10px;color:var(--ink2);margin-top:2px}
-
-.summary-card{background:var(--s1);border-radius:18px;padding:18px;margin-bottom:18px}
-.sum-row{display:flex;justify-content:space-between;align-items:center;
-  padding:10px 0;border-bottom:1px solid var(--s2)}
-.sum-row:last-child{border-bottom:none}
-.sum-lbl{font-size:13px;color:var(--ink2);font-weight:500}
-.sum-val{font-size:13px;font-weight:800;color:var(--green)}
-
-.modal-nav{display:flex;gap:10px;margin-top:8px}
-
-/* ════ DETALLE DE CULTIVO ════ */
+/* ════ DETALLE CULTIVO ════ */
 .crop-hero{margin:0 18px;border-radius:22px;overflow:hidden;position:relative;aspect-ratio:16/9}
 .crop-hero img{width:100%;height:100%;object-fit:cover;display:block}
 .crop-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
   display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
 .cho-name{font-family:'DM Serif Display',serif;font-size:26px;color:#fff}
 .cho-phase{font-size:13px;color:rgba(255,255,255,.8);margin-top:3px}
-
 .prog-card{margin:14px 18px;background:var(--s0);border-radius:18px;padding:18px}
 .prog-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .prog-title{font-size:15px;font-weight:700}
@@ -263,19 +187,63 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .prog-fill-big{height:100%;background:linear-gradient(90deg,var(--green),#4caf50);border-radius:100px;transition:width .8s ease}
 .prog-dates{display:flex;justify-content:space-between;font-size:11px;color:var(--ink2);font-weight:600}
 
+/* ── editable stats ── */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 18px;margin-bottom:14px}
-.stat-c{background:var(--s0);border-radius:14px;padding:14px 10px;text-align:center}
+.stat-c{background:var(--s0);border-radius:14px;padding:14px 10px;text-align:center;position:relative}
 .stat-ico{font-size:22px;margin-bottom:4px}
 .stat-val{font-size:17px;font-weight:800;color:var(--green)}
 .stat-lbl{font-size:10px;color:var(--ink2);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.stat-edit-btn{position:absolute;top:8px;right:8px;font-size:12px;background:none;border:none;cursor:pointer;opacity:.5}
 
-/* weekly guide */
+/* edit card */
+.edit-card{margin:0 18px 14px;background:var(--s0);border-radius:18px;padding:18px;
+  border:1.5px solid var(--green);display:none}
+.edit-card.on{display:block}
+.edit-title{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--green)}
+.edit-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.edit-lbl{font-size:12px;font-weight:700;color:var(--ink2);min-width:110px}
+.edit-inp{flex:1;background:var(--s1);border:1.5px solid var(--outv);border-radius:10px;
+  padding:9px 12px;font-size:15px;font-weight:700;font-family:'Manrope',sans-serif;
+  color:var(--green);outline:none;text-align:center;transition:border-color .15s}
+.edit-inp:focus{border-color:var(--green)}
+.edit-btns{display:flex;gap:8px;margin-top:4px}
+.edit-save{flex:2;padding:11px;border-radius:100px;border:none;cursor:pointer;
+  background:var(--green);color:#fff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:800;transition:opacity .15s}
+.edit-save:hover{opacity:.88}
+.edit-cancel{flex:1;padding:11px;border-radius:100px;border:none;cursor:pointer;
+  background:var(--s2);color:var(--ink2);font-family:'Manrope',sans-serif;font-size:13px;font-weight:700}
+
+/* labor calc */
+.labor-card{margin:0 18px 14px;background:var(--s0);border-radius:18px;padding:18px}
+.labor-title{font-size:15px;font-weight:700;margin-bottom:14px}
+.labor-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.labor-lbl{font-size:13px;color:var(--ink2);font-weight:600;flex:1}
+.labor-inp{width:90px;background:var(--s1);border:1.5px solid var(--outv);border-radius:10px;
+  padding:8px 12px;font-size:14px;font-weight:700;font-family:'Manrope',sans-serif;
+  color:var(--ink);outline:none;text-align:center;transition:border-color .15s}
+.labor-inp:focus{border-color:var(--green)}
+.labor-unit{font-size:11px;color:var(--out);font-weight:600;min-width:40px}
+.labor-divider{height:1px;background:var(--s2);margin:12px 0}
+.labor-result{background:var(--greenfix);border-radius:14px;padding:14px 16px}
+.labor-result-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.labor-result-row:last-child{margin-bottom:0}
+.lr-lbl{font-size:12px;color:var(--tert);font-weight:600}
+.lr-val{font-size:15px;font-weight:800;color:var(--green)}
+.lr-val.big{font-size:20px}
+.labor-calc-btn{width:100%;padding:13px;border-radius:100px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;
+  box-shadow:0 3px 12px rgba(23,59,30,.2);transition:opacity .15s}
+.labor-calc-btn:hover{opacity:.9}
+
+/* guide */
 .guide-section{padding:0 18px;margin-bottom:14px}
 .guide-title{font-size:16px;font-weight:700;margin-bottom:12px}
 .week-card{background:var(--s0);border-radius:16px;padding:16px;margin-bottom:10px;
   border-left:4px solid var(--outv);transition:border-color .2s}
 .week-card.current{border-left-color:var(--green)}
-.week-card.done{border-left-color:var(--greendim);opacity:.7}
+.week-card.done-wk{border-left-color:var(--greendim);opacity:.7}
 .week-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .week-label{font-size:12px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:.5px}
 .week-label.past{color:var(--out)}
@@ -286,21 +254,119 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .week-title{font-size:14px;font-weight:700;margin-bottom:4px}
 .week-desc{font-size:12px;color:var(--ink2);line-height:1.6}
 .week-tasks{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-.wtask{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink2)}
-.wtask-ico{font-size:16px;flex-shrink:0}
+.wtask{display:flex;align-items:center;gap:8px}
+.wtask-txt{font-size:12px;font-weight:600;color:var(--ink2);flex:1}
+/* ── task coach button ── */
+.wtask-help{padding:4px 10px;border-radius:100px;border:1px solid var(--outv);
+  background:var(--s1);font-size:11px;font-weight:700;color:var(--green);
+  cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit;flex-shrink:0}
+.wtask-help:hover{background:var(--greenfix);border-color:var(--green)}
+.week-alert{background:rgba(253,205,188,.35);border-radius:10px;padding:10px 12px;
+  margin-top:10px;font-size:12px;color:var(--seconc);line-height:1.5}
 .week-complete-btn{width:100%;padding:11px;border-radius:100px;border:none;cursor:pointer;
   background:var(--greenfix);color:var(--green);font-family:'Manrope',sans-serif;
   font-size:13px;font-weight:800;margin-top:12px;display:flex;align-items:center;
   justify-content:center;gap:6px;transition:background .15s}
 .week-complete-btn:active{background:var(--greendim)}
 .week-complete-btn.done{background:var(--green);color:#fff;pointer-events:none}
-
-.gen-guide-btn{width:100%;padding:16px;border-radius:18px;border:none;cursor:pointer;
-  background:var(--s1);border:1.5px dashed var(--outv);
-  font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:var(--ink2);
-  display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;
-  transition:all .15s}
+.gen-guide-btn{width:100%;padding:16px;border-radius:18px;border:1.5px dashed var(--outv);
+  background:var(--s1);font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;
+  color:var(--ink2);display:flex;align-items:center;justify-content:center;
+  gap:8px;margin-bottom:14px;transition:all .15s;cursor:pointer}
 .gen-guide-btn:hover{border-color:var(--green);color:var(--green);background:var(--s2)}
+
+/* ════ TASK COACH DRAWER ════ */
+.coach-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;
+  display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
+.coach-bg.on{opacity:1;pointer-events:all}
+.coach-drawer{background:var(--bg);border-radius:28px 28px 0 0;padding:20px 20px 36px;
+  width:100%;max-height:88dvh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .3s ease}
+.coach-bg.on .coach-drawer{transform:translateY(0)}
+.coach-handle{width:40px;height:4px;background:var(--outv);border-radius:100px;margin:0 auto 16px}
+.coach-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.coach-task-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);flex:1;line-height:1.2}
+.coach-close{width:36px;height:36px;border-radius:50%;border:none;background:var(--s2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.coach-crop-badge{display:inline-block;font-size:11px;font-weight:700;background:var(--greenfix);
+  color:var(--green);padding:3px 10px;border-radius:100px;margin-bottom:14px}
+/* chat inside drawer */
+.coach-msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;
+  margin-bottom:12px;padding-right:2px;-webkit-overflow-scrolling:touch}
+.cmsg{animation:fadeup .2s ease both}
+.cmsg.bot .bbl{background:var(--s0);border-radius:16px 16px 16px 4px;padding:12px 14px;
+  font-size:13px;color:var(--ink);line-height:1.65;box-shadow:0 2px 6px rgba(25,28,27,.06)}
+.cmsg.user{align-self:flex-end;max-width:85%}
+.cmsg.user .bbl{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;
+  border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:13px;font-weight:600;line-height:1.5}
+.coach-ibar{display:flex;gap:8px;align-items:flex-end}
+.coach-itxt{flex:1;background:var(--s0);border:1.5px solid var(--outv);border-radius:16px;
+  padding:10px 14px;font-size:14px;font-family:'Manrope',sans-serif;color:var(--ink);
+  outline:none;resize:none;line-height:1.4;max-height:100px;overflow-y:auto;transition:border-color .15s}
+.coach-itxt:focus{border-color:var(--green)}
+.coach-itxt::placeholder{color:var(--out)}
+.coach-send{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(23,59,30,.22);transition:opacity .15s}
+.coach-send:active{opacity:.8}
+.coach-send:disabled{opacity:.35;pointer-events:none}
+/* quick questions */
+.coach-qs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.cq{padding:6px 12px;border-radius:100px;font-size:11px;font-weight:700;
+  border:1.5px solid var(--outv);background:var(--s0);color:var(--ink2);
+  cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.cq:active{background:var(--greenfix);border-color:var(--green);color:var(--green)}
+
+/* ════ WIZARD MODAL ════ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;
+  display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-bg.on{opacity:1;pointer-events:all}
+.modal{background:var(--s0);border-radius:28px 28px 0 0;padding:24px 20px 36px;
+  width:100%;max-height:92dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s ease}
+.modal-bg.on .modal{transform:translateY(0)}
+.modal-handle{width:40px;height:4px;background:var(--outv);border-radius:100px;margin:0 auto 20px}
+.modal-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--green);margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--ink2);margin-bottom:24px;line-height:1.5}
+.wizard-steps{display:flex;gap:6px;margin-bottom:24px}
+.ws{flex:1;height:3px;border-radius:100px;background:var(--s3);transition:background .3s}
+.ws.done{background:var(--green)}.ws.active{background:var(--green)}
+.wstep{display:none}.wstep.on{display:block}
+.field-lbl{font-size:12px;font-weight:700;color:var(--ink2);text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:8px;display:block}
+.field-input{width:100%;background:var(--s1);border:1.5px solid var(--outv);border-radius:14px;
+  padding:13px 16px;font-size:15px;font-family:'Manrope',sans-serif;color:var(--ink);
+  outline:none;transition:border-color .15s;margin-bottom:18px}
+.field-input:focus{border-color:var(--green)}
+.field-input::placeholder{color:var(--out)}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.qty-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--outv);
+  background:var(--s0);font-size:22px;font-weight:300;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.qty-btn:hover{border-color:var(--green);color:var(--green)}
+.qty-val{flex:1;text-align:center;font-size:28px;font-weight:800;color:var(--green)}
+.qty-unit{font-size:13px;color:var(--ink2);text-align:center;margin-top:2px;font-weight:600}
+.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.date-card{background:var(--s1);border:1.5px solid var(--outv);border-radius:14px;
+  padding:14px;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit}
+.date-card.sel{border-color:var(--green);background:var(--greenfix)}
+.dc-icon{font-size:24px;margin-bottom:4px}
+.dc-lbl{font-size:12px;font-weight:700;color:var(--ink)}
+.dc-sub{font-size:11px;color:var(--ink2);margin-top:2px}
+.area-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.area-opt{background:var(--s1);border:1.5px solid var(--outv);border-radius:12px;
+  padding:12px 8px;cursor:pointer;text-align:center;font-family:inherit;transition:all .15s}
+.area-opt.sel{border-color:var(--green);background:var(--greenfix)}
+.ao-ico{font-size:22px;margin-bottom:4px}
+.ao-lbl{font-size:11px;font-weight:700;color:var(--ink)}
+.ao-sub{font-size:10px;color:var(--ink2);margin-top:2px}
+.summary-card{background:var(--s1);border-radius:18px;padding:18px;margin-bottom:18px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--s2)}
+.sum-row:last-child{border-bottom:none}
+.sum-lbl{font-size:13px;color:var(--ink2);font-weight:500}
+.sum-val{font-size:13px;font-weight:800;color:var(--green)}
+.modal-nav{display:flex;gap:10px;margin-top:8px}
 
 /* ════ PERFIL ════ */
 .pcrd{margin:14px 18px;background:var(--s0);border-radius:22px;padding:22px;
@@ -308,7 +374,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .avwp{position:relative;flex-shrink:0}
 .av{width:76px;height:76px;border-radius:50%;object-fit:cover;display:block}
 .vbdg{position:absolute;bottom:0;right:0;background:var(--green);border-radius:50%;
-  padding:5px;border:3px solid var(--s0);display:flex;align-items:center;justify-content:center;font-size:12px}
+  padding:5px;border:3px solid var(--s0);font-size:12px;display:flex;align-items:center;justify-content:center}
 .pnm{font-family:'DM Serif Display',serif;font-size:22px}
 .plc{font-size:12px;color:var(--ink2);margin:3px 0}
 .pbi{font-size:12px;color:var(--ink2);line-height:1.5}
@@ -319,8 +385,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .mcta{font-size:13px;font-weight:700;color:var(--greenfix);text-decoration:underline;
   cursor:pointer;border:none;background:none;font-family:inherit}
 .sgrd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 18px}
-.sc{background:var(--s1);border-radius:14px;padding:14px 8px;
-  display:flex;flex-direction:column;align-items:center;gap:3px}
+.sc{background:var(--s1);border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .sn{font-size:23px;font-weight:800;color:var(--green);line-height:1}
 .sn.s2{color:var(--sec)}
 .sl{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;text-transform:uppercase;letter-spacing:.4px}
@@ -341,10 +406,9 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   border-radius:22px;padding:22px;color:#fff}
 .supt{font-family:'DM Serif Display',serif;font-size:21px;margin-bottom:6px}
 .supd{font-size:13px;opacity:.8;margin-bottom:18px;line-height:1.5}
-.supb{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
-  border-radius:100px;padding:10px 18px;cursor:pointer;color:#fff;font-weight:700;
-  font-size:13px;display:inline-flex;align-items:center;gap:7px;font-family:inherit}
-
+.supb{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:100px;
+  padding:10px 18px;cursor:pointer;color:#fff;font-weight:700;font-size:13px;
+  display:inline-flex;align-items:center;gap:7px;font-family:inherit}
 .mt14{margin-top:14px}.mt20{margin-top:20px}.mt24{margin-top:24px}
 </style>
 </head>
@@ -353,18 +417,12 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 <!-- TOP BAR -->
 <header class="topbar">
   <div class="logo">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2" stroke="#173b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 2" stroke="#173b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Cosecha Guía
   </div>
   <div class="topact">
-    <button class="ibtn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </button>
-    <button class="ibtn">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-    </button>
+    <button class="ibtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="ibtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
   </div>
 </header>
 
@@ -389,33 +447,21 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
     </div>
     <div class="shdr"><h2>Cultivos Recientes</h2><button class="lbtn" onclick="go('s-cultivos')">Ver todos</button></div>
     <div class="cgrid" id="inicio-crops">
-      <!-- filled by JS -->
       <button class="addcard" onclick="go('s-guias')">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-        <div>
-          <div style="font-size:14px;font-weight:700">Agregar Cultivo</div>
-          <div style="font-size:12px;color:var(--ink2);margin-top:2px">Explora y recibe guía IA personalizada</div>
-        </div>
+        <div><div style="font-size:14px;font-weight:700">Agregar Cultivo</div><div style="font-size:12px;color:var(--ink2);margin-top:2px">Explora y recibe guía IA personalizada</div></div>
         <svg style="margin-left:auto;flex-shrink:0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--out)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       </button>
     </div>
     <div class="shdr"><h2>Tareas del Día</h2></div>
-    <div id="tareas-hoy">
-      <div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">
-        Agrega cultivos para ver tus tareas del día 🌿
-      </div>
-    </div>
+    <div id="tareas-hoy"><div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">Agrega cultivos para ver tus tareas del día 🌿</div></div>
     <div style="height:8px"></div>
   </div>
 
   <!-- ══ MIS CULTIVOS ══ -->
   <div class="scr" id="s-cultivos">
-    <div class="shdr" style="padding-top:18px"><h2>🌿 Mis Cultivos</h2>
-      <button class="lbtn" onclick="go('s-guias')">＋ Agregar</button>
-    </div>
-    <div class="cgrid" id="cultivos-grid">
-      <!-- filled by JS -->
-    </div>
+    <div class="shdr" style="padding-top:18px"><h2>🌿 Mis Cultivos</h2><button class="lbtn" onclick="go('s-guias')">＋ Agregar</button></div>
+    <div class="cgrid" id="cultivos-grid"></div>
     <div id="cultivos-empty" class="empty-state" style="display:none">
       <div class="big">🌱</div>
       <p>Aún no tienes cultivos registrados.<br>Explora y agrega tu primero.</p>
@@ -424,13 +470,11 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
     <div style="height:8px"></div>
   </div>
 
-  <!-- ══ DETALLE DE CULTIVO ══ -->
+  <!-- ══ DETALLE ══ -->
   <div class="scr" id="s-detalle">
     <div class="bbar">
-      <button class="bbtn" onclick="go('s-cultivos')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-      <span class="bcat" id="detalle-bcat">Detalle de Cultivo</span>
+      <button class="bbtn" onclick="go('s-cultivos')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <span class="bcat" id="detalle-bcat">Detalle</span>
     </div>
     <div class="crop-hero" id="detalle-hero">
       <img id="detalle-img" src="" alt="Cultivo"/>
@@ -440,26 +484,81 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
       </div>
     </div>
     <div class="prog-card">
-      <div class="prog-hdr">
-        <div class="prog-title">Progreso Total</div>
-        <div class="prog-pct" id="detalle-pct">0%</div>
-      </div>
+      <div class="prog-hdr"><div class="prog-title">Progreso Total</div><div class="prog-pct" id="detalle-pct">0%</div></div>
       <div class="prog-bar-big"><div class="prog-fill-big" id="detalle-bar" style="width:0%"></div></div>
-      <div class="prog-dates">
-        <span id="detalle-start-lbl">Inicio: —</span>
-        <span id="detalle-end-lbl">Cosecha: —</span>
+      <div class="prog-dates"><span id="detalle-start-lbl">Inicio: —</span><span id="detalle-end-lbl">Cosecha: —</span></div>
+    </div>
+
+    <!-- editable stats -->
+    <div class="stats-row">
+      <div class="stat-c">
+        <div class="stat-ico">📐</div>
+        <div class="stat-val" id="ds-area">—</div>
+        <div class="stat-lbl">Área</div>
+        <button class="stat-edit-btn" onclick="openEdit()" title="Editar">✏️</button>
+      </div>
+      <div class="stat-c">
+        <div class="stat-ico">🌾</div>
+        <div class="stat-val" id="ds-qty">—</div>
+        <div class="stat-lbl">Plantas</div>
+        <button class="stat-edit-btn" onclick="openEdit()" title="Editar">✏️</button>
+      </div>
+      <div class="stat-c">
+        <div class="stat-ico">⏳</div>
+        <div class="stat-val" id="ds-days">—</div>
+        <div class="stat-lbl">Días rest.</div>
       </div>
     </div>
-    <div class="stats-row">
-      <div class="stat-c"><div class="stat-ico">📐</div><div class="stat-val" id="ds-area">—</div><div class="stat-lbl">Área</div></div>
-      <div class="stat-c"><div class="stat-ico">🌾</div><div class="stat-val" id="ds-qty">—</div><div class="stat-lbl">Cantidad</div></div>
-      <div class="stat-c"><div class="stat-ico">⏳</div><div class="stat-val" id="ds-days">—</div><div class="stat-lbl">Días rest.</div></div>
+
+    <!-- edit panel -->
+    <div class="edit-card" id="edit-card">
+      <div class="edit-title">✏️ Editar datos del cultivo</div>
+      <div class="edit-row">
+        <span class="edit-lbl">🌾 Plantas / semillas</span>
+        <input type="number" class="edit-inp" id="edit-qty" min="1" placeholder="0"/>
+      </div>
+      <div class="edit-row">
+        <span class="edit-lbl">📐 Metros² sembrados</span>
+        <input type="number" class="edit-inp" id="edit-m2" min="1" placeholder="0"/>
+      </div>
+      <div class="edit-btns">
+        <button class="edit-cancel" onclick="closeEdit()">Cancelar</button>
+        <button class="edit-save" onclick="saveEdit()">✓ Guardar cambios</button>
+      </div>
     </div>
+
+    <!-- labor calculator -->
+    <div class="labor-card">
+      <div class="labor-title">👷 Calculadora de Mano de Obra</div>
+      <div class="labor-row">
+        <span class="labor-lbl">Jornales por hectárea</span>
+        <input type="number" class="labor-inp" id="lab-jph" value="20" min="1"/>
+        <span class="labor-unit">j/ha</span>
+      </div>
+      <div class="labor-row">
+        <span class="labor-lbl">Costo por jornal</span>
+        <input type="number" class="labor-inp" id="lab-cj" value="50000" min="0"/>
+        <span class="labor-unit">$/j</span>
+      </div>
+      <div class="labor-row">
+        <span class="labor-lbl">Semanas de cultivo</span>
+        <input type="number" class="labor-inp" id="lab-sem" value="12" min="1"/>
+        <span class="labor-unit">sem</span>
+      </div>
+      <button class="labor-calc-btn" onclick="calcLabor()">🧮 Calcular mano de obra</button>
+      <div class="labor-divider" id="lab-div" style="display:none"></div>
+      <div class="labor-result" id="lab-result" style="display:none">
+        <div class="labor-result-row"><span class="lr-lbl">Área del cultivo</span><span class="lr-val" id="lr-area">—</span></div>
+        <div class="labor-result-row"><span class="lr-lbl">Jornales totales necesarios</span><span class="lr-val" id="lr-jornales">—</span></div>
+        <div class="labor-result-row"><span class="lr-lbl">Jornales por semana</span><span class="lr-val" id="lr-jsem">—</span></div>
+        <div class="labor-result-row"><span class="lr-lbl" style="font-weight:800;color:var(--green)">💰 Costo total estimado</span><span class="lr-val big" id="lr-total">—</span></div>
+      </div>
+    </div>
+
+    <!-- guide -->
     <div class="guide-section">
       <div class="guide-title">📋 Guía Semanal</div>
-      <button class="gen-guide-btn" id="gen-guide-btn" onclick="generateGuide()">
-        🧠 Generar guía con IA
-      </button>
+      <button class="gen-guide-btn" id="gen-guide-btn" onclick="generateGuide()">🧠 Generar guía con IA</button>
       <div id="guide-loading" style="display:none;text-align:center;padding:20px">
         <div class="typi" style="justify-content:center"><span></span><span></span><span></span></div>
         <p style="font-size:13px;color:var(--ink2);margin-top:12px">Generando tu guía personalizada…</p>
@@ -469,11 +568,11 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
     <div style="height:8px"></div>
   </div>
 
-  <!-- ══ GUÍAS / EXPLORADOR ══ -->
+  <!-- ══ EXPLORADOR ══ -->
   <div class="scr" id="s-guias">
     <div class="ghdr">
       <div class="gtl">🌍 Explorador de Cultivos</div>
-      <p class="gsb">Describe tu zona o clima y la IA recomienda qué cultivar. Luego agrégalo con una guía personalizada.</p>
+      <p class="gsb">Describe tu zona o clima y la IA recomienda qué cultivar.</p>
     </div>
     <div class="chat">
       <div class="exlbl">Ejemplos rápidos</div>
@@ -485,9 +584,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
       </div>
       <div class="msgs" id="msgs"></div>
       <div class="ibar">
-        <textarea class="itxt" id="qinput" rows="1"
-          placeholder="Ej: zona cafetera, 1600 msnm, temporada seca…"
-          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <textarea class="itxt" id="qinput" rows="1" placeholder="Ej: zona cafetera, 1600 msnm, temporada seca…" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button class="isend" id="sendbtn" onclick="sendQuery()">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
         </button>
@@ -509,10 +606,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
         <p class="pbi">Agricultura regenerativa y cultivos de altura desde 2015.</p>
       </div>
     </div>
-    <div class="mems mt14">
-      <span class="mlbl">Socio Platinum</span><span class="mico">🌿</span>
-      <button class="mcta">Ver Beneficios</button>
-    </div>
+    <div class="mems mt14"><span class="mlbl">Socio Platinum</span><span class="mico">🌿</span><button class="mcta">Ver Beneficios</button></div>
     <div class="sgrd mt14">
       <div class="sc"><span class="sn" id="prf-count">0</span><span class="sl">Cultivos Activos</span></div>
       <div class="sc"><span class="sn">12</span><span class="sl">Cosechas</span></div>
@@ -538,7 +632,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 
 </div><!-- /wrap -->
 
-<!-- ══ BOTTOM NAV ══ -->
+<!-- BOTTOM NAV -->
 <nav class="bnav">
   <button class="nb on" id="nb-s-inicio" onclick="go('s-inicio')">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -558,112 +652,84 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
   </button>
 </nav>
 
-<!-- ══ MODAL: AGREGAR CULTIVO ══ -->
+<!-- ══ TASK COACH DRAWER ══ -->
+<div class="coach-bg" id="coach-bg" onclick="closeCoachBg(event)">
+  <div class="coach-drawer" id="coach-drawer">
+    <div class="coach-handle"></div>
+    <div class="coach-header">
+      <div class="coach-task-name" id="coach-task-name">Tarea</div>
+      <button class="coach-close" onclick="closeCoach()">✕</button>
+    </div>
+    <div class="coach-crop-badge" id="coach-crop-badge">Cultivo</div>
+    <div class="coach-qs" id="coach-qs"></div>
+    <div class="coach-msgs" id="coach-msgs"></div>
+    <div class="coach-ibar">
+      <textarea class="coach-itxt" id="coach-input" rows="1"
+        placeholder="Pregunta algo sobre esta tarea…"
+        onkeydown="coachKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="coach-send" id="coach-send-btn" onclick="coachSend()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WIZARD MODAL ══ -->
 <div class="modal-bg" id="modal-bg" onclick="closeModalBg(event)">
   <div class="modal" id="modal">
     <div class="modal-handle"></div>
     <div class="modal-title" id="modal-crop-name">🌱 Configurar Cultivo</div>
     <div class="modal-sub" id="modal-crop-sub">Completa los datos para generar tu guía personalizada.</div>
-
     <div class="wizard-steps" id="wiz-steps">
-      <div class="ws active" id="ws0"></div>
-      <div class="ws" id="ws1"></div>
-      <div class="ws" id="ws2"></div>
-      <div class="ws" id="ws3"></div>
+      <div class="ws active" id="ws0"></div><div class="ws" id="ws1"></div>
+      <div class="ws" id="ws2"></div><div class="ws" id="ws3"></div>
     </div>
-
-    <!-- STEP 0: ¿Cuándo siembras? -->
+    <!-- STEP 0 -->
     <div class="wstep on" id="wstep-0">
       <label class="field-lbl">¿Cuándo vas a sembrar?</label>
       <div class="date-grid">
-        <button class="date-card sel" id="dc-hoy" onclick="selectDate('hoy')">
-          <div class="dc-icon">📅</div>
-          <div class="dc-lbl">Hoy</div>
-          <div class="dc-sub" id="dc-hoy-sub">—</div>
-        </button>
-        <button class="date-card" id="dc-semana" onclick="selectDate('semana')">
-          <div class="dc-icon">🗓️</div>
-          <div class="dc-lbl">Esta semana</div>
-          <div class="dc-sub" id="dc-semana-sub">—</div>
-        </button>
-        <button class="date-card" id="dc-custom" onclick="selectDate('custom')">
-          <div class="dc-icon">✏️</div>
-          <div class="dc-lbl">Otra fecha</div>
-          <div class="dc-sub">Elige en calendario</div>
-        </button>
-        <button class="date-card" id="dc-mes" onclick="selectDate('mes')">
-          <div class="dc-icon">📆</div>
-          <div class="dc-lbl">El próximo mes</div>
-          <div class="dc-sub" id="dc-mes-sub">—</div>
-        </button>
+        <button class="date-card sel" id="dc-hoy" onclick="selectDate('hoy')"><div class="dc-icon">📅</div><div class="dc-lbl">Hoy</div><div class="dc-sub" id="dc-hoy-sub">—</div></button>
+        <button class="date-card" id="dc-semana" onclick="selectDate('semana')"><div class="dc-icon">🗓️</div><div class="dc-lbl">Esta semana</div><div class="dc-sub" id="dc-semana-sub">—</div></button>
+        <button class="date-card" id="dc-custom" onclick="selectDate('custom')"><div class="dc-icon">✏️</div><div class="dc-lbl">Otra fecha</div><div class="dc-sub">Elige en calendario</div></button>
+        <button class="date-card" id="dc-mes" onclick="selectDate('mes')"><div class="dc-icon">📆</div><div class="dc-lbl">Próximo mes</div><div class="dc-sub" id="dc-mes-sub">—</div></button>
       </div>
-      <div id="custom-date-wrap" style="display:none">
-        <input type="date" class="field-input" id="custom-date" onchange="onCustomDate()"/>
-      </div>
+      <div id="custom-date-wrap" style="display:none"><input type="date" class="field-input" id="custom-date" onchange="onCustomDate()"/></div>
     </div>
-
-    <!-- STEP 1: ¿Cuánto vas a sembrar? -->
+    <!-- STEP 1 -->
     <div class="wstep" id="wstep-1">
       <label class="field-lbl">¿Cuántas plantas o semillas?</label>
       <div class="qty-row">
         <button class="qty-btn" onclick="changeQty(-1)">−</button>
-        <div>
-          <div class="qty-val" id="qty-val">10</div>
-          <div class="qty-unit" id="qty-unit">plantas</div>
-        </div>
+        <div><div class="qty-val" id="qty-val">10</div><div class="qty-unit" id="qty-unit">plantas</div></div>
         <button class="qty-btn" onclick="changeQty(1)">＋</button>
       </div>
-
       <label class="field-lbl" style="margin-top:4px">Área de siembra</label>
       <div class="area-options">
-        <button class="area-opt sel" id="ao-p" onclick="selectArea('pequeño')">
-          <div class="ao-ico">🪴</div>
-          <div class="ao-lbl">Pequeño</div>
-          <div class="ao-sub">1–10 m²</div>
-        </button>
-        <button class="area-opt" id="ao-m" onclick="selectArea('mediano')">
-          <div class="ao-ico">🌿</div>
-          <div class="ao-lbl">Mediano</div>
-          <div class="ao-sub">10–50 m²</div>
-        </button>
-        <button class="area-opt" id="ao-g" onclick="selectArea('grande')">
-          <div class="ao-ico">🌾</div>
-          <div class="ao-lbl">Grande</div>
-          <div class="ao-sub">50+ m²</div>
-        </button>
+        <button class="area-opt sel" id="ao-p" onclick="selectArea('pequeño')"><div class="ao-ico">🪴</div><div class="ao-lbl">Pequeño</div><div class="ao-sub">1–10 m²</div></button>
+        <button class="area-opt" id="ao-m" onclick="selectArea('mediano')"><div class="ao-ico">🌿</div><div class="ao-lbl">Mediano</div><div class="ao-sub">10–50 m²</div></button>
+        <button class="area-opt" id="ao-g" onclick="selectArea('grande')"><div class="ao-ico">🌾</div><div class="ao-lbl">Grande</div><div class="ao-sub">50+ m²</div></button>
       </div>
+      <label class="field-lbl">Metros² exactos (opcional)</label>
+      <input type="number" class="field-input" id="m2-input" placeholder="Ej: 25" min="1" style="margin-bottom:0"/>
     </div>
-
-    <!-- STEP 2: Condiciones (opcional) -->
+    <!-- STEP 2 -->
     <div class="wstep" id="wstep-2">
       <label class="field-lbl">Tipo de suelo (opcional)</label>
       <input type="text" class="field-input" id="soil-input" placeholder="Ej: arcilloso, arenoso, limoso…"/>
       <label class="field-lbl">¿Tienes sistema de riego?</label>
       <div style="display:flex;gap:10px;margin-bottom:18px">
-        <button class="date-card sel" id="riego-si" onclick="selectRiego('si')" style="flex:1">
-          <div class="dc-icon">💧</div><div class="dc-lbl">Sí</div>
-        </button>
-        <button class="date-card" id="riego-no" onclick="selectRiego('no')" style="flex:1">
-          <div class="dc-icon">🌧️</div><div class="dc-lbl">Solo lluvia</div>
-        </button>
-        <button class="date-card" id="riego-manual" onclick="selectRiego('manual')" style="flex:1">
-          <div class="dc-icon">🪣</div><div class="dc-lbl">Manual</div>
-        </button>
+        <button class="date-card sel" id="riego-si" onclick="selectRiego('si')" style="flex:1"><div class="dc-icon">💧</div><div class="dc-lbl">Sí</div></button>
+        <button class="date-card" id="riego-no" onclick="selectRiego('no')" style="flex:1"><div class="dc-icon">🌧️</div><div class="dc-lbl">Solo lluvia</div></button>
+        <button class="date-card" id="riego-manual" onclick="selectRiego('manual')" style="flex:1"><div class="dc-icon">🪣</div><div class="dc-lbl">Manual</div></button>
       </div>
       <label class="field-lbl">Notas adicionales (opcional)</label>
       <input type="text" class="field-input" id="notes-input" placeholder="Ej: zona cafetera, 1800 msnm…"/>
     </div>
-
-    <!-- STEP 3: Resumen -->
+    <!-- STEP 3 -->
     <div class="wstep" id="wstep-3">
-      <div class="summary-card" id="summary-card">
-        <!-- filled by JS -->
-      </div>
-      <p style="font-size:12px;color:var(--ink2);line-height:1.6;text-align:center;margin-bottom:16px">
-        La IA generará una guía semanal personalizada cuando abras el detalle del cultivo. 🤖
-      </p>
+      <div class="summary-card" id="summary-card"></div>
+      <p style="font-size:12px;color:var(--ink2);line-height:1.6;text-align:center;margin-bottom:16px">La IA generará una guía semanal personalizada cuando abras el detalle del cultivo. 🤖</p>
     </div>
-
     <div class="modal-nav" id="modal-nav">
       <button class="sbtn" style="flex:1" id="wiz-back" onclick="wizBack()">Atrás</button>
       <button class="pbtn" style="flex:2" id="wiz-next" onclick="wizNext()">Siguiente →</button>
@@ -672,7 +738,7 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 </div>
 
 <script>
-// ─── CONFIG ────────────────────────────────────────
+// ─── CONFIG ─────────────────────────────────────
 const GROQ_KEY = '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';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const MODEL    = 'llama-3.3-70b-versatile';
@@ -685,155 +751,99 @@ async function groq(system, user, maxTokens) {
       messages:[{role:'system',content:system},{role:'user',content:user}]})
   });
   if(!r.ok) throw new Error('Groq '+r.status);
-  const d = await r.json();
-  return d.choices[0].message.content.trim();
+  return (await r.json()).choices[0].message.content.trim();
 }
 
-// ─── NAVIGATION ────────────────────────────────────
+// ─── NAV ──────────────────────────────────────
 let cur = 's-inicio';
-const noNav = new Set(['s-detalle']);
-
-function go(id) {
+function go(id){
   if(id===cur) return;
   document.getElementById(cur).classList.remove('on');
-  document.getElementById(cur).scrollTop = 0;
+  document.getElementById(cur).scrollTop=0;
   document.getElementById(id).classList.add('on');
-  cur = id;
-  document.querySelectorAll('.nb').forEach(b=>{
-    b.classList.toggle('on', b.id==='nb-'+id);
-  });
+  cur=id;
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.id==='nb-'+id));
 }
 
-// ─── STATE ─────────────────────────────────────────
+// ─── STATE ────────────────────────────────────
 let myCrops = JSON.parse(localStorage.getItem('cg_crops')||'[]');
 let currentCropIdx = -1;
+function saveCrops(){ localStorage.setItem('cg_crops',JSON.stringify(myCrops)); }
 
-// wizard state
-let wizStep = 0;
-let pendingCrop = null;
-let wizData = { date:null, dateLabel:'', qty:10, area:'pequeño', soil:'', riego:'si', notes:'' };
-
-function saveCrops() {
-  localStorage.setItem('cg_crops', JSON.stringify(myCrops));
-}
-
-// ─── RENDER CROPS ──────────────────────────────────
-const cropImages = {
+// ─── IMAGES ───────────────────────────────────
+const cropImages={
   frutas:'https://images.unsplash.com/photo-1592921870789-04563d55041c?w=400&h=400&fit=crop',
   verduras:'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=400&fit=crop',
   granos:'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&h=400&fit=crop',
   tuberculos:'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&h=400&fit=crop',
   hierbas:'https://images.unsplash.com/photo-1466842885935-1c14a54699fd?w=400&h=400&fit=crop',
 };
+function getCropImg(c){ return cropImages[c.categoria]||cropImages.verduras; }
 
-function getCropImg(c) {
-  return cropImages[c.categoria] || cropImages.verduras;
-}
-
-function calcProgress(c) {
-  const start = new Date(c.startDate);
-  const end = new Date(c.endDate);
-  const now = new Date();
-  if(now <= start) return 0;
-  if(now >= end) return 100;
+function calcProgress(c){
+  const start=new Date(c.startDate),end=new Date(c.endDate),now=new Date();
+  if(now<=start) return 0; if(now>=end) return 100;
   return Math.round(((now-start)/(end-start))*100);
 }
-
-function getDaysLeft(c) {
-  const end = new Date(c.endDate);
-  const now = new Date();
-  const diff = Math.ceil((end-now)/(1000*60*60*24));
-  return Math.max(0, diff);
-}
-
-function getCurrentPhase(c) {
-  const pct = calcProgress(c);
-  if(pct < 20) return '🌱 Germinación';
-  if(pct < 45) return '🌿 Crecimiento';
-  if(pct < 70) return '🌸 Floración';
-  if(pct < 90) return '🍅 Fructificación';
+function getDaysLeft(c){ return Math.max(0,Math.ceil((new Date(c.endDate)-new Date())/(86400000))); }
+function getCurrentPhase(c){
+  const p=calcProgress(c);
+  if(p<20) return '🌱 Germinación'; if(p<45) return '🌿 Crecimiento';
+  if(p<70) return '🌸 Floración'; if(p<90) return '🍅 Fructificación';
   return '🌾 Listo para cosechar';
 }
+function fmtDate(d){ if(!d) return '—'; return new Date(d).toLocaleDateString('es-CO',{day:'numeric',month:'short'}); }
 
-function renderInitCrops() {
-  const grid = document.getElementById('inicio-crops');
-  const addBtn = grid.querySelector('.addcard');
-  // remove old crop cards
+// ─── RENDER ───────────────────────────────────
+function renderCropCard(c, idx){
+  const pct=calcProgress(c);
+  const btn=document.createElement('button');
+  btn.className='cc'; btn.onclick=()=>openDetail(idx);
+  btn.innerHTML=`<div class="ccw"><img src="${getCropImg(c)}" alt="${esc(c.nombre)}" loading="lazy"/></div>
+    <div class="ccn">${esc(c.nombre)}</div><div class="ccp">${getCurrentPhase(c)}</div>
+    <div class="ccbadge">Activo</div>
+    <div class="prow"><span>Progreso</span><span style="color:var(--green)">${pct}%</span></div>
+    <div class="pbar"><div class="pfil" style="width:${pct}%"></div></div>
+    <div class="eta">🗓 ${getDaysLeft(c)} días para cosechar</div>`;
+  return btn;
+}
+
+function renderInitCrops(){
+  const grid=document.getElementById('inicio-crops');
+  const addBtn=grid.querySelector('.addcard');
   grid.querySelectorAll('.cc').forEach(el=>el.remove());
-  const recent = myCrops.slice(-2).reverse();
-  recent.forEach((c,i)=>{
-    const pct = calcProgress(c);
-    const btn = document.createElement('button');
-    btn.className='cc';
-    btn.onclick=()=>openDetail(myCrops.indexOf(c));
-    btn.innerHTML=`
-      <div class="ccw"><img src="${getCropImg(c)}" alt="${esc(c.nombre)}" loading="lazy"/></div>
-      <div class="ccn">${esc(c.nombre)}</div>
-      <div class="ccp">${getCurrentPhase(c)}</div>
-      <div class="ccbadge">Activo</div>
-      <div class="prow"><span>Progreso</span><span style="color:var(--green)">${pct}%</span></div>
-      <div class="pbar"><div class="pfil" style="width:${pct}%"></div></div>
-      <div class="eta">🗓 ${getDaysLeft(c)} días para cosechar</div>`;
-    grid.insertBefore(btn, addBtn);
-  });
-  // tasks
+  myCrops.slice(-2).reverse().forEach((c,_)=>{ grid.insertBefore(renderCropCard(c,myCrops.indexOf(c)),addBtn); });
   renderTodayTasks();
 }
 
-function renderMyCrops() {
-  const grid = document.getElementById('cultivos-grid');
-  const empty = document.getElementById('cultivos-empty');
+function renderMyCrops(){
+  const grid=document.getElementById('cultivos-grid');
+  const empty=document.getElementById('cultivos-empty');
   grid.innerHTML='';
-  if(!myCrops.length){
-    empty.style.display='block';
-    return;
-  }
+  if(!myCrops.length){ empty.style.display='block'; return; }
   empty.style.display='none';
-  myCrops.forEach((c,i)=>{
-    const pct = calcProgress(c);
-    const btn = document.createElement('button');
-    btn.className='cc';
-    btn.onclick=()=>openDetail(i);
-    btn.innerHTML=`
-      <div class="ccw"><img src="${getCropImg(c)}" alt="${esc(c.nombre)}" loading="lazy"/></div>
-      <div class="ccn">${esc(c.nombre)}</div>
-      <div class="ccp">${getCurrentPhase(c)}</div>
-      <div class="ccbadge">Activo</div>
-      <div class="prow"><span>Progreso</span><span style="color:var(--green)">${pct}%</span></div>
-      <div class="pbar"><div class="pfil" style="width:${pct}%"></div></div>
-      <div class="eta">🗓 ${getDaysLeft(c)} días para cosechar</div>`;
-    grid.appendChild(btn);
-  });
-  // add button
-  const addBtn = document.createElement('button');
-  addBtn.className='addcard';
-  addBtn.onclick=()=>go('s-guias');
-  addBtn.style.cssText='grid-column:1/-1';
-  addBtn.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><div><div style="font-size:14px;font-weight:700">Agregar otro cultivo</div><div style="font-size:12px;color:var(--ink2);margin-top:2px">Explora recomendaciones por zona</div></div>`;
+  myCrops.forEach((c,i)=>grid.appendChild(renderCropCard(c,i)));
+  const addBtn=document.createElement('button');
+  addBtn.className='addcard'; addBtn.style.gridColumn='1/-1'; addBtn.onclick=()=>go('s-guias');
+  addBtn.innerHTML=`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><div><div style="font-size:14px;font-weight:700">Agregar otro cultivo</div></div>`;
   grid.appendChild(addBtn);
-  // profile count
-  const pc = document.getElementById('prf-count');
-  if(pc) pc.textContent = myCrops.length;
+  const pc=document.getElementById('prf-count'); if(pc) pc.textContent=myCrops.length;
 }
 
-function renderTodayTasks() {
-  const box = document.getElementById('tareas-hoy');
-  if(!myCrops.length){
-    box.innerHTML='<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">Agrega cultivos para ver tus tareas del día 🌿</div>';
-    return;
-  }
-  const tasks = [];
+function renderTodayTasks(){
+  const box=document.getElementById('tareas-hoy');
+  if(!myCrops.length){ box.innerHTML='<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">Agrega cultivos para ver tus tareas del día 🌿</div>'; return; }
+  const tasks=[];
   myCrops.forEach(c=>{
-    const pct = calcProgress(c);
-    if(pct < 100){
-      const phase = getCurrentPhase(c);
-      if(pct < 30) tasks.push({ico:'💧',name:'Riego de establecimiento',meta:`${c.nombre} · Hoy`});
-      else if(pct < 60) tasks.push({ico:'🌿',name:'Revisión de crecimiento',meta:`${c.nombre} · Hoy`});
+    const p=calcProgress(c);
+    if(p<100){
+      if(p<30) tasks.push({ico:'💧',name:'Riego de establecimiento',meta:`${c.nombre} · Hoy`});
+      else if(p<60) tasks.push({ico:'🌿',name:'Revisión de crecimiento',meta:`${c.nombre} · Hoy`});
       else tasks.push({ico:'🍃',name:'Control de hojas y plagas',meta:`${c.nombre} · Hoy`});
     }
   });
   if(!tasks.length){ box.innerHTML='<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">¡Sin tareas pendientes hoy! ✅</div>'; return; }
-  box.innerHTML = tasks.map(t=>`
+  box.innerHTML=tasks.map(t=>`
     <div class="tcard" onclick="go('s-cultivos')">
       <div class="ttico w" style="font-size:22px;background:var(--seccon)">${t.ico}</div>
       <div style="flex:1"><div class="tn">${t.name}</div><div class="tm">${t.meta}</div></div>
@@ -841,264 +851,338 @@ function renderTodayTasks() {
     </div>`).join('');
 }
 
-// ─── CROP DETAIL ───────────────────────────────────
-function openDetail(idx) {
-  currentCropIdx = idx;
-  const c = myCrops[idx];
-  const pct = calcProgress(c);
-  document.getElementById('detalle-bcat').textContent = c.nombre;
-  document.getElementById('detalle-img').src = getCropImg(c);
-  document.getElementById('detalle-name').textContent = c.nombre;
-  document.getElementById('detalle-phase').textContent = getCurrentPhase(c);
-  document.getElementById('detalle-pct').textContent = pct+'%';
-  document.getElementById('detalle-bar').style.width = pct+'%';
-  document.getElementById('detalle-start-lbl').textContent = 'Inicio: '+fmtDate(c.startDate);
-  document.getElementById('detalle-end-lbl').textContent = 'Cosecha: '+fmtDate(c.endDate);
-  document.getElementById('ds-area').textContent = c.area;
-  document.getElementById('ds-qty').textContent = c.qty+' pl.';
-  document.getElementById('ds-days').textContent = getDaysLeft(c)+'d';
-  // guide
-  document.getElementById('gen-guide-btn').style.display = c.guide ? 'none' : 'flex';
-  document.getElementById('guide-weeks').innerHTML = '';
-  document.getElementById('guide-loading').style.display = 'none';
-  if(c.guide) renderGuide(c.guide, c);
+// ─── DETAIL ───────────────────────────────────
+function openDetail(idx){
+  currentCropIdx=idx;
+  const c=myCrops[idx];
+  const pct=calcProgress(c);
+  document.getElementById('detalle-bcat').textContent=c.nombre;
+  document.getElementById('detalle-img').src=getCropImg(c);
+  document.getElementById('detalle-name').textContent=c.nombre;
+  document.getElementById('detalle-phase').textContent=getCurrentPhase(c);
+  document.getElementById('detalle-pct').textContent=pct+'%';
+  document.getElementById('detalle-bar').style.width=pct+'%';
+  document.getElementById('detalle-start-lbl').textContent='Inicio: '+fmtDate(c.startDate);
+  document.getElementById('detalle-end-lbl').textContent='Cosecha: '+fmtDate(c.endDate);
+  refreshStats();
+  document.getElementById('edit-card').classList.remove('on');
+  document.getElementById('lab-result').style.display='none';
+  document.getElementById('lab-div').style.display='none';
+  document.getElementById('lab-sem').value=Math.ceil(parseInt(c.diasCosecha||90)/7);
+  document.getElementById('gen-guide-btn').style.display=c.guide?'none':'flex';
+  document.getElementById('guide-weeks').innerHTML='';
+  document.getElementById('guide-loading').style.display='none';
+  if(c.guide) renderGuide(c.guide,c);
   go('s-detalle');
 }
 
-function fmtDate(d) {
-  if(!d) return '—';
-  return new Date(d).toLocaleDateString('es-CO',{day:'numeric',month:'short'});
+function refreshStats(){
+  const c=myCrops[currentCropIdx];
+  document.getElementById('ds-area').textContent=c.m2 ? c.m2+'m²' : c.area;
+  document.getElementById('ds-qty').textContent=c.qty+' pl.';
+  document.getElementById('ds-days').textContent=getDaysLeft(c)+'d';
 }
 
-// ─── GENERATE GUIDE ────────────────────────────────
-async function generateGuide() {
-  const c = myCrops[currentCropIdx];
+// ─── EDIT PANEL ───────────────────────────────
+function openEdit(){
+  const c=myCrops[currentCropIdx];
+  document.getElementById('edit-qty').value=c.qty||'';
+  document.getElementById('edit-m2').value=c.m2||'';
+  document.getElementById('edit-card').classList.add('on');
+  document.getElementById('s-detalle').scrollTo({top:document.getElementById('edit-card').offsetTop-80,behavior:'smooth'});
+}
+function closeEdit(){ document.getElementById('edit-card').classList.remove('on'); }
+function saveEdit(){
+  const c=myCrops[currentCropIdx];
+  const newQty=parseInt(document.getElementById('edit-qty').value);
+  const newM2=parseInt(document.getElementById('edit-m2').value);
+  if(newQty>0) c.qty=newQty;
+  if(newM2>0) c.m2=newM2;
+  saveCrops(); refreshStats(); closeEdit();
+  renderInitCrops(); renderMyCrops();
+}
+
+// ─── LABOR CALCULATOR ─────────────────────────
+function calcLabor(){
+  const c=myCrops[currentCropIdx];
+  const jph=parseFloat(document.getElementById('lab-jph').value)||20;
+  const cj=parseFloat(document.getElementById('lab-cj').value)||50000;
+  const sem=parseFloat(document.getElementById('lab-sem').value)||12;
+  // area in hectares
+  const m2=c.m2 || (c.area==='grande'?500:c.area==='mediano'?30:5);
+  const ha=m2/10000;
+  const jorTotales=Math.ceil(jph*ha*sem);
+  const jorSem=Math.ceil(jph*ha);
+  const total=jorTotales*cj;
+  document.getElementById('lr-area').textContent=(m2)+' m² ('+ha.toFixed(4)+' ha)';
+  document.getElementById('lr-jornales').textContent=jorTotales+' jornales';
+  document.getElementById('lr-jsem').textContent=jorSem+' jornales/semana';
+  document.getElementById('lr-total').textContent='$'+total.toLocaleString('es-CO');
+  document.getElementById('lab-result').style.display='block';
+  document.getElementById('lab-div').style.display='block';
+}
+
+// ─── GUIDE ────────────────────────────────────
+async function generateGuide(){
+  const c=myCrops[currentCropIdx];
   document.getElementById('gen-guide-btn').style.display='none';
   document.getElementById('guide-loading').style.display='block';
-
-  const weeksTotal = Math.ceil(parseInt(c.diasCosecha||'90')/7);
-  const sys = `Eres un agrónomo experto en cultivos latinoamericanos. 
-Responde SOLO con JSON válido, sin markdown:
-{"semanas":[{"semana":1,"titulo":"...","fase":"...","descripcion":"2 oraciones de qué hacer esta semana","tareas":["tarea1","tarea2","tarea3"],"alerta":"consejo clave o alerta opcional"}]}
-Genera ${weeksTotal} semanas de guía completa y práctica para el cultivo indicado.`;
-
-  const user = `Cultivo: ${c.nombre}
-Área: ${c.area}, Cantidad: ${c.qty} plantas
-Tipo de suelo: ${c.soil||'no especificado'}
-Riego: ${c.riego}
-Notas: ${c.notes||'ninguna'}
-Días totales hasta cosecha: ${c.diasCosecha||90}
-Zona: ${c.zona||'no especificada'}`;
-
-  try {
-    const raw = await groq(sys, user, 2000);
-    const data = JSON.parse(raw.replace(/```json|```/g,'').trim());
-    myCrops[currentCropIdx].guide = data.semanas;
-    saveCrops();
+  const weeksTotal=Math.ceil(parseInt(c.diasCosecha||'90')/7);
+  const sys=`Eres un agrónomo experto. Responde SOLO con JSON válido, sin markdown:
+{"semanas":[{"semana":1,"titulo":"...","fase":"...","descripcion":"2 oraciones de qué hacer","tareas":["tarea1","tarea2","tarea3"],"alerta":"consejo clave opcional"}]}
+Genera ${weeksTotal} semanas de guía completa y práctica.`;
+  const user=`Cultivo: ${c.nombre}, Área: ${c.m2?c.m2+'m²':c.area}, Plantas: ${c.qty}
+Suelo: ${c.soil||'no especificado'}, Riego: ${c.riego}, Notas: ${c.notes||'ninguna'}
+Días totales: ${c.diasCosecha||90}, Zona: ${c.zona||'no especificada'}`;
+  try{
+    const raw=await groq(sys,user,2000);
+    const data=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    myCrops[currentCropIdx].guide=data.semanas; saveCrops();
     document.getElementById('guide-loading').style.display='none';
-    renderGuide(data.semanas, c);
-  } catch(e) {
+    renderGuide(data.semanas,c);
+  }catch{
     document.getElementById('guide-loading').style.display='none';
-    document.getElementById('guide-weeks').innerHTML=
-      '<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">Error generando la guía. Verifica tu conexión y vuelve a intentar.</div>';
+    document.getElementById('guide-weeks').innerHTML='<div style="text-align:center;padding:20px;font-size:13px;color:var(--ink2)">Error generando la guía. Verifica tu conexión.</div>';
     document.getElementById('gen-guide-btn').style.display='flex';
   }
 }
 
-function renderGuide(semanas, c) {
-  const pct = calcProgress(c);
-  const weeksTotal = semanas.length;
-  const currentWeek = Math.max(1, Math.ceil(pct/100*weeksTotal));
-  const box = document.getElementById('guide-weeks');
-  box.innerHTML = semanas.map((s,i)=>{
-    const wNum = i+1;
-    const isDone = wNum < currentWeek;
-    const isCurrent = wNum === currentWeek;
-    const isUpcoming = wNum > currentWeek;
-    const savedDone = (c.weeksCompleted||[]).includes(wNum);
-    const cls = isDone||savedDone ? 'done' : isCurrent ? 'current' : '';
-    const badge = isDone||savedDone
-      ? '<span class="week-badge wb-done">✓ Completada</span>'
-      : isCurrent
-        ? '<span class="week-badge wb-current">👉 Esta semana</span>'
-        : '<span class="week-badge wb-upcoming">Próxima</span>';
-    const tasks = (s.tareas||[]).map(t=>`<div class="wtask"><span class="wtask-ico">▸</span>${esc(t)}</div>`).join('');
-    const alert = s.alerta ? `<div style="background:rgba(253,205,188,.35);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--seconc)">💡 ${esc(s.alerta)}</div>` : '';
-    const btn = (isCurrent && !savedDone)
-      ? `<button class="week-complete-btn" id="wcbtn-${wNum}" onclick="completeWeek(${wNum})">✓ Marcar semana como completada</button>` : '';
-    return `
-      <div class="week-card ${cls}" id="week-${wNum}">
-        <div class="week-hdr">
-          <span class="week-label ${isDone?'past':''}">Semana ${wNum}</span>
-          ${badge}
-        </div>
-        <div class="week-title">${esc(s.titulo||s.fase||'')}</div>
-        <div class="week-desc">${esc(s.descripcion||'')}</div>
-        <div class="week-tasks">${tasks}</div>
-        ${alert}
-        ${btn}
-      </div>`;
+function renderGuide(semanas,c){
+  const pct=calcProgress(c);
+  const wTotal=semanas.length;
+  const curWeek=Math.max(1,Math.ceil(pct/100*wTotal));
+  const box=document.getElementById('guide-weeks');
+  box.innerHTML=semanas.map((s,i)=>{
+    const w=i+1;
+    const isDone=(c.weeksCompleted||[]).includes(w)||w<curWeek;
+    const isCur=w===curWeek&&!isDone;
+    const badge=isDone?'<span class="week-badge wb-done">✓ Completada</span>'
+      :isCur?'<span class="week-badge wb-current">👉 Esta semana</span>'
+      :'<span class="week-badge wb-upcoming">Próxima</span>';
+    const cls=isDone?'done-wk':isCur?'current':'';
+    // tasks with "Ayuda IA" button
+    const tasks=(s.tareas||[]).map(t=>`
+      <div class="wtask">
+        <span style="font-size:14px">▸</span>
+        <span class="wtask-txt">${esc(t)}</span>
+        <button class="wtask-help" onclick="openCoach('${esc2(t)}','${esc2(c.nombre)}',event)">🤖 ¿Cómo?</button>
+      </div>`).join('');
+    const alert=s.alerta?`<div class="week-alert">💡 ${esc(s.alerta)}</div>`:'';
+    const btn=isCur?`<button class="week-complete-btn" id="wcbtn-${w}" onclick="completeWeek(${w})">✓ Marcar semana como completada</button>`:'';
+    return`<div class="week-card ${cls}" id="week-${w}">
+      <div class="week-hdr"><span class="week-label ${isDone?'past':''}">SEMANA ${w}</span>${badge}</div>
+      <div class="week-title">${esc(s.titulo||s.fase||'')}</div>
+      <div class="week-desc">${esc(s.descripcion||'')}</div>
+      <div class="week-tasks">${tasks}</div>
+      ${alert}${btn}
+    </div>`;
   }).join('');
 }
 
-function completeWeek(wNum) {
-  const c = myCrops[currentCropIdx];
+function completeWeek(w){
+  const c=myCrops[currentCropIdx];
   if(!c.weeksCompleted) c.weeksCompleted=[];
-  if(!c.weeksCompleted.includes(wNum)) c.weeksCompleted.push(wNum);
-  saveCrops();
-  if(c.guide) renderGuide(c.guide, c);
+  if(!c.weeksCompleted.includes(w)) c.weeksCompleted.push(w);
+  saveCrops(); if(c.guide) renderGuide(c.guide,c);
 }
 
-// ─── WIZARD / MODAL ────────────────────────────────
-function openModal(cropData) {
-  pendingCrop = cropData;
-  wizStep = 0;
-  wizData = {date:null,dateLabel:'',qty:10,area:'pequeño',soil:'',riego:'si',notes:''};
-  document.getElementById('modal-crop-name').textContent = '🌱 '+cropData.nombre;
-  document.getElementById('modal-crop-sub').textContent = cropData.descripcion||'Configura tu siembra.';
-  document.getElementById('qty-unit').textContent = cropData.categoria==='granos'?'semillas':'plantas';
-  // dates
-  const now = new Date();
-  document.getElementById('dc-hoy-sub').textContent = fmtDate(now.toISOString());
-  const sem = new Date(now); sem.setDate(sem.getDate()+3);
-  document.getElementById('dc-semana-sub').textContent = fmtDate(sem.toISOString());
-  const mes = new Date(now); mes.setMonth(mes.getMonth()+1);
-  document.getElementById('dc-mes-sub').textContent = fmtDate(mes.toISOString());
-  wizData.date = now.toISOString().split('T')[0];
-  wizData.dateLabel = 'Hoy, '+fmtDate(now.toISOString());
+// ─── TASK COACH ───────────────────────────────
+let coachBusy=false;
+let coachTask='';
+let coachCrop='';
+let coachHistory=[];
+
+const quickQs=[
+  '¿Cómo lo hago paso a paso?',
+  '¿Qué herramientas necesito?',
+  '¿Cuánto tiempo toma?',
+  '¿Cada cuánto debo repetirlo?',
+  '¿Qué errores debo evitar?',
+];
+
+function openCoach(task, cropName, e){
+  if(e) e.stopPropagation();
+  coachTask=task; coachCrop=cropName; coachHistory=[];
+  document.getElementById('coach-task-name').textContent=task;
+  document.getElementById('coach-crop-badge').textContent='🌱 '+cropName;
+  document.getElementById('coach-msgs').innerHTML='';
+  document.getElementById('coach-input').value='';
+  // quick questions
+  const qsBox=document.getElementById('coach-qs');
+  qsBox.innerHTML=quickQs.map(q=>`<button class="cq" onclick="coachQuick('${esc2(q)}')">${q}</button>`).join('');
+  // welcome message
+  appendCoachMsg('bot',`Hola 👋 Soy tu asistente agrónomo. Estoy aquí para guiarte en: <strong>${esc(task)}</strong> para tu cultivo de <strong>${esc(cropName)}</strong>.<br><br>Usa los botones rápidos o escribe tu pregunta.`);
+  document.getElementById('coach-bg').classList.add('on');
+}
+
+function closeCoach(){ document.getElementById('coach-bg').classList.remove('on'); }
+function closeCoachBg(e){ if(e.target===document.getElementById('coach-bg')) closeCoach(); }
+
+function appendCoachMsg(role,html){
+  const box=document.getElementById('coach-msgs');
+  const d=document.createElement('div');
+  d.className='cmsg '+role;
+  d.innerHTML='<div class="bbl">'+html+'</div>';
+  box.appendChild(d);
+  setTimeout(()=>{ box.scrollTop=box.scrollHeight; },50);
+  return d;
+}
+
+function coachQuick(q){ document.getElementById('coach-input').value=q; coachSend(); }
+function coachKey(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); coachSend(); } }
+
+async function coachSend(){
+  if(coachBusy) return;
+  const inp=document.getElementById('coach-input');
+  const q=inp.value.trim(); if(!q) return;
+  coachBusy=true; document.getElementById('coach-send-btn').disabled=true;
+  inp.value=''; inp.style.height='auto';
+  appendCoachMsg('user',esc(q));
+  coachHistory.push({role:'user',content:q});
+  const tyEl=appendCoachMsg('bot','<div class="typi"><span></span><span></span><span></span></div>');
+  const sys=`Eres un agrónomo experto y coach práctico de campo.
+El usuario está cultivando "${coachCrop}" y necesita ayuda con la tarea: "${coachTask}".
+Responde en español, con pasos claros y lenguaje sencillo para agricultores.
+Usa emojis para separar pasos. Máximo 5 oraciones o 5 pasos. Sé concreto y práctico.`;
+  const msgs=[{role:'system',content:sys},...coachHistory];
+  try{
+    const r=await fetch(GROQ_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
+      body:JSON.stringify({model:MODEL,max_tokens:600,messages:msgs})
+    });
+    const d=await r.json();
+    const ans=d.choices[0].message.content.trim();
+    coachHistory.push({role:'assistant',content:ans});
+    tyEl.remove();
+    appendCoachMsg('bot',ans.replace(/\n/g,'<br>'));
+  }catch{
+    tyEl.remove();
+    appendCoachMsg('bot','Lo siento, no pude conectarme. Verifica tu conexión e intenta de nuevo.');
+  }
+  coachBusy=false; document.getElementById('coach-send-btn').disabled=false;
+  // hide quick qs after first answer
+  document.getElementById('coach-qs').style.display='none';
+}
+
+// ─── WIZARD ───────────────────────────────────
+let wizStep=0, pendingCrop=null;
+let wizData={date:null,dateLabel:'',qty:10,area:'pequeño',m2:0,soil:'',riego:'si',notes:''};
+
+function openModal(cropData){
+  pendingCrop=cropData; wizStep=0;
+  wizData={date:null,dateLabel:'',qty:10,area:'pequeño',m2:0,soil:'',riego:'si',notes:''};
+  document.getElementById('modal-crop-name').textContent='🌱 '+cropData.nombre;
+  document.getElementById('modal-crop-sub').textContent=cropData.descripcion||'Configura tu siembra.';
+  document.getElementById('qty-unit').textContent=cropData.categoria==='granos'?'semillas':'plantas';
+  const now=new Date();
+  document.getElementById('dc-hoy-sub').textContent=fmtDate(now.toISOString());
+  const sem=new Date(now); sem.setDate(sem.getDate()+3);
+  document.getElementById('dc-semana-sub').textContent=fmtDate(sem.toISOString());
+  const mes=new Date(now); mes.setMonth(mes.getMonth()+1);
+  document.getElementById('dc-mes-sub').textContent=fmtDate(mes.toISOString());
+  wizData.date=now.toISOString().split('T')[0];
+  wizData.dateLabel='Hoy, '+fmtDate(now.toISOString());
+  // reset
+  ['hoy','semana','custom','mes'].forEach(t=>document.getElementById('dc-'+t).classList.remove('sel'));
+  document.getElementById('dc-hoy').classList.add('sel');
+  document.getElementById('custom-date-wrap').style.display='none';
+  document.getElementById('soil-input').value='';
+  document.getElementById('notes-input').value='';
+  document.getElementById('m2-input').value='';
+  ['p','m','g'].forEach(x=>document.getElementById('ao-'+x).classList.remove('sel'));
+  document.getElementById('ao-p').classList.add('sel');
+  ['si','no','manual'].forEach(x=>document.getElementById('riego-'+x).classList.remove('sel'));
+  document.getElementById('riego-si').classList.add('sel');
   updateWizard();
   document.getElementById('modal-bg').classList.add('on');
 }
+function closeModal(){ document.getElementById('modal-bg').classList.remove('on'); }
+function closeModalBg(e){ if(e.target===document.getElementById('modal-bg')) closeModal(); }
 
-function closeModalBg(e) {
-  if(e.target===document.getElementById('modal-bg')) closeModal();
-}
-function closeModal() {
-  document.getElementById('modal-bg').classList.remove('on');
-}
-
-function updateWizard() {
+function updateWizard(){
   for(let i=0;i<4;i++){
     document.getElementById('wstep-'+i).className='wstep'+(i===wizStep?' on':'');
-    const ws = document.getElementById('ws'+i);
-    if(i<wizStep) ws.className='ws done';
-    else if(i===wizStep) ws.className='ws active';
-    else ws.className='ws';
+    const ws=document.getElementById('ws'+i);
+    ws.className='ws'+(i<wizStep?' done':i===wizStep?' active':'');
   }
-  document.getElementById('wiz-back').style.display = wizStep===0?'none':'flex';
-  document.getElementById('wiz-next').textContent = wizStep===3?'✅ Agregar Cultivo':'Siguiente →';
+  document.getElementById('wiz-back').style.display=wizStep===0?'none':'flex';
+  document.getElementById('wiz-next').textContent=wizStep===3?'✅ Agregar Cultivo':'Siguiente →';
 }
-
-function wizNext() {
+function wizNext(){
   if(wizStep===3){ addCropFromWizard(); return; }
+  if(wizStep===1){ wizData.m2=parseInt(document.getElementById('m2-input').value)||0; }
   wizStep++;
   if(wizStep===3) buildSummary();
   updateWizard();
 }
-function wizBack() {
-  if(wizStep===0) return;
-  wizStep--;
-  updateWizard();
-}
+function wizBack(){ if(wizStep>0){ wizStep--; updateWizard(); } }
 
-function selectDate(type) {
+function selectDate(type){
   ['hoy','semana','custom','mes'].forEach(t=>document.getElementById('dc-'+t).classList.remove('sel'));
   document.getElementById('dc-'+type).classList.add('sel');
-  const now = new Date();
-  document.getElementById('custom-date-wrap').style.display = type==='custom'?'block':'none';
+  const now=new Date();
+  document.getElementById('custom-date-wrap').style.display=type==='custom'?'block':'none';
   if(type==='hoy'){wizData.date=now.toISOString().split('T')[0];wizData.dateLabel='Hoy, '+fmtDate(now.toISOString());}
   else if(type==='semana'){const d=new Date(now);d.setDate(d.getDate()+3);wizData.date=d.toISOString().split('T')[0];wizData.dateLabel='Esta semana, '+fmtDate(d.toISOString());}
   else if(type==='mes'){const d=new Date(now);d.setMonth(d.getMonth()+1);wizData.date=d.toISOString().split('T')[0];wizData.dateLabel='Próximo mes, '+fmtDate(d.toISOString());}
 }
-function onCustomDate(){
-  const v=document.getElementById('custom-date').value;
-  if(v){wizData.date=v;wizData.dateLabel='El '+fmtDate(v);}
-}
-
-function changeQty(d){
-  wizData.qty = Math.max(1, wizData.qty+d);
-  document.getElementById('qty-val').textContent = wizData.qty;
-}
-
+function onCustomDate(){ const v=document.getElementById('custom-date').value; if(v){wizData.date=v;wizData.dateLabel='El '+fmtDate(v);} }
+function changeQty(d){ wizData.qty=Math.max(1,wizData.qty+d); document.getElementById('qty-val').textContent=wizData.qty; }
 function selectArea(a){
   wizData.area=a;
-  ['pequeño','mediano','grande'].forEach(x=>{
-    const m={'pequeño':'p','mediano':'m','grande':'g'};
-    document.getElementById('ao-'+m[x]).classList.toggle('sel',x===a);
-  });
+  const m={'pequeño':'p','mediano':'m','grande':'g'};
+  ['pequeño','mediano','grande'].forEach(x=>document.getElementById('ao-'+m[x]).classList.toggle('sel',x===a));
 }
-
-function selectRiego(r){
-  wizData.riego=r;
-  ['si','no','manual'].forEach(x=>document.getElementById('riego-'+x).classList.toggle('sel',x===r));
-}
+function selectRiego(r){ wizData.riego=r; ['si','no','manual'].forEach(x=>document.getElementById('riego-'+x).classList.toggle('sel',x===r)); }
 
 function buildSummary(){
-  wizData.soil = document.getElementById('soil-input').value;
-  wizData.notes = document.getElementById('notes-input').value;
-  const dias = pendingCrop.diasCosecha||'90';
-  const endDate = new Date(wizData.date);
-  endDate.setDate(endDate.getDate()+parseInt(dias));
+  wizData.soil=document.getElementById('soil-input').value;
+  wizData.notes=document.getElementById('notes-input').value;
+  const dias=parseInt(pendingCrop.diasCosecha||'90');
+  const endDate=new Date(wizData.date); endDate.setDate(endDate.getDate()+dias);
+  const areaDisplay=wizData.m2?wizData.m2+'m²':wizData.area;
   document.getElementById('summary-card').innerHTML=`
     <div class="sum-row"><span class="sum-lbl">🌱 Cultivo</span><span class="sum-val">${esc(pendingCrop.nombre)}</span></div>
-    <div class="sum-row"><span class="sum-lbl">📅 Fecha de siembra</span><span class="sum-val">${wizData.dateLabel}</span></div>
+    <div class="sum-row"><span class="sum-lbl">📅 Fecha siembra</span><span class="sum-val">${wizData.dateLabel}</span></div>
     <div class="sum-row"><span class="sum-lbl">🌿 Cantidad</span><span class="sum-val">${wizData.qty} ${pendingCrop.categoria==='granos'?'semillas':'plantas'}</span></div>
-    <div class="sum-row"><span class="sum-lbl">📐 Área</span><span class="sum-val">${wizData.area}</span></div>
+    <div class="sum-row"><span class="sum-lbl">📐 Área</span><span class="sum-val">${areaDisplay}</span></div>
     <div class="sum-row"><span class="sum-lbl">💧 Riego</span><span class="sum-val">${wizData.riego}</span></div>
     <div class="sum-row"><span class="sum-lbl">🗓 Cosecha estimada</span><span class="sum-val">${fmtDate(endDate.toISOString())} (~${dias}d)</span></div>`;
 }
 
 function addCropFromWizard(){
-  const dias = parseInt(pendingCrop.diasCosecha||'90');
-  const endDate = new Date(wizData.date);
-  endDate.setDate(endDate.getDate()+dias);
-  const newCrop = {
-    ...pendingCrop,
-    startDate: wizData.date,
-    endDate: endDate.toISOString().split('T')[0],
-    qty: wizData.qty,
-    area: wizData.area,
-    soil: wizData.soil,
-    riego: wizData.riego,
-    notes: wizData.notes,
-    zona: document.getElementById('qinput').value||'',
-    guide: null,
-    weeksCompleted: []
-  };
-  myCrops.push(newCrop);
-  saveCrops();
-  closeModal();
-  renderInitCrops();
-  renderMyCrops();
-  // go to detail immediately
-  setTimeout(()=>openDetail(myCrops.length-1), 350);
+  const dias=parseInt(pendingCrop.diasCosecha||'90');
+  const endDate=new Date(wizData.date); endDate.setDate(endDate.getDate()+dias);
+  myCrops.push({
+    ...pendingCrop, startDate:wizData.date, endDate:endDate.toISOString().split('T')[0],
+    qty:wizData.qty, area:wizData.area, m2:wizData.m2||0,
+    soil:wizData.soil, riego:wizData.riego, notes:wizData.notes,
+    zona:document.getElementById('qinput').value||'',
+    guide:null, weeksCompleted:[]
+  });
+  saveCrops(); closeModal(); renderInitCrops(); renderMyCrops();
+  setTimeout(()=>openDetail(myCrops.length-1),350);
 }
 
-// ─── EXPLORADOR ────────────────────────────────────
-let busy = false;
-const addedSet = new Set();
-
-const imgMap = {
+// ─── EXPLORADOR ───────────────────────────────
+let busy=false;
+const addedSet=new Set();
+const imgMap={
   frutas:'https://images.unsplash.com/photo-1592921870789-04563d55041c?w=160&h=160&fit=crop',
   verduras:'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=160&h=160&fit=crop',
   granos:'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=160&h=160&fit=crop',
   tuberculos:'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=160&h=160&fit=crop',
   hierbas:'https://images.unsplash.com/photo-1466842885935-1c14a54699fd?w=160&h=160&fit=crop',
 };
-
-function useEx(btn){
-  const inp=document.getElementById('qinput');
-  inp.value=btn.textContent.replace(/^\S+\s/,'').trim();
-  autoResize(inp); sendQuery();
-}
-function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendQuery();}}
-function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
-function scrollBottom(){const s=document.getElementById('s-guias');setTimeout(()=>{s.scrollTop=s.scrollHeight;},60);}
+function useEx(btn){ const inp=document.getElementById('qinput'); inp.value=btn.textContent.replace(/^\S+\s/,'').trim(); autoResize(inp); sendQuery(); }
+function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendQuery();} }
+function autoResize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,120)+'px'; }
+function scrollBottom(){ const s=document.getElementById('s-guias'); setTimeout(()=>{s.scrollTop=s.scrollHeight;},60); }
 
 function addMsg(role,html){
   const box=document.getElementById('msgs');
-  const d=document.createElement('div');
-  d.className='msg '+role;
+  const d=document.createElement('div'); d.className='msg '+role;
   d.innerHTML='<div class="bbl">'+html+'</div>';
   box.appendChild(d); scrollBottom(); return d;
 }
@@ -1111,19 +1195,15 @@ async function sendQuery(){
   inp.value=''; inp.style.height='auto';
   addMsg('user',esc(q));
   const tyEl=addMsg('bot','<div class="typi"><span></span><span></span><span></span></div>');
-
   const sys=`Eres agrónomo experto en cultivos latinoamericanos.
 Responde SOLO con JSON válido, sin markdown:
 {"intro":"1-2 oraciones sobre la zona","cultivos":[{"nombre":"...","categoria":"verduras|frutas|granos|tuberculos|hierbas","clima":"...","temporada":"...","diasCosecha":"número","descripcion":"2 oraciones: por qué es ideal + tip","agua":"bajo|medio|alto","dificultad":"Fácil|Moderado|Avanzado","rendimiento":"X-Y kg/m²"}]}
-4-6 cultivos relevantes para la zona descrita.`;
-
+4-6 cultivos relevantes.`;
   try{
     const raw=await groq(sys,q,1500);
     const data=JSON.parse(raw.replace(/```json|```/g,'').trim());
     tyEl.remove(); renderResp(data);
-  }catch{
-    tyEl.remove(); renderResp(fallback());
-  }
+  }catch{ tyEl.remove(); renderResp(fallback()); }
   busy=false; document.getElementById('sendbtn').disabled=false;
 }
 
@@ -1132,65 +1212,31 @@ function renderResp(data){
   const crops=data.cultivos||[];
   if(!crops.length){addMsg('bot','No encontré resultados. Intenta con más detalles.');return;}
   const box=document.getElementById('msgs');
-  const wrap=document.createElement('div');
-  wrap.className='msg bot'; wrap.style.cssText='max-width:100%;width:100%';
+  const wrap=document.createElement('div'); wrap.className='msg bot'; wrap.style.cssText='max-width:100%;width:100%';
+  wrap._crops=crops;
   const cards=document.createElement('div'); cards.className='rcards';
   crops.forEach((c,i)=>{
     const uid='rc_'+Date.now()+'_'+i;
-    const img=imgMap[c.categoria]||imgMap.verduras;
-    const el=document.createElement('div');
-    el.className='rcrd'; el.style.animationDelay=(i*.07)+'s';
+    const el=document.createElement('div'); el.className='rcrd'; el.style.animationDelay=(i*.07)+'s';
     el.innerHTML=`
-      <div class="rcimg"><img src="${img}" alt="${esc(c.nombre)}" loading="lazy"/></div>
+      <div class="rcimg"><img src="${imgMap[c.categoria]||imgMap.verduras}" alt="${esc(c.nombre)}" loading="lazy"/></div>
       <div class="rcbdy">
         <div class="rcn">${esc(c.nombre)}</div>
-        <div class="rctgs">
-          <span class="tag tg">${esc(c.clima)}</span>
-          <span class="tag ts2">${esc(c.temporada)}</span>
-          <span class="tag tt">⏱ ${esc(c.diasCosecha)}d</span>
-        </div>
+        <div class="rctgs"><span class="tag tg">${esc(c.clima)}</span><span class="tag ts2">${esc(c.temporada)}</span><span class="tag tt">⏱ ${esc(c.diasCosecha)}d</span></div>
         <div class="rcdesc">${esc(c.descripcion)}</div>
-        <div class="rcft">
-          <div class="rst">💧 Agua: ${esc(c.agua)}</div>
-          <div class="rst">📈 ${esc(c.rendimiento)}</div>
-          <div class="rst">⭐ ${esc(c.dificultad)}</div>
-        </div>
-        <button class="addbtn" id="${uid}" onclick="startAddCrop('${uid}',${i})">
-          ＋ Agregar a mis cultivos
-        </button>
+        <div class="rcft"><div class="rst">💧 ${esc(c.agua)}</div><div class="rst">📈 ${esc(c.rendimiento)}</div><div class="rst">⭐ ${esc(c.dificultad)}</div></div>
+        <button class="addbtn" id="${uid}" onclick="startAddCrop('${uid}',${i})">＋ Agregar a mis cultivos</button>
       </div>`;
     cards.appendChild(el);
-    el._cropData = c;
   });
   wrap.appendChild(cards); box.appendChild(wrap); scrollBottom();
-  // store crop refs
-  wrap._crops = crops;
 }
 
-function startAddCrop(uid, idx){
-  const btn=document.getElementById(uid);
-  if(!btn||addedSet.has(uid)) return;
-  // find crop data
-  const msgs=document.getElementById('msgs');
-  let crop=null;
-  msgs.querySelectorAll('.rcrd').forEach((el,i)=>{
-    if(el.querySelector('#'+uid)){
-      // find in parent wrap
-    }
-  });
-  // walk up to find wrap with crops
-  const el=document.getElementById(uid).closest('.msg.bot');
-  if(el&&el._crops) crop=el._crops[idx];
-  if(!crop){
-    // fallback: get from btn parent
-    const rcrd=document.getElementById(uid).closest('.rcrd');
-    const name=rcrd.querySelector('.rcn').textContent;
-    crop={nombre:name,categoria:'verduras',diasCosecha:'90',descripcion:''};
-  }
-  openModal(crop);
-  addedSet.add(uid);
-  btn.classList.add('added');
-  btn.textContent='✅ Configurando…';
+function startAddCrop(uid,idx){
+  const btn=document.getElementById(uid); if(!btn||addedSet.has(uid)) return;
+  const wrap=btn.closest('.msg.bot'); const crop=wrap&&wrap._crops?wrap._crops[idx]:null;
+  if(!crop) return;
+  openModal(crop); addedSet.add(uid); btn.classList.add('added'); btn.textContent='✅ Configurando…';
 }
 
 function fallback(){
@@ -1202,9 +1248,10 @@ function fallback(){
   ]};
 }
 
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc2(s){ return String(s||'').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
 
-// ─── INIT ───────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────
 renderInitCrops();
 renderMyCrops();
 </script>
