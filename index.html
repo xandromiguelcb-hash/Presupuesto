@@ -369,29 +369,68 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .modal-nav{display:flex;gap:10px;margin-top:8px}
 
 /* ════ PERFIL ════ */
-.pcrd{margin:14px 18px;background:var(--s0);border-radius:22px;padding:22px;
-  display:flex;align-items:center;gap:18px;box-shadow:0 3px 14px rgba(25,28,27,.06)}
-.avwp{position:relative;flex-shrink:0}
-.av{width:76px;height:76px;border-radius:50%;object-fit:cover;display:block}
-.vbdg{position:absolute;bottom:0;right:0;background:var(--green);border-radius:50%;
-  padding:5px;border:3px solid var(--s0);font-size:12px;display:flex;align-items:center;justify-content:center}
-.pnm{font-family:'DM Serif Display',serif;font-size:22px}
-.plc{font-size:12px;color:var(--ink2);margin:3px 0}
-.pbi{font-size:12px;color:var(--ink2);line-height:1.5}
-.mems{margin:0 18px;background:var(--green2);border-radius:18px;padding:18px;
-  display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
-.mlbl{font-size:10px;color:var(--greendim);text-transform:uppercase;letter-spacing:1px;font-weight:700}
-.mico{font-size:34px}
-.mcta{font-size:13px;font-weight:700;color:var(--greenfix);text-decoration:underline;
-  cursor:pointer;border:none;background:none;font-family:inherit}
+/* hero editable */
+.pf-hero{margin:14px 18px;background:linear-gradient(135deg,var(--green),var(--green2));
+  border-radius:22px;padding:22px;color:#fff;position:relative}
+.pf-avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.pf-av-wrap{position:relative;flex-shrink:0;cursor:pointer}
+.pf-av{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;
+  border:3px solid rgba(255,255,255,.3)}
+.pf-av-placeholder{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;font-size:30px;
+  border:3px dashed rgba(255,255,255,.4);cursor:pointer;flex-shrink:0}
+.pf-av-edit{position:absolute;bottom:0;right:0;background:var(--greenfix);
+  border-radius:50%;width:22px;height:22px;display:flex;align-items:center;
+  justify-content:center;font-size:12px;border:2px solid var(--green)}
+.pf-name{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:2px}
+.pf-sub{font-size:12px;color:rgba(255,255,255,.7)}
+.pf-edit-btn{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:6px 12px;
+  color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s}
+.pf-edit-btn:hover{background:rgba(255,255,255,.25)}
+.pf-tags{display:flex;gap:8px;flex-wrap:wrap}
+.pf-tag{background:rgba(255,255,255,.15);border-radius:100px;padding:4px 10px;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.9)}
+
+/* edit form */
+.pf-form{margin:0 18px;background:var(--s0);border-radius:18px;padding:18px;
+  border:1.5px solid var(--green);display:none}
+.pf-form.on{display:block}
+.pf-form-title{font-size:15px;font-weight:700;color:var(--green);margin-bottom:16px}
+.pf-field{margin-bottom:14px}
+.pf-field label{display:block;font-size:11px;font-weight:700;color:var(--ink2);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.pf-field input,.pf-field textarea,.pf-field select{
+  width:100%;background:var(--s1);border:1.5px solid var(--outv);border-radius:12px;
+  padding:11px 14px;font-size:14px;font-family:'Manrope',sans-serif;color:var(--ink);
+  outline:none;transition:border-color .15s}
+.pf-field input:focus,.pf-field textarea:focus,.pf-field select:focus{border-color:var(--green)}
+.pf-field textarea{resize:none;line-height:1.5}
+.pf-field select{appearance:none;cursor:pointer}
+.pf-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pf-save-btn{width:100%;padding:14px;border-radius:100px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 3px 12px rgba(23,59,30,.2);transition:opacity .15s}
+.pf-save-btn:hover{opacity:.9}
+.pf-cancel-btn{width:100%;padding:13px;border-radius:100px;border:none;cursor:pointer;
+  background:var(--s2);color:var(--ink2);font-family:'Manrope',sans-serif;
+  font-size:14px;font-weight:700;margin-top:8px}
+
+/* stats */
 .sgrd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 18px}
 .sc{background:var(--s1);border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px}
 .sn{font-size:23px;font-weight:800;color:var(--green);line-height:1}
 .sn.s2{color:var(--sec)}
 .sl{font-size:9px;font-weight:700;color:var(--ink2);text-align:center;text-transform:uppercase;letter-spacing:.4px}
-.prwp{padding:0 18px}
-.prtt{font-size:17px;font-weight:700;margin-bottom:12px}
-.prg{background:var(--s2);border-radius:16px;overflow:hidden}
+
+/* section header inside perfil */
+.pf-shdr{display:flex;justify-content:space-between;align-items:center;padding:20px 18px 12px}
+.pf-shdr h3{font-size:16px;font-weight:700}
+
+/* prefs */
+.prg{background:var(--s2);border-radius:16px;overflow:hidden;margin:0 18px}
 .prr{background:var(--s0);padding:13px 16px;display:flex;align-items:center;
   justify-content:space-between;border-bottom:1px solid var(--s2)}
 .prr:last-child{border-bottom:none}
@@ -409,6 +448,74 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 .supb{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:100px;
   padding:10px 18px;cursor:pointer;color:#fff;font-weight:700;font-size:13px;
   display:inline-flex;align-items:center;gap:7px;font-family:inherit}
+
+/* ════ INVENTARIO ════ */
+.inv-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 18px;margin-bottom:4px}
+.inv-sum-c{background:var(--s0);border-radius:14px;padding:14px 10px;text-align:center}
+.inv-sum-ico{font-size:20px;margin-bottom:3px}
+.inv-sum-val{font-size:18px;font-weight:800;color:var(--green)}
+.inv-sum-lbl{font-size:9px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+
+/* category filter */
+.inv-cats{display:flex;gap:8px;overflow-x:auto;padding:0 18px 4px;scrollbar-width:none;margin-bottom:4px}
+.inv-cats::-webkit-scrollbar{display:none}
+.inv-cat{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;
+  border:1.5px solid var(--outv);background:var(--s0);color:var(--ink2);
+  white-space:nowrap;cursor:pointer;transition:all .15s;font-family:inherit;flex-shrink:0}
+.inv-cat.on{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* insumo list */
+.inv-list{padding:0 18px;display:flex;flex-direction:column;gap:10px}
+.inv-item{background:var(--s0);border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;gap:12px;animation:fadeup .2s ease both}
+.inv-item-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0}
+.inv-item-ico.fert{background:#e8f5e9}
+.inv-item-ico.pest{background:#fff3e0}
+.inv-item-ico.seed{background:#e3f2fd}
+.inv-item-ico.tool{background:#fce4ec}
+.inv-item-ico.other{background:var(--s2)}
+.inv-item-body{flex:1;min-width:0}
+.inv-item-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.inv-item-meta{font-size:11px;color:var(--ink2);display:flex;gap:8px;flex-wrap:wrap}
+.inv-meta-chip{background:var(--s1);border-radius:100px;padding:2px 8px;font-size:10px;font-weight:600}
+.inv-item-price{font-size:14px;font-weight:800;color:var(--green);white-space:nowrap}
+.inv-item-actions{display:flex;gap:6px;flex-shrink:0}
+.inv-act-btn{width:32px;height:32px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--s2);display:flex;align-items:center;justify-content:center;
+  font-size:14px;transition:background .15s}
+.inv-act-btn:hover{background:var(--s3)}
+.inv-act-btn.del:hover{background:#ffdad6;color:#ba1a1a}
+
+/* low stock warning */
+.inv-low{background:rgba(253,205,188,.4);border-left:3px solid var(--sec);
+  border-radius:10px;padding:8px 12px;font-size:11px;color:var(--seconc);font-weight:600;margin-top:4px}
+
+/* add insumo modal */
+.inv-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:250;
+  display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .2s}
+.inv-modal-bg.on{opacity:1;pointer-events:all}
+.inv-modal{background:var(--s0);border-radius:28px 28px 0 0;padding:24px 20px 36px;
+  width:100%;max-height:90dvh;overflow-y:auto;
+  transform:translateY(100%);transition:transform .3s ease}
+.inv-modal-bg.on .inv-modal{transform:translateY(0)}
+.inv-modal-handle{width:40px;height:4px;background:var(--outv);border-radius:100px;margin:0 auto 18px}
+.inv-modal-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--green);margin-bottom:18px}
+.inv-field{margin-bottom:14px}
+.inv-field label{display:block;font-size:11px;font-weight:700;color:var(--ink2);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.inv-field input,.inv-field select{width:100%;background:var(--s1);border:1.5px solid var(--outv);
+  border-radius:12px;padding:12px 14px;font-size:15px;font-family:'Manrope',sans-serif;
+  color:var(--ink);outline:none;transition:border-color .15s}
+.inv-field input:focus,.inv-field select:focus{border-color:var(--green)}
+.inv-field select{appearance:none;cursor:pointer}
+.inv-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inv-cats-select{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.inv-cat-opt{padding:8px 14px;border-radius:100px;font-size:13px;font-weight:600;
+  border:1.5px solid var(--outv);background:var(--s1);color:var(--ink2);
+  cursor:pointer;transition:all .15s;font-family:inherit}
+.inv-cat-opt.sel{background:var(--green);color:#fff;border-color:var(--green)}
+
 .mt14{margin-top:14px}.mt20{margin-top:20px}.mt24{margin-top:24px}
 </style>
 </head>
@@ -595,37 +702,121 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
 
   <!-- ══ PERFIL ══ -->
   <div class="scr" id="s-perfil">
-    <div class="pcrd">
-      <div class="avwp">
-        <img class="av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" alt="Perfil"/>
-        <div class="vbdg">✓</div>
+    <!-- Hero card -->
+    <div class="pf-hero" style="margin-top:14px">
+      <div class="pf-avatar-row">
+        <div class="pf-av-wrap" onclick="triggerAvatarUpload()">
+          <img class="pf-av" id="pf-av-img" src="" alt="Avatar" style="display:none"/>
+          <div class="pf-av-placeholder" id="pf-av-ph">🧑‍🌾</div>
+          <div class="pf-av-edit">✏️</div>
+          <input type="file" id="pf-av-input" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)"/>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div class="pf-name" id="pf-display-name">Tu Nombre</div>
+          <div class="pf-sub" id="pf-display-loc">📍 Ubicación · Tipo de cultivo</div>
+        </div>
       </div>
-      <div>
-        <div class="pnm">Mateo Rivera</div>
-        <div class="plc">📍 Valle de Bravo</div>
-        <p class="pbi">Agricultura regenerativa y cultivos de altura desde 2015.</p>
-      </div>
+      <div class="pf-tags" id="pf-tags"></div>
+      <button class="pf-edit-btn" onclick="togglePfForm()">✏️ Editar perfil</button>
     </div>
-    <div class="mems mt14"><span class="mlbl">Socio Platinum</span><span class="mico">🌿</span><button class="mcta">Ver Beneficios</button></div>
+
+    <!-- Edit form -->
+    <div class="pf-form mt14" id="pf-form">
+      <div class="pf-form-title">📝 Editar mi perfil</div>
+      <div class="pf-field"><label>Nombre completo</label><input type="text" id="pf-nombre" placeholder="Ej: Carlos Rodríguez"/></div>
+      <div class="pf-row2">
+        <div class="pf-field"><label>Ciudad / Municipio</label><input type="text" id="pf-ciudad" placeholder="Ej: Manizales"/></div>
+        <div class="pf-field"><label>Departamento</label><input type="text" id="pf-depto" placeholder="Ej: Caldas"/></div>
+      </div>
+      <div class="pf-field"><label>Tipo de agricultor</label>
+        <select id="pf-tipo">
+          <option value="">Selecciona…</option>
+          <option>Pequeño productor</option>
+          <option>Mediano productor</option>
+          <option>Gran productor</option>
+          <option>Agricultor familiar</option>
+          <option>Técnico agrícola</option>
+          <option>Agrónomo</option>
+        </select>
+      </div>
+      <div class="pf-row2">
+        <div class="pf-field"><label>Hectáreas totales</label><input type="number" id="pf-ha" placeholder="Ej: 2.5" min="0" step="0.1"/></div>
+        <div class="pf-field"><label>Años de experiencia</label><input type="number" id="pf-exp" placeholder="Ej: 8" min="0"/></div>
+      </div>
+      <div class="pf-field"><label>Sobre mí (opcional)</label><textarea id="pf-bio" rows="2" placeholder="Cuéntanos un poco sobre tu finca o tu historia…"></textarea></div>
+      <div class="pf-field"><label>Cultivos principales (separados por coma)</label><input type="text" id="pf-cultivos-principales" placeholder="Ej: Café, Plátano, Aguacate"/></div>
+      <button class="pf-save-btn" onclick="savePerfil()">✓ Guardar cambios</button>
+      <button class="pf-cancel-btn" onclick="togglePfForm()">Cancelar</button>
+    </div>
+
+    <!-- Stats -->
     <div class="sgrd mt14">
       <div class="sc"><span class="sn" id="prf-count">0</span><span class="sl">Cultivos Activos</span></div>
-      <div class="sc"><span class="sn">12</span><span class="sl">Cosechas</span></div>
-      <div class="sc"><span class="sn s2" style="font-size:20px">94<span style="font-size:12px">%</span></span><span class="sl">Eficiencia</span></div>
-      <div class="sc"><span class="sn">4.2</span><span class="sl">Hectáreas</span></div>
+      <div class="sc"><span class="sn" id="prf-ha">0</span><span class="sl">Hectáreas</span></div>
+      <div class="sc"><span class="sn" id="prf-insumos">0</span><span class="sl">Insumos</span></div>
+      <div class="sc"><span class="sn" id="prf-exp">0</span><span class="sl">Años exp.</span></div>
     </div>
-    <div class="prwp mt24">
-      <div class="prtt">Preferencias</div>
-      <div class="prg">
-        <div class="prr"><div class="prnm">🔔 Notificaciones de Riego</div><button class="tog" onclick="this.classList.toggle('off')"><div class="togk"></div></button></div>
-        <div class="prr"><div class="prnm">📏 Sistema de Unidades</div><span class="prvl">Métrico</span></div>
-        <div class="prr"><div class="prnm">🌐 Idioma</div><span class="prvl">Español</span></div>
-        <div class="prr"><div class="prnm">🌙 Modo Oscuro</div><button class="tog off" onclick="this.classList.toggle('off')"><div class="togk"></div></button></div>
+
+    <!-- Quick access to inventario -->
+    <div class="pf-shdr"><h3>📦 Inventario de Insumos</h3><button class="lbtn" onclick="go('s-inventario')">Ver todo →</button></div>
+    <div id="pf-inv-preview" style="padding:0 18px">
+      <div style="text-align:center;padding:16px;font-size:13px;color:var(--ink2);background:var(--s1);border-radius:14px">
+        Sin insumos registrados. <button onclick="go('s-inventario')" style="color:var(--green);font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit">Agregar →</button>
       </div>
     </div>
+
+    <!-- Preferences -->
+    <div class="pf-shdr"><h3>⚙️ Preferencias</h3></div>
+    <div class="prg">
+      <div class="prr"><div class="prnm">🔔 Notificaciones de Riego</div><button class="tog" onclick="this.classList.toggle('off')"><div class="togk"></div></button></div>
+      <div class="prr"><div class="prnm">📏 Sistema de Unidades</div><span class="prvl">Métrico</span></div>
+      <div class="prr"><div class="prnm">🌐 Idioma</div><span class="prvl">Español</span></div>
+      <div class="prr"><div class="prnm">🌙 Modo Oscuro</div><button class="tog off" onclick="this.classList.toggle('off')"><div class="togk"></div></button></div>
+    </div>
+
     <div class="supc mt20">
       <div class="supt">¿Necesitas asesoría?</div>
       <p class="supd">Nuestros agrónomos están listos para ayudarte con plagas, suelos o nutrición.</p>
       <button class="supb">💬 Contactar Experto</button>
+    </div>
+    <div style="height:16px"></div>
+  </div>
+
+  <!-- ══ INVENTARIO ══ -->
+  <div class="scr" id="s-inventario">
+    <div class="bbar">
+      <button class="bbtn" onclick="go('s-perfil')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <span class="bcat">Inventario de Insumos</span>
+    </div>
+
+    <!-- Summary -->
+    <div class="inv-summary">
+      <div class="inv-sum-c"><div class="inv-sum-ico">📦</div><div class="inv-sum-val" id="inv-total-items">0</div><div class="inv-sum-lbl">Insumos</div></div>
+      <div class="inv-sum-c"><div class="inv-sum-ico">⚠️</div><div class="inv-sum-val" id="inv-low-stock" style="color:var(--sec)">0</div><div class="inv-sum-lbl">Stock bajo</div></div>
+      <div class="inv-sum-c"><div class="inv-sum-ico">💰</div><div class="inv-sum-val" id="inv-total-value" style="font-size:13px">$0</div><div class="inv-sum-lbl">Valor total</div></div>
+    </div>
+
+    <!-- Category filter -->
+    <div class="inv-cats" id="inv-cats">
+      <button class="inv-cat on" onclick="filterInv(this,'all')">Todos</button>
+      <button class="inv-cat" onclick="filterInv(this,'fertilizante')">🌿 Fertilizantes</button>
+      <button class="inv-cat" onclick="filterInv(this,'pesticida')">🐛 Pesticidas</button>
+      <button class="inv-cat" onclick="filterInv(this,'semilla')">🌱 Semillas</button>
+      <button class="inv-cat" onclick="filterInv(this,'herramienta')">🔧 Herramientas</button>
+      <button class="inv-cat" onclick="filterInv(this,'otro')">📦 Otros</button>
+    </div>
+
+    <!-- Add button -->
+    <div style="padding:12px 18px 4px">
+      <button class="pbtn" onclick="openInvModal()">＋ Agregar Insumo</button>
+    </div>
+
+    <!-- Items list -->
+    <div class="inv-list mt14" id="inv-list">
+      <div style="text-align:center;padding:30px;color:var(--ink2)">
+        <div style="font-size:40px;margin-bottom:10px">📦</div>
+        <p style="font-size:14px;line-height:1.6">Sin insumos registrados.<br>Agrega fertilizantes, semillas, herramientas y más.</p>
+      </div>
     </div>
     <div style="height:16px"></div>
   </div>
@@ -646,13 +837,77 @@ body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--ink);
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
     <span class="nl">Explorar</span>
   </button>
+  <button class="nb" id="nb-s-inventario" onclick="go('s-inventario')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+    <span class="nl">Insumos</span>
+  </button>
   <button class="nb" id="nb-s-perfil" onclick="go('s-perfil')">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <span class="nl">Perfil</span>
   </button>
 </nav>
 
-<!-- ══ TASK COACH DRAWER ══ -->
+<!-- ══ INVENTARIO MODAL ══ -->
+<div class="inv-modal-bg" id="inv-modal-bg" onclick="closeInvModalBg(event)">
+  <div class="inv-modal">
+    <div class="inv-modal-handle"></div>
+    <div class="inv-modal-title" id="inv-modal-title">＋ Agregar Insumo</div>
+
+    <div class="inv-field">
+      <label>Nombre del insumo</label>
+      <input type="text" id="inv-nombre" placeholder="Ej: Fertilizante NPK 15-15-15"/>
+    </div>
+
+    <div class="inv-field">
+      <label>Categoría</label>
+      <div class="inv-cats-select" id="inv-cat-sel">
+        <button class="inv-cat-opt sel" data-v="fertilizante" onclick="selInvCat(this)">🌿 Fertilizante</button>
+        <button class="inv-cat-opt" data-v="pesticida" onclick="selInvCat(this)">🐛 Pesticida</button>
+        <button class="inv-cat-opt" data-v="semilla" onclick="selInvCat(this)">🌱 Semilla</button>
+        <button class="inv-cat-opt" data-v="herramienta" onclick="selInvCat(this)">🔧 Herramienta</button>
+        <button class="inv-cat-opt" data-v="otro" onclick="selInvCat(this)">📦 Otro</button>
+      </div>
+    </div>
+
+    <div class="inv-row2">
+      <div class="inv-field">
+        <label>Cantidad</label>
+        <input type="number" id="inv-qty" placeholder="Ej: 50" min="0" step="0.1"/>
+      </div>
+      <div class="inv-field">
+        <label>Unidad</label>
+        <select id="inv-unit">
+          <option>kg</option><option>g</option><option>L</option><option>mL</option>
+          <option>bultos</option><option>unidades</option><option>rollos</option>
+          <option>cajas</option><option>m²</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="inv-row2">
+      <div class="inv-field">
+        <label>Precio unitario ($)</label>
+        <input type="number" id="inv-precio" placeholder="Ej: 85000" min="0"/>
+      </div>
+      <div class="inv-field">
+        <label>Stock mínimo (alerta)</label>
+        <input type="number" id="inv-min" placeholder="Ej: 10" min="0"/>
+      </div>
+    </div>
+
+    <div class="inv-field">
+      <label>Proveedor (opcional)</label>
+      <input type="text" id="inv-proveedor" placeholder="Ej: Agrocampo Manizales"/>
+    </div>
+    <div class="inv-field">
+      <label>Notas (opcional)</label>
+      <input type="text" id="inv-notas" placeholder="Ej: Aplicar cada 15 días"/>
+    </div>
+
+    <button class="pbtn" onclick="saveInsumo()" style="margin-top:4px" id="inv-save-btn">✓ Guardar Insumo</button>
+    <button style="width:100%;padding:13px;border-radius:100px;border:none;cursor:pointer;background:var(--s2);color:var(--ink2);font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;margin-top:8px" onclick="closeInvModal()">Cancelar</button>
+  </div>
+</div>
 <div class="coach-bg" id="coach-bg" onclick="closeCoachBg(event)">
   <div class="coach-drawer" id="coach-drawer">
     <div class="coach-handle"></div>
@@ -1251,7 +1506,222 @@ function fallback(){
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function esc2(s){ return String(s||'').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
 
+// ─── PERFIL ───────────────────────────────────
+let perfilData = JSON.parse(localStorage.getItem('cg_perfil')||'{}');
+
+function loadPerfil(){
+  const p=perfilData;
+  const nameEl=document.getElementById('pf-display-name');
+  const locEl=document.getElementById('pf-display-loc');
+  const tagsEl=document.getElementById('pf-tags');
+  nameEl.textContent=p.nombre||'Tu Nombre';
+  const loc=[p.ciudad,p.depto].filter(Boolean).join(', ');
+  locEl.textContent=(loc?'📍 '+loc:'📍 Ubicación')+(p.tipo?' · '+p.tipo:'');
+  // tags
+  const tags=[];
+  if(p.ha) tags.push('🌾 '+p.ha+' ha');
+  if(p.exp) tags.push('⭐ '+p.exp+' años');
+  if(p.cultivosPrincipales) p.cultivosPrincipales.split(',').slice(0,3).forEach(c=>tags.push('🌱 '+c.trim()));
+  tagsEl.innerHTML=tags.map(t=>`<span class="pf-tag">${esc(t)}</span>`).join('');
+  // avatar
+  if(p.avatar){
+    document.getElementById('pf-av-img').src=p.avatar;
+    document.getElementById('pf-av-img').style.display='block';
+    document.getElementById('pf-av-ph').style.display='none';
+  }
+  // stats
+  const haEl=document.getElementById('prf-ha'); if(haEl) haEl.textContent=p.ha||'0';
+  const expEl=document.getElementById('prf-exp'); if(expEl) expEl.textContent=p.exp||'0';
+}
+
+function togglePfForm(){
+  const form=document.getElementById('pf-form');
+  const on=form.classList.toggle('on');
+  if(on){
+    const p=perfilData;
+    document.getElementById('pf-nombre').value=p.nombre||'';
+    document.getElementById('pf-ciudad').value=p.ciudad||'';
+    document.getElementById('pf-depto').value=p.depto||'';
+    document.getElementById('pf-tipo').value=p.tipo||'';
+    document.getElementById('pf-ha').value=p.ha||'';
+    document.getElementById('pf-exp').value=p.exp||'';
+    document.getElementById('pf-bio').value=p.bio||'';
+    document.getElementById('pf-cultivos-principales').value=p.cultivosPrincipales||'';
+    document.getElementById('s-perfil').scrollTo({top:document.getElementById('pf-form').offsetTop-70,behavior:'smooth'});
+  }
+}
+
+function savePerfil(){
+  perfilData={
+    ...perfilData,
+    nombre:document.getElementById('pf-nombre').value.trim(),
+    ciudad:document.getElementById('pf-ciudad').value.trim(),
+    depto:document.getElementById('pf-depto').value.trim(),
+    tipo:document.getElementById('pf-tipo').value,
+    ha:document.getElementById('pf-ha').value,
+    exp:document.getElementById('pf-exp').value,
+    bio:document.getElementById('pf-bio').value.trim(),
+    cultivosPrincipales:document.getElementById('pf-cultivos-principales').value.trim(),
+  };
+  localStorage.setItem('cg_perfil',JSON.stringify(perfilData));
+  loadPerfil(); togglePfForm();
+}
+
+function triggerAvatarUpload(){ document.getElementById('pf-av-input').click(); }
+function handleAvatarUpload(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    perfilData.avatar=ev.target.result;
+    localStorage.setItem('cg_perfil',JSON.stringify(perfilData));
+    document.getElementById('pf-av-img').src=ev.target.result;
+    document.getElementById('pf-av-img').style.display='block';
+    document.getElementById('pf-av-ph').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderPfInvPreview(){
+  const box=document.getElementById('pf-inv-preview'); if(!box) return;
+  const items=inventario.slice(0,3);
+  if(!items.length){
+    box.innerHTML='<div style="text-align:center;padding:16px;font-size:13px;color:var(--ink2);background:var(--s1);border-radius:14px">Sin insumos. <button onclick="go(\'s-inventario\')" style="color:var(--green);font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit">Agregar →</button></div>';
+    return;
+  }
+  box.innerHTML=items.map(inv=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--s0);border-radius:12px;margin-bottom:8px">
+      <span style="font-size:20px">${catIco(inv.categoria)}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:700">${esc(inv.nombre)}</div>
+        <div style="font-size:11px;color:var(--ink2)">${inv.qty} ${esc(inv.unit)}</div>
+      </div>
+      <div style="font-size:13px;font-weight:800;color:var(--green)">$${Number(inv.precio).toLocaleString('es-CO')}</div>
+    </div>`).join('');
+  if(inventario.length>3) box.innerHTML+=`<button onclick="go('s-inventario')" style="width:100%;padding:10px;border-radius:12px;border:none;background:var(--s1);color:var(--green);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Ver todos (${inventario.length}) →</button>`;
+}
+
+// ─── INVENTARIO ───────────────────────────────
+let inventario = JSON.parse(localStorage.getItem('cg_inv')||'[]');
+let invEditIdx = -1;
+let invCatFilter = 'all';
+let invCatSelected = 'fertilizante';
+
+function saveInv(){ localStorage.setItem('cg_inv',JSON.stringify(inventario)); }
+
+const catIco = c=>({fertilizante:'🌿',pesticida:'🐛',semilla:'🌱',herramienta:'🔧',otro:'📦'}[c]||'📦');
+const catCls = c=>({fertilizante:'fert',pesticida:'pest',semilla:'seed',herramienta:'tool',otro:'other'}[c]||'other');
+
+function renderInventario(){
+  const list=document.getElementById('inv-list'); if(!list) return;
+  const filtered=invCatFilter==='all'?inventario:inventario.filter(i=>i.categoria===invCatFilter);
+  // summary
+  const totalVal=inventario.reduce((s,i)=>s+(Number(i.precio)||0)*(Number(i.qty)||0),0);
+  const lowStock=inventario.filter(i=>i.min&&Number(i.qty)<=Number(i.min)).length;
+  document.getElementById('inv-total-items').textContent=inventario.length;
+  document.getElementById('inv-low-stock').textContent=lowStock;
+  document.getElementById('inv-total-value').textContent='$'+Math.round(totalVal).toLocaleString('es-CO');
+  const inEl=document.getElementById('prf-insumos'); if(inEl) inEl.textContent=inventario.length;
+
+  if(!filtered.length){
+    list.innerHTML=`<div style="text-align:center;padding:30px;color:var(--ink2)"><div style="font-size:36px;margin-bottom:8px">📦</div><p style="font-size:13px">${invCatFilter==='all'?'Sin insumos aún. Agrega tu primero.':'Sin insumos en esta categoría.'}</p></div>`;
+    renderPfInvPreview(); return;
+  }
+
+  list.innerHTML=filtered.map((inv,_)=>{
+    const realIdx=inventario.indexOf(inv);
+    const isLow=inv.min&&Number(inv.qty)<=Number(inv.min);
+    const totalItem=(Number(inv.precio)||0)*(Number(inv.qty)||0);
+    return`<div class="inv-item">
+      <div class="inv-item-ico ${catCls(inv.categoria)}">${catIco(inv.categoria)}</div>
+      <div class="inv-item-body">
+        <div class="inv-item-name">${esc(inv.nombre)}</div>
+        <div class="inv-item-meta">
+          <span class="inv-meta-chip">${inv.qty} ${esc(inv.unit)}</span>
+          ${inv.proveedor?`<span class="inv-meta-chip">🏪 ${esc(inv.proveedor)}</span>`:''}
+          ${inv.notas?`<span class="inv-meta-chip">📝 ${esc(inv.notas)}</span>`:''}
+        </div>
+        ${isLow?`<div class="inv-low">⚠️ Stock bajo (mínimo: ${inv.min} ${esc(inv.unit)})</div>`:''}
+        <div style="font-size:11px;color:var(--ink2);margin-top:4px">Valor total: <strong style="color:var(--green)">$${Math.round(totalItem).toLocaleString('es-CO')}</strong></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div class="inv-item-price">$${Number(inv.precio).toLocaleString('es-CO')}<span style="font-size:10px;font-weight:600;color:var(--ink2)">/${esc(inv.unit)}</span></div>
+        <div class="inv-item-actions">
+          <button class="inv-act-btn" onclick="editInsumo(${realIdx})" title="Editar">✏️</button>
+          <button class="inv-act-btn del" onclick="deleteInsumo(${realIdx})" title="Eliminar">🗑️</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  renderPfInvPreview();
+}
+
+function filterInv(btn,cat){
+  document.querySelectorAll('.inv-cat').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); invCatFilter=cat; renderInventario();
+}
+
+function openInvModal(editIdx){
+  invEditIdx=editIdx!=null?editIdx:-1;
+  const isEdit=invEditIdx>=0;
+  document.getElementById('inv-modal-title').textContent=isEdit?'✏️ Editar Insumo':'＋ Agregar Insumo';
+  document.getElementById('inv-save-btn').textContent=isEdit?'✓ Guardar cambios':'✓ Guardar Insumo';
+  // reset
+  ['inv-nombre','inv-qty','inv-precio','inv-min','inv-proveedor','inv-notas'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('inv-unit').value='kg';
+  document.querySelectorAll('.inv-cat-opt').forEach(b=>b.classList.remove('sel'));
+  document.querySelector('.inv-cat-opt[data-v="fertilizante"]').classList.add('sel');
+  invCatSelected='fertilizante';
+  if(isEdit){
+    const inv=inventario[invEditIdx];
+    document.getElementById('inv-nombre').value=inv.nombre||'';
+    document.getElementById('inv-qty').value=inv.qty||'';
+    document.getElementById('inv-unit').value=inv.unit||'kg';
+    document.getElementById('inv-precio').value=inv.precio||'';
+    document.getElementById('inv-min').value=inv.min||'';
+    document.getElementById('inv-proveedor').value=inv.proveedor||'';
+    document.getElementById('inv-notas').value=inv.notas||'';
+    invCatSelected=inv.categoria||'fertilizante';
+    document.querySelectorAll('.inv-cat-opt').forEach(b=>{b.classList.toggle('sel',b.dataset.v===invCatSelected);});
+  }
+  document.getElementById('inv-modal-bg').classList.add('on');
+}
+
+function closeInvModal(){ document.getElementById('inv-modal-bg').classList.remove('on'); }
+function closeInvModalBg(e){ if(e.target===document.getElementById('inv-modal-bg')) closeInvModal(); }
+
+function selInvCat(btn){
+  document.querySelectorAll('.inv-cat-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel'); invCatSelected=btn.dataset.v;
+}
+
+function saveInsumo(){
+  const nombre=document.getElementById('inv-nombre').value.trim();
+  if(!nombre){ alert('El nombre del insumo es obligatorio.'); return; }
+  const item={
+    nombre, categoria:invCatSelected,
+    qty:document.getElementById('inv-qty').value||'0',
+    unit:document.getElementById('inv-unit').value,
+    precio:document.getElementById('inv-precio').value||'0',
+    min:document.getElementById('inv-min').value||'0',
+    proveedor:document.getElementById('inv-proveedor').value.trim(),
+    notas:document.getElementById('inv-notas').value.trim(),
+    fechaAgregado:new Date().toISOString().split('T')[0],
+  };
+  if(invEditIdx>=0) inventario[invEditIdx]=item;
+  else inventario.push(item);
+  saveInv(); closeInvModal(); renderInventario();
+}
+
+function editInsumo(idx){ openInvModal(idx); }
+
+function deleteInsumo(idx){
+  if(!confirm('¿Eliminar este insumo?')) return;
+  inventario.splice(idx,1); saveInv(); renderInventario();
+}
+
 // ─── INIT ─────────────────────────────────────
+loadPerfil();
+renderInventario();
 renderInitCrops();
 renderMyCrops();
 </script>
